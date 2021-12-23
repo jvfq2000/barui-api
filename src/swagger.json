@@ -1,0 +1,628 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação API",
+        "description": "Documentação da API",
+        "version": "1.0.0",
+        "contact": {
+            "email": "jvfq2000@gmail.com"
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "responses": {
+            "UnauthorizedError": {
+                "description": "Credenciais inválidas.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/sessions": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Efetuar login.",
+                "description": "Para efetuar login no sistema, é necessário que o usuário já esteja cadastrado.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "alu@isju.pk",
+                                    "password": "jJGiJQyJ"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login realizado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "accessLevel": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    }
+                }
+            }
+        },
+        "/refresh-token": {
+            "post": {
+                "tags": [
+                    "Autenticação"
+                ],
+                "summary": "Atualizar Token.",
+                "description": "Para efetuar a atualização de um token, é necessário ter o refreshToken que vem junto com o token quando o login é feito. Importante: ao fazer a atualização de um token um novo refreshToken também é gerado e o antigo é inativado!",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "token": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "token": "sm9nH2awjKJfZUEZu8pqrknecgNwXfDUO9Y1lXbJzOc7L0P8UK"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token atualizado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "refreshToken": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Token inválido."
+                    }
+                }
+            }
+        },
+        "/password/forgot": {
+            "post": {
+                "tags": [
+                    "Senha"
+                ],
+                "summary": "Esqueceu senha.",
+                "description": "Para acessar o esqueceu senha, é necessário que o usuário já esteja cadastrado. Não necessita de nenhuma permissão específica. Essa funcionalidade enviará um e-mail para o usuário com as instruções da recuperação de senha.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "nafob@viobopis.tc"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "E-mail enviado com sucesso."
+                    },
+                    "400": {
+                        "description": "Usuário não encontrado."
+                    }
+                }
+            }
+        },
+        "/password/reset?token={token}": {
+            "post": {
+                "tags": [
+                    "Senha"
+                ],
+                "summary": "Resetar senha.",
+                "description": "Para acessar o resetar senha, é necessário que o usuário já esteja cadastrado e tenha feito a solicitação do e-mail em \"Esqueceu Senha\". Não necessita de nenhuma permissão específica. Essa funcionalidade permitirá ao usuário inserir uma nova senha no sistema, substituindo o a senha que ele esqueceu.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "token",
+                        "description": "Token recebido por e-mail.",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "password": "rD3XJHI0"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Senha alterada com sucesso."
+                    },
+                    "400": {
+                        "description": "Token inválido."
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Criar um usuário.",
+                "description": "Para criar um novo usuário, não é necessário estar autenticado, nem requer nenhum nível específico de acesso.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "lastName": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Joel Cortez",
+                                    "lastName": "Nina Hayes",
+                                    "email": "dir@riv.io",
+                                    "password": "RITk8G4M"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cadastro realizado com sucesso."
+                    },
+                    "400": {
+                        "description": "Já existe um usuário cadastrado com esse e-mail."
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Listar usuários.",
+                "description": "Para listar todos os usuários, é necessário estar autenticado e ter permissão de administrador.",
+                "responses": {
+                    "200": {
+                        "description": "Sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "lastName": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "identifier": {
+                                                "type": "string"
+                                            },
+                                            "createdAt": {
+                                                "type": "string"
+                                            },
+                                            "avatar": {
+                                                "type": "string"
+                                            },
+                                            "accessLevel": {
+                                                "type": "string"
+                                            },
+                                            "avatarUrl": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    }
+                }
+            }
+        },
+        "/users/avatar": {
+            "patch": {
+                "tags": [
+                    "Usuários"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Alterar avatar.",
+                "description": "Para alterar o avatar, é necessário estar autenticado, não requer nenhuma permissão específica e só é possível atualizar o próprio avatar.",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "avatar": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Avatar alterado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "avatarUrl": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    }
+                }
+            }
+        },
+        "/users/access-level?userId={userId}": {
+            "patch": {
+                "tags": [
+                    "Usuários"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Alterar nível de acesso.",
+                "description": "Para alterar o nível de acesso, é necessário que o usuário que efetuará a alteração esteja logado e tenha permissão de administrador. Niveis de acesso aceitos: cliente, profissional, representante, administrador",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "description": "id do usuário que terá o nível de acesso alterado.",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "accessLevel": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "accessLevel": "cliente"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Nível de acesso alterado com sucesso."
+                    },
+                    "400": {
+                        "description": "Erro ao alterar nível de acesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/is-active?userId={userId}": {
+            "patch": {
+                "tags": [
+                    "Usuários"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Alterar ou Inativar.",
+                "description": "Para ativar ou inativar um usuário, é necessário que o usuário que efetuará a alteração esteja logado e tenha permissão de administrador. Se o usuário com o id correspondente estiver ativo, ele será inativado, se ele estiver inativo, será ativado.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "description": "id do usuário que será ativado ou inativado.",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Alteração realizada com sucesso."
+                    },
+                    "400": {
+                        "description": "Erro ao alterar isActive.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/profile": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Perfil do Usuário.",
+                "description": "Para ver o perfil de usuário, é necessário estar autenticado, não requer nenhuma permissão específica e só é possível visualizar o próprio perfil.",
+                "responses": {
+                    "200": {
+                        "description": "Perfil acessado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "lastName": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "identifier": {
+                                            "type": "string"
+                                        },
+                                        "createdAt": {
+                                            "type": "string"
+                                        },
+                                        "avatar": {
+                                            "type": "string"
+                                        },
+                                        "accessLevel": {
+                                            "type": "string"
+                                        },
+                                        "avatarUrl": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Usuários"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "summary": "Alterar Perfil.",
+                "description": "Para alterar o perfil, é necessário estar autenticado, não requer nenhuma permissão específica e só é possível visualizar o próprio perfil.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "lastName": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Jose Potter",
+                                    "lastName": "Edith Herrera",
+                                    "email": "ezateku@fifiaci.as"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Perfil alterado com sucesso.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "lastName": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "identifier": {
+                                            "type": "string"
+                                        },
+                                        "createdAt": {
+                                            "type": "string"
+                                        },
+                                        "avatar": {
+                                            "type": "string"
+                                        },
+                                        "accessLevel": {
+                                            "type": "string"
+                                        },
+                                        "avatarUrl": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/UnauthorizedError"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,83 @@
+import { Router } from "express";
+import multer from "multer";
+
+import uploadConfig from "@config/upload";
+import { CreateUserController } from "@modules/accounts/useCases/createUser/CreateUserController";
+import { FindUserByIdController } from "@modules/accounts/useCases/findUserById/FindUserByIdController";
+import { ListUsersController } from "@modules/accounts/useCases/listUsers/ListUsersController";
+import { ModifyIsActiveUserController } from "@modules/accounts/useCases/modifyIsActiveUser/ModifyIsActiveUserController";
+import { ProfileUserController } from "@modules/accounts/useCases/profileUser/ProfileUserController";
+import { UpdateProfileUserController } from "@modules/accounts/useCases/updateProfileUser/UpdateProfileUserController";
+import { UpdateUserController } from "@modules/accounts/useCases/updateUser/UpdateUserController";
+import { UpdateUserAccessLevelController } from "@modules/accounts/useCases/updateUserAccessLevel/UpdateUserAccessLevelController";
+import { UpdateUserAvatarController } from "@modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController";
+import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
+
+import { ensureAdmin } from "../middlewares/ensureAdmin";
+
+const createUserController = new CreateUserController();
+const updateUserController = new UpdateUserController();
+const findUserByIdController = new FindUserByIdController();
+const listUsersController = new ListUsersController();
+const updateUserAvatarController = new UpdateUserAvatarController();
+const profileUserController = new ProfileUserController();
+const updateProfileUserController = new UpdateProfileUserController();
+const updateUserAccessLevelController = new UpdateUserAccessLevelController();
+const modifyIsActiveUserController = new ModifyIsActiveUserController();
+
+const uploadAvatar = multer(uploadConfig);
+
+const usersRoutes = Router();
+
+usersRoutes.post(
+  "/",
+  ensureAuthenticated,
+  ensureAdmin,
+  createUserController.handle,
+);
+
+usersRoutes.put(
+  "/",
+  ensureAuthenticated,
+  ensureAdmin,
+  updateUserController.handle,
+);
+
+usersRoutes.get("/by-id", ensureAuthenticated, findUserByIdController.handle);
+
+usersRoutes.get(
+  "/",
+  ensureAuthenticated,
+  ensureAdmin,
+  listUsersController.handle,
+);
+
+usersRoutes.patch(
+  "/avatar",
+  ensureAuthenticated,
+  uploadAvatar.single("avatar"),
+  updateUserAvatarController.handle,
+);
+
+usersRoutes.get("/profile", ensureAuthenticated, profileUserController.handle);
+usersRoutes.put(
+  "/profile",
+  ensureAuthenticated,
+  updateProfileUserController.handle,
+);
+
+usersRoutes.patch(
+  "/access-level",
+  ensureAuthenticated,
+  ensureAdmin,
+  updateUserAccessLevelController.handle,
+);
+
+usersRoutes.patch(
+  "/is-active",
+  ensureAuthenticated,
+  ensureAdmin,
+  modifyIsActiveUserController.handle,
+);
+
+export { usersRoutes };

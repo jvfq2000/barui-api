@@ -3,14 +3,14 @@ version: "3.9"
 services:
   database:
     image: postgres
-    container_name: database
+    container_name: barui_database
     restart: always
     ports: 
       - 5432:5432
     environment:
-      - POSTGRES_USER=api
-      - POSTGRES_PASSWORD=api123#@!
-      - POSTGRES_DB=database
+      - POSTGRES_USER=barui_api
+      - POSTGRES_PASSWORD=barui_api123#@!
+      - POSTGRES_DB=barui_database
     volumes:
       - pgdata:/data/postgres
 

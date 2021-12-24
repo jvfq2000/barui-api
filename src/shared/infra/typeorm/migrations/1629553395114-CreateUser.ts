@@ -57,7 +57,7 @@ export class CreateUser1629553395114 implements MigrationInterface {
     queryRunner.query(
       `INSERT INTO
         "user"(id, name, last_name, password, email, identifier, access_level)
-        VALUES('${id}', 'admin', '', '${password}', 'joao.quintal@ji.dev.br', '14633971603', 'administrador')`,
+        VALUES('${id}', 'João Admin', 'Farias Quintal', '${password}', 'joao.quintal@ji.dev.br', '14633971603', 'administrador')`,
     );
   }
 

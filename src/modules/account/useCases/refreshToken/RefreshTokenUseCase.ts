@@ -1,0 +1,88 @@
+import { sign, verify } from "jsonwebtoken";
+import { inject, injectable } from "tsyringe";
+
+import auth from "@config/auth";
+import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
+import { IUsersTokensRepository } from "@modules/account/repositories/IUsersTokensRepository";
+import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { AppError } from "@shared/errors/AppError";
+
+interface IPayload {
+  sub: string;
+  email: string;
+}
+
+interface ITokenResponse {
+  token: string;
+  refreshToken: string;
+}
+
+@injectable()
+class RefreshTokenUseCase {
+  constructor(
+    @inject("UsersTokensRepository")
+    private usersTokensRepository: IUsersTokensRepository,
+    @inject("UsersRepository")
+    private usersRepository: IUsersRepository,
+    @inject("DayjsDateProvider")
+    private dateProvider: IDateProvider,
+  ) {}
+
+  async execute(refreshToken: string): Promise<ITokenResponse> {
+    try {
+      const { sub, email } = verify(
+        refreshToken,
+        auth.secretRefreshToken,
+      ) as IPayload;
+
+      const userId = sub;
+
+      const userToken =
+        await this.usersTokensRepository.findByUserIdAndRefreshToken(
+          userId,
+          refreshToken,
+        );
+
+      if (!userToken) {
+        throw new AppError("Refresh token não encontrado!", 401);
+      }
+
+      await this.usersTokensRepository.deleteById(userToken.id);
+
+      const newRefreshToken = sign({ email }, auth.secretRefreshToken, {
+        subject: sub,
+        expiresIn: auth.expiresInRefreshToken,
+      });
+
+      const refreshTokenExpiresDate = this.dateProvider.addDays(
+        auth.expiresRefreshTokenDays,
+      );
+
+      await this.usersTokensRepository.create({
+        userId,
+        refreshToken: newRefreshToken,
+        expiresDate: refreshTokenExpiresDate,
+      });
+
+      const user = await this.usersRepository.findByEmail(email);
+
+      const newToken = sign(
+        { accessLevel: user.accessLevel },
+        auth.secretToken,
+        {
+          subject: userId,
+          expiresIn: auth.expiresInToken,
+        },
+      );
+
+      return {
+        token: newToken,
+        refreshToken: newRefreshToken,
+      };
+    } catch {
+      throw new AppError("Refresh token inválido!", 401);
+    }
+  }
+}
+
+export { RefreshTokenUseCase };

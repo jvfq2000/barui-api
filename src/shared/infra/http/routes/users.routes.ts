@@ -2,15 +2,15 @@ import { Router } from "express";
 import multer from "multer";
 
 import uploadConfig from "@config/upload";
-import { CreateUserController } from "@modules/accounts/useCases/createUser/CreateUserController";
-import { FindUserByIdController } from "@modules/accounts/useCases/findUserById/FindUserByIdController";
-import { ListUsersController } from "@modules/accounts/useCases/listUsers/ListUsersController";
-import { ModifyIsActiveUserController } from "@modules/accounts/useCases/modifyIsActiveUser/ModifyIsActiveUserController";
-import { ProfileUserController } from "@modules/accounts/useCases/profileUser/ProfileUserController";
-import { UpdateProfileUserController } from "@modules/accounts/useCases/updateProfileUser/UpdateProfileUserController";
-import { UpdateUserController } from "@modules/accounts/useCases/updateUser/UpdateUserController";
-import { UpdateUserAccessLevelController } from "@modules/accounts/useCases/updateUserAccessLevel/UpdateUserAccessLevelController";
-import { UpdateUserAvatarController } from "@modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController";
+import { CreateUserController } from "@modules/account/useCases/createUser/CreateUserController";
+import { FindUserByIdController } from "@modules/account/useCases/findUserById/FindUserByIdController";
+import { ListUsersController } from "@modules/account/useCases/listUsers/ListUsersController";
+import { ModifyIsActiveUserController } from "@modules/account/useCases/modifyIsActiveUser/ModifyIsActiveUserController";
+import { ProfileUserController } from "@modules/account/useCases/profileUser/ProfileUserController";
+import { UpdateProfileUserController } from "@modules/account/useCases/updateProfileUser/UpdateProfileUserController";
+import { UpdateUserController } from "@modules/account/useCases/updateUser/UpdateUserController";
+import { UpdateUserAccessLevelController } from "@modules/account/useCases/updateUserAccessLevel/UpdateUserAccessLevelController";
+import { UpdateUserAvatarController } from "@modules/account/useCases/updateUserAvatar/UpdateUserAvatarController";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
 import { ensureAdmin } from "../middlewares/ensureAdmin";

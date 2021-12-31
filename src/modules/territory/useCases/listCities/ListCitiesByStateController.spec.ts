@@ -5,7 +5,7 @@ import { app } from "@shared/infra/http/app";
 
 let connection: Connection;
 
-describe("List States Controller", () => {
+describe("List Cities Controller", () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
@@ -16,10 +16,14 @@ describe("List States Controller", () => {
     await connection.close();
   });
 
-  it("should be able to list all states", async () => {
+  it("should be able to list all cities", async () => {
     const responseStates = await request(app).get("/states");
 
-    expect(responseStates.status).toBe(200);
-    expect(responseStates.body.length > 0).toBe(true);
+    const responseCities = await request(app).get(
+      `/cities?stateId=${responseStates.body[0].id}`,
+    );
+
+    expect(responseCities.status).toBe(200);
+    expect(responseCities.body.length > 0).toBe(true);
   });
 });

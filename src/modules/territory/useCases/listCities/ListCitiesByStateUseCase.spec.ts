@@ -18,7 +18,7 @@ describe("List Cities", () => {
     );
   });
 
-  it("should be able to list all Cities", async () => {
+  it("should be able to list all cities", async () => {
     const listCities = await listCitiesByStateUseCase.execute(
       "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
     );

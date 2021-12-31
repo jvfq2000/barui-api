@@ -13,7 +13,7 @@ import { UpdateUserAccessLevelController } from "@modules/account/useCases/updat
 import { UpdateUserAvatarController } from "@modules/account/useCases/updateUserAvatar/UpdateUserAvatarController";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
-import { ensureAdmin } from "../middlewares/ensureAdmin";
+import { ensureAdmin } from "../../middlewares/ensureAdmin";
 
 const createUserController = new CreateUserController();
 const updateUserController = new UpdateUserController();

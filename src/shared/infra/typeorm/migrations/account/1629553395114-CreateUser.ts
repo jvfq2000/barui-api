@@ -38,9 +38,9 @@ export class CreateUser1629553395114 implements MigrationInterface {
           {
             name: "access_level",
             type: "varchar",
-            default: "'cliente'",
+            default: "'aluno'",
             comment:
-              "Nível de acesso do usuário: cliente, profissional, representante, administrador",
+              "Nível de acesso do usuário: aluno, coordenador de atividades, coordenador de curso, administrador do campus, administrador geral",
           },
           {
             name: "created_at",

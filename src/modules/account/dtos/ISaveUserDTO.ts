@@ -3,11 +3,16 @@ interface ISaveUserDTO {
   name: string;
   lastName: string;
   email: string;
-  password?: string;
-  accessLevel?: string;
-  identifier?: string;
-  isActive?: boolean;
+  identifier: string;
+  telephone: string;
+  initialSemester: string;
+  registration: string;
   avatar?: string;
+  password?: string;
+  accessLevel: string;
+  courseId: string;
+  institutionId?: string;
+  isActive?: boolean;
 }
 
 export { ISaveUserDTO };

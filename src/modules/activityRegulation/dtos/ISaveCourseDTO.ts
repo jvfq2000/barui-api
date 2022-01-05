@@ -1,8 +1,8 @@
 interface ISaveCourseDTO {
   id?: string;
   name: string;
-  numberPeriods: string;
-  institutionId: string;
+  numberPeriods: number;
+  institutionId?: string;
   isActive?: boolean;
 }
 

@@ -13,7 +13,8 @@ import { UpdateUserAccessLevelController } from "@modules/account/useCases/updat
 import { UpdateUserAvatarController } from "@modules/account/useCases/updateUserAvatar/UpdateUserAvatarController";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
-import { ensureAdmin } from "../../middlewares/ensureAdmin";
+import { ensureActivitiesCoordinator } from "../../middlewares/ensureActivitiesCoordinator";
+import { ensureInstitutionAdmin } from "../../middlewares/ensureInstitutionAdmin";
 
 const createUserController = new CreateUserController();
 const updateUserController = new UpdateUserController();
@@ -32,23 +33,28 @@ const usersRoutes = Router();
 usersRoutes.post(
   "/",
   ensureAuthenticated,
-  ensureAdmin,
+  ensureInstitutionAdmin,
   createUserController.handle,
 );
 
 usersRoutes.put(
   "/",
   ensureAuthenticated,
-  ensureAdmin,
+  ensureInstitutionAdmin,
   updateUserController.handle,
 );
 
-usersRoutes.get("/by-id", ensureAuthenticated, findUserByIdController.handle);
+usersRoutes.get(
+  "/by-id",
+  ensureAuthenticated,
+  ensureActivitiesCoordinator,
+  findUserByIdController.handle,
+);
 
 usersRoutes.get(
   "/",
   ensureAuthenticated,
-  ensureAdmin,
+  ensureInstitutionAdmin,
   listUsersController.handle,
 );
 
@@ -60,6 +66,7 @@ usersRoutes.patch(
 );
 
 usersRoutes.get("/profile", ensureAuthenticated, profileUserController.handle);
+
 usersRoutes.put(
   "/profile",
   ensureAuthenticated,
@@ -69,14 +76,14 @@ usersRoutes.put(
 usersRoutes.patch(
   "/access-level",
   ensureAuthenticated,
-  ensureAdmin,
+  ensureInstitutionAdmin,
   updateUserAccessLevelController.handle,
 );
 
 usersRoutes.patch(
   "/is-active",
   ensureAuthenticated,
-  ensureAdmin,
+  ensureInstitutionAdmin,
   modifyIsActiveUserController.handle,
 );
 

@@ -18,12 +18,12 @@ describe("Update User Access Level Controller", () => {
 
     await connection.query(`
       INSERT INTO "user"(id, name, last_name, password, email, identifier, access_level)
-      VALUES('${userId}', 'Frances Barnes', 'Ella Shelton', '${password}', 'ovoak@em.mq', '65827747034', 'administrador')
+      VALUES('${userId}', 'Frances Barnes', 'Ella Shelton', '${password}', 'ovoak@em.mq', '65827747034', 'administrador geral')
     `);
 
     await connection.query(`
       INSERT INTO "user"(id, name, last_name, password, email, identifier, access_level)
-      VALUES('${userId2}', 'Olive Harrison', 'Mayme Dawson', '${password}', 'noogo@rowin.mz', '91211856892', 'cliente')
+      VALUES('${userId2}', 'Olive Harrison', 'Mayme Dawson', '${password}', 'noogo@rowin.mz', '91211856892', 'aluno')
     `);
   });
 
@@ -43,7 +43,7 @@ describe("Update User Access Level Controller", () => {
     const responseUpdateAccessLevel = await request(app)
       .patch(`/users/access-level?userId=${userId2}`)
       .send({
-        accessLevel: "profissional",
+        accessLevel: "coordenador de curso",
       })
       .set({
         Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ describe("Update User Access Level Controller", () => {
     const responseUpdateAccessLevel = await request(app)
       .patch(`/users/access-level?userId=fd3c77a7-f700-4ffb-a544-8410bb7b2544`)
       .send({
-        accessLevel: "profissional",
+        accessLevel: "coordenador de curso",
       })
       .set({
         Authorization: `Bearer ${token}`,

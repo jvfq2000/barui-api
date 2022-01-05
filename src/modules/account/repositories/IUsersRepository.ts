@@ -1,10 +1,10 @@
 import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
 import { User } from "@modules/account/infra/typeorm/entities/User";
 
-import { IListUsersDTO } from "../dtos/IListUserDTO";
+import { IListUsersDTO } from "../dtos/IListUsersDTO";
 
 interface IUsersRepository {
-  create(data: ISaveUserDTO): Promise<void>;
+  save(data: ISaveUserDTO): Promise<void>;
   findByEmail(email: string): Promise<User>;
   findById(id: string): Promise<User>;
   list(

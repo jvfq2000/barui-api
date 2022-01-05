@@ -5,6 +5,7 @@ import { IUserResponseDTO } from "@modules/account/dtos/IUserResponseDTO";
 import { UserMap } from "@modules/account/mapper/UserMap";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
+import { accessLevel as accessLevelPermitions } from "@utils/permitions";
 
 @injectable()
 class UpdateUserUseCase {
@@ -13,23 +14,54 @@ class UpdateUserUseCase {
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute({
-    id,
-    name,
-    lastName,
-    email,
-    identifier,
-    accessLevel,
-  }: ISaveUserDTO): Promise<IUserResponseDTO> {
+  async execute(
+    adminId: string,
+    {
+      id,
+      name,
+      lastName,
+      email,
+      identifier,
+      telephone,
+      initialSemester,
+      registration,
+      accessLevel,
+      courseId,
+      institutionId,
+    }: ISaveUserDTO,
+  ): Promise<IUserResponseDTO> {
     let user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppError("Usuário não encontrado.");
     }
 
-    Object.assign(user, { name, lastName, email, identifier, accessLevel });
+    const adminUser = await this.usersRepository.findById(adminId);
 
-    await this.usersRepository.create(user);
+    if (
+      adminUser.accessLevel === accessLevelPermitions[3] &&
+      adminUser.institutionId !== user.institutionId
+    ) {
+      throw new AppError(
+        "Você não tem permissão para realizar esta ação!",
+        401,
+      );
+    }
+
+    Object.assign(user, {
+      name,
+      lastName,
+      email,
+      identifier,
+      telephone,
+      initialSemester,
+      registration,
+      accessLevel,
+      courseId,
+      institutionId,
+    });
+
+    await this.usersRepository.save(user);
 
     user = await this.usersRepository.findById(id);
     return UserMap.toDTO(user);

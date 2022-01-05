@@ -5,7 +5,7 @@ import { AppError } from "@shared/errors/AppError";
 import { accessLevel } from "@utils/permitions";
 import { validateUserAccessLevel } from "@utils/validateUserAccessLevel";
 
-export async function ensureProfessional(
+async function ensureActivitiesCoordinator(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -20,8 +20,10 @@ export async function ensureProfessional(
   });
 
   if (userHasValidAccessLevel) {
-    throw new AppError("Usuário não tem permissão!", 401);
+    throw new AppError("Você não tem permissão para realizar esta ação!", 401);
   }
 
   return next();
 }
+
+export { ensureActivitiesCoordinator };

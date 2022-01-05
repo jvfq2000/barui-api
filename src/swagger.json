@@ -393,7 +393,7 @@
                     }
                 ],
                 "summary": "Alterar nível de acesso.",
-                "description": "Para alterar o nível de acesso, é necessário que o usuário que efetuará a alteração esteja logado e tenha permissão de administrador. Niveis de acesso aceitos: cliente, profissional, representante, administrador",
+                "description": "Para alterar o nível de acesso, é necessário que o usuário que efetuará a alteração esteja logado e tenha permissão de administrador. Niveis de acesso aceitos: aluno, coordenador de atividades, coordenador de curso, administrador do campus, administrador geral",
                 "parameters": [
                     {
                         "in": "path",
@@ -414,7 +414,7 @@
                                     }
                                 },
                                 "example": {
-                                    "accessLevel": "cliente"
+                                    "accessLevel": "aluno"
                                 }
                             }
                         }

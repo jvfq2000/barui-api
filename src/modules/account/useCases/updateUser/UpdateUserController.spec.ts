@@ -19,13 +19,13 @@ describe("Update User Controller", () => {
     await connection.query(
       `INSERT INTO
           "user"(id, name, last_name, password, email, identifier, access_level)
-          VALUES('${uuidV4()}', 'Ruby Barnett', 'Max Hammond', '${password}', 'bora@ruc.cw', '88471531365', 'cliente')`,
+          VALUES('${uuidV4()}', 'Ruby Barnett', 'Max Hammond', '${password}', 'bora@ruc.cw', '88471531365', 'aluno')`,
     );
 
     await connection.query(
       `INSERT INTO
           "user"(id, name, last_name, password, email, identifier, access_level)
-          VALUES('${userId}', 'Eddie Clayton', 'Gavin Terry', '${password}', 'tan@tihuhoh.la', '38770871889', 'administrador')`,
+          VALUES('${userId}', 'Eddie Clayton', 'Gavin Terry', '${password}', 'tan@tihuhoh.la', '38770871889', 'administrador geral')`,
     );
   });
 
@@ -42,7 +42,7 @@ describe("Update User Controller", () => {
 
     const { token } = responseToken.body;
 
-    const responseUpdateProfileUser = await request(app)
+    const responseUpdateUser = await request(app)
       .put(`/users?userId=${userId}`)
       .send({
         name: "Francis Watson",
@@ -53,18 +53,18 @@ describe("Update User Controller", () => {
         Authorization: `Bearer ${token}`,
       });
 
-    expect(responseUpdateProfileUser.status).toBe(200);
+    expect(responseUpdateUser.status).toBe(200);
   });
 
   it("should not be able to update a profile user if you are not authenticated", async () => {
-    const responseUpdateProfileUser = await request(app)
-      .put("/users/profile")
+    const responseUpdateUser = await request(app)
+      .put(`/users?userId=${userId}`)
       .send({
         name: "Mathilda Griffith",
         lastName: "Edward May",
         email: "bir@litiw.ee",
       });
 
-    expect(responseUpdateProfileUser.status).toBe(401);
+    expect(responseUpdateUser.status).toBe(401);
   });
 });

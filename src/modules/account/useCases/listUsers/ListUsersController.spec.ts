@@ -17,13 +17,13 @@ describe("List Users Controller", () => {
     await connection.query(
       `INSERT INTO
         "user"(id, name, last_name, password, email, identifier, access_level)
-        VALUES('${uuidV4()}', 'Francisco Wheeler', 'Loretta Gutierrez', '${password}', 'zaz@idazapup.it', '12445961325', 'administrador')`,
+        VALUES('${uuidV4()}', 'Francisco Wheeler', 'Loretta Gutierrez', '${password}', 'zaz@idazapup.it', '12445961325', 'administrador geral')`,
     );
 
     await connection.query(
       `INSERT INTO
           "user"(id, name, last_name, password, email, identifier, access_level)
-          VALUES('${uuidV4()}', 'Gilbert Jordan', 'Francis Conner', '${password}', 'ecoge@zagpuzef.vg', '76252991806', 'cliente')`,
+          VALUES('${uuidV4()}', 'Gilbert Jordan', 'Francis Conner', '${password}', 'ecoge@zagpuzef.vg', '76252991806', 'aluno')`,
     );
   });
 

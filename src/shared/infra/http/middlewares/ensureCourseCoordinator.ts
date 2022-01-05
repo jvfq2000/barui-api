@@ -5,7 +5,7 @@ import { AppError } from "@shared/errors/AppError";
 import { accessLevel } from "@utils/permitions";
 import { validateUserAccessLevel } from "@utils/validateUserAccessLevel";
 
-export async function ensureAdmin(
+async function ensureCourseCoordinator(
   request: Request,
   response: Response,
   next: NextFunction,
@@ -16,12 +16,14 @@ export async function ensureAdmin(
 
   const userHasValidAccessLevel = validateUserAccessLevel({
     userAccessLevel: user.accessLevel,
-    requiredAccessLevel: accessLevel[3],
+    requiredAccessLevel: accessLevel[2],
   });
 
-  if (!userHasValidAccessLevel) {
-    throw new AppError("Usuário não tem permissão!", 401);
+  if (userHasValidAccessLevel) {
+    throw new AppError("Você não tem permissão para realizar esta ação!", 401);
   }
 
   return next();
 }
+
+export { ensureCourseCoordinator };

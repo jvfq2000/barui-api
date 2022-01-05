@@ -6,7 +6,18 @@ import { UpdateProfileUserUseCase } from "./UpdateProfileUserUseCase";
 class UpdateProfileUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
-    const { name, lastName, email } = request.body;
+    const {
+      name,
+      lastName,
+      email,
+      identifier,
+      telephone,
+      initialSemester,
+      registration,
+      accessLevel,
+      courseId,
+      institutionId,
+    } = request.body;
 
     const updateProfileUserUseCase = container.resolve(
       UpdateProfileUserUseCase,
@@ -17,6 +28,13 @@ class UpdateProfileUserController {
       name,
       lastName,
       email,
+      identifier,
+      telephone,
+      initialSemester,
+      registration,
+      accessLevel,
+      courseId,
+      institutionId,
     });
 
     return response.json(user);

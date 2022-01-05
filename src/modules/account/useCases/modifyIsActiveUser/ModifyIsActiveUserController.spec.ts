@@ -9,7 +9,7 @@ let connection: Connection;
 
 const useId = uuidV4();
 
-describe("List User Controller", () => {
+describe("Modify Is Active User Controller", () => {
   beforeAll(async () => {
     connection = await createConnection();
     await connection.runMigrations();
@@ -19,13 +19,13 @@ describe("List User Controller", () => {
     await connection.query(
       `INSERT INTO
         "user"(id, name, last_name, password, email, identifier, access_level)
-        VALUES('${uuidV4()}', 'Frank Snyder', 'Ryan Kelley', '${password}', 'ri@fur.kg', '05690937755', 'administrador')`,
+        VALUES('${uuidV4()}', 'Frank Snyder', 'Ryan Kelley', '${password}', 'ri@fur.kg', '05690937755', 'administrador geral')`,
     );
 
     await connection.query(
       `INSERT INTO
           "user"(id, name, last_name, password, email, identifier, access_level)
-          VALUES('${useId}', 'Daniel Morton', 'Maurice Kelley', '${password}', 'idwodom@puveda.mv', '54557123075', 'cliente')`,
+          VALUES('${useId}', 'Daniel Morton', 'Maurice Kelley', '${password}', 'idwodom@puveda.mv', '54557123075', 'aluno')`,
     );
   });
 

@@ -32,13 +32,13 @@ class ListUsersUseCase {
       registersPerPage || 10,
       filter || "",
     );
-    const formatUsers: IUserResponseDTO[] = [];
+    const formatedUsers: IUserResponseDTO[] = [];
 
     users.forEach(user => {
-      formatUsers.push(UserMap.toDTO(user));
+      formatedUsers.push(UserMap.toDTO(user));
     });
 
-    return { users: formatUsers, totalCount };
+    return { users: formatedUsers, totalCount };
   }
 }
 

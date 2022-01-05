@@ -18,13 +18,13 @@ describe("Authenticate User Controller", () => {
     await connection.query(
       `INSERT INTO
         "user"(id, name, last_name, password, email, identifier, access_level)
-        VALUES('${uuidV4()}', 'Micheal Glover', 'Caleb Horton', '${password}', 'nuv@roibmuf.bd', '81613429227', 'administrador')`,
+        VALUES('${uuidV4()}', 'Micheal Glover', 'Caleb Horton', '${password}', 'nuv@roibmuf.bd', '81613429227', 'administrador geral')`,
     );
 
     await connection.query(
       `INSERT INTO
           "user"(id, name, last_name, password, email, identifier, access_level)
-          VALUES('${uuidV4()}', 'Sam Singleton', 'Rodney Anderson', '${password}', 'maw@sipefful.cc', '43381416592', 'cliente')`,
+          VALUES('${uuidV4()}', 'Sam Singleton', 'Rodney Anderson', '${password}', 'maw@sipefful.cc', '43381416592', 'aluno')`,
     );
   });
 

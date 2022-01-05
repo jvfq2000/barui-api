@@ -17,7 +17,7 @@ describe("Update Profile User Controller", () => {
     await connection.query(
       `INSERT INTO
           "user"(id, name, last_name, password, email, identifier, access_level)
-          VALUES('${uuidV4()}', 'Ruby Barnett', 'Max Hammond', '${password}', 'bora@ruc.cw', '88471531365', 'cliente')`,
+          VALUES('${uuidV4()}', 'Ruby Barnett', 'Max Hammond', '${password}', 'bora@ruc.cw', '88471531365', 'aluno')`,
     );
   });
 

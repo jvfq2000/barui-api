@@ -28,7 +28,7 @@ class UpdateUserAccessLevelUseCase {
     }
 
     user.accessLevel = newAccessLevel;
-    await this.usersRepository.create(user);
+    await this.usersRepository.save(user);
   }
 }
 

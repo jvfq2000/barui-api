@@ -22,7 +22,7 @@ class UpdateProfileUserUseCase {
 
     Object.assign(user, { name, lastName, email });
 
-    await this.usersRepository.create(user);
+    await this.usersRepository.save(user);
 
     user = await this.usersRepository.findById(id);
     return UserMap.toDTO(user);

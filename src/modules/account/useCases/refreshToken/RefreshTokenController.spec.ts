@@ -17,7 +17,7 @@ describe("Refresh Token Controller", () => {
     await connection.query(
       `INSERT INTO
           "user"(id, name, last_name, password, email, identifier, access_level)
-          VALUES('${uuidV4()}', 'Gabriel Guerrero', 'Jeffrey Bates', '${password}', 'rofafa@wi.va', '07122105908', 'cliente')`,
+          VALUES('${uuidV4()}', 'Gabriel Guerrero', 'Jeffrey Bates', '${password}', 'rofafa@wi.va', '07122105908', 'aluno')`,
     );
   });
 

@@ -27,7 +27,7 @@ class UpdateUserAvatarUseCase {
 
     user.avatar = avatarFile;
 
-    await this.usersRepository.create(user);
+    await this.usersRepository.save(user);
 
     user = await this.usersRepository.findById(userId);
     return user.avatarUrl();

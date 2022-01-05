@@ -1,6 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 
-import { IListUsersDTO } from "@modules/account/dtos/IListUserDTO";
+import { IListUsersDTO } from "@modules/account/dtos/IListUsersDTO";
 import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
 import { User } from "@modules/account/infra/typeorm/entities/User";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
@@ -12,7 +12,7 @@ class UsersRepository implements IUsersRepository {
     this.repository = getRepository(User);
   }
 
-  async create({
+  async save({
     id,
     name,
     lastName,
@@ -60,13 +60,13 @@ class UsersRepository implements IUsersRepository {
       .orWhere("LOWER(user.email) like LOWER(:filter)")
       .orWhere("LOWER(user.access_level) like LOWER(:filter)")
       .orWhere("LOWER(user.identifier) like LOWER(:filter)")
-      .orWhere("to_char(created_at, 'DD/MM/YYYY')  like LOWER(:filter)")
+      .orWhere("to_char(created_at, 'DD/MM/YYYY') like LOWER(:filter)")
       .setParameter("filter", `%${filter}%`);
 
     const users = await baseQuery
       .skip(registersPerPage * (page - 1))
       .take(registersPerPage)
-      .orderBy("name")
+      .orderBy("user.name")
       .getMany();
 
     const totalCount = await baseQuery.getCount();

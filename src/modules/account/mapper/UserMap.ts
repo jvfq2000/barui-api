@@ -9,11 +9,18 @@ class UserMap {
       lastName: user.lastName,
       email: user.email,
       identifier: user.identifier,
-      createdAt: user.createdAt,
+      telephone: user.telephone,
+      initialSemester: user.initialSemester,
+      registration: user.registration,
       avatar: user.avatar,
       accessLevel: user.accessLevel,
       isActive: user.isActive,
+      courseId: user.courseId,
+      course: user.course,
+      institutionId: user.institutionId,
+      institution: user.institution,
       avatarUrl: user.avatarUrl(),
+      createdAt: user.createdAt,
     };
 
     return userDTO;

@@ -9,6 +9,7 @@ import {
 import { v4 as uuidV4 } from "uuid";
 
 import { Course } from "@modules/activityRegulation/infra/typeorm/entities/Course";
+import { Institution } from "@modules/activityRegulation/infra/typeorm/entities/Institution";
 
 @Entity("user")
 class User {
@@ -51,6 +52,13 @@ class User {
   @ManyToOne(() => Course)
   @JoinColumn({ name: "course_id" })
   course: Course;
+
+  @Column({ name: "institution_id" })
+  institutionId: string;
+
+  @ManyToOne(() => Institution)
+  @JoinColumn({ name: "institution_id" })
+  institution: Institution;
 
   @Column({ name: "is_active" })
   isActive: boolean;

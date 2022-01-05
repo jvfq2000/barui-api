@@ -46,9 +46,10 @@ class CoursesRepository implements ICoursesRepository {
   async list(
     page: number,
     registersPerPage: number,
-    filter?: string,
+    filter: string,
+    institutionId: string,
   ): Promise<IListCoursesDTO> {
-    const baseQuery = this.repository
+    let baseQuery = this.repository
       .createQueryBuilder("course")
       .innerJoinAndSelect(
         "course.institution",
@@ -58,6 +59,12 @@ class CoursesRepository implements ICoursesRepository {
       .where("LOWER(course.name) like LOWER(:filter)")
       .orWhere("to_char(course.created_at, 'DD/MM/YYYY') like LOWER(:filter)")
       .setParameter("filter", `%${filter}%`);
+
+    if (institutionId) {
+      baseQuery = baseQuery
+        .andWhere("course.institution_id like LOWER(:institution_id)")
+        .setParameter("institution_id", `%${institutionId}%`);
+    }
 
     const courses = await baseQuery
       .skip(registersPerPage * (page - 1))

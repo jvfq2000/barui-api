@@ -9,7 +9,7 @@ interface IRegulationsRepository {
   list(
     page: number,
     registersPerPage: number,
-    filter?: string,
+    filter: string,
   ): Promise<IListRegulationsDTO>;
 }
 

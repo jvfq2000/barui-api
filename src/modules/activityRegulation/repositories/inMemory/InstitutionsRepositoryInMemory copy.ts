@@ -38,7 +38,7 @@ class InstitutionsRepositoryInMemory implements IInstitutionsRepository {
   async list(
     page: number,
     registersPerPage: number,
-    filter?: string,
+    filter: string,
   ): Promise<IListInstitutionsDTO> {
     return {
       institutions: this.institutions,

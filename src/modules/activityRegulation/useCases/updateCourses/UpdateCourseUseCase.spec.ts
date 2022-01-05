@@ -1,27 +1,24 @@
-import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
 import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersRepositoryInMemory";
 import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/ISaveCourseDTO";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInstitutionDTO";
 import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
-import { CreateCourseUseCase } from "@modules/activityRegulation/useCases/createCourse/CreateCourseUseCase";
-import { CreateInstitutionUseCase } from "@modules/activityRegulation/useCases/createInstitution/CreateInstitutionUseCase";
 
-import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
-import { UpdateUserUseCase } from "./UpdateUserUseCase";
+import { CreateCourseUseCase } from "../createCourse/CreateCourseUseCase";
+import { CreateInstitutionUseCase } from "../createInstitution/CreateInstitutionUseCase";
+import { UpdateCourseUseCase } from "./UpdateCourseUseCase";
 
+let usersRepositoryInMemory: UsersRepositoryInMemory;
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
 let coursesRepositoryInMemory: CoursesRepositoryInMemory;
-let usersRepositoryInMemory: UsersRepositoryInMemory;
 let createInstitutionUseCase: CreateInstitutionUseCase;
 let createCourseUseCase: CreateCourseUseCase;
-let createUserUseCase: CreateUserUseCase;
-let updateUserUseCase: UpdateUserUseCase;
+let updateCourseUseCase: UpdateCourseUseCase;
 
-describe("Update User", () => {
+describe("Update Course", () => {
   beforeEach(() => {
-    institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
     coursesRepositoryInMemory = new CoursesRepositoryInMemory();
+    institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
     usersRepositoryInMemory = new UsersRepositoryInMemory();
 
     createInstitutionUseCase = new CreateInstitutionUseCase(
@@ -34,15 +31,14 @@ describe("Update User", () => {
       usersRepositoryInMemory,
     );
 
-    createUserUseCase = new CreateUserUseCase(
-      usersRepositoryInMemory,
+    updateCourseUseCase = new UpdateCourseUseCase(
+      coursesRepositoryInMemory,
       institutionsRepositoryInMemory,
+      usersRepositoryInMemory,
     );
-
-    updateUserUseCase = new UpdateUserUseCase(usersRepositoryInMemory);
   });
 
-  it("should be able to update a user", async () => {
+  it("should be able to update a course", async () => {
     let institution: ISaveInstitutionDTO = {
       cityId: "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
       name: "Institution Iva Rowe",
@@ -67,40 +63,17 @@ describe("Update User", () => {
 
     course = await coursesRepositoryInMemory.findByName(course.name);
 
-    let user: ISaveUserDTO = {
-      name: "Emily Dixon",
-      lastName: "Jimmy Hopkins",
-      email: "vojwacle@ku.ae",
-      identifier: "24233361131",
-      telephone: "(921) 583-5241",
-      initialSemester: "1/2022",
-      registration: "31191",
-      accessLevel: "aluno",
-      courseId: course.id,
-      institutionId: institution.id,
-    };
-
-    await createUserUseCase.execute(
-      "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      user,
-    );
-
-    user = await usersRepositoryInMemory.findByEmail(user.email);
-
-    Object.assign(user, {
-      name: "Alexander Clayton",
-      lastName: "Randall Abbott",
-      identifier: "67371587546",
-      email: "izzunba@ma.pe",
+    Object.assign(course, {
+      name: "Course Herman Pierce",
+      numberPeriods: 6,
     });
 
-    const userUpdated = await updateUserUseCase.execute(
+    const courseUpdated = await updateCourseUseCase.execute(
       "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      user,
+      course,
     );
 
-    expect(userUpdated.name).toBe("Alexander Clayton");
-    expect(userUpdated.lastName).toBe("Randall Abbott");
-    expect(userUpdated.email).toBe("izzunba@ma.pe");
+    expect(courseUpdated.name).toBe("Course Herman Pierce");
+    expect(courseUpdated.numberPeriods).toBe(6);
   });
 });

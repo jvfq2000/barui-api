@@ -13,7 +13,7 @@ interface IActivitiesRepository {
   list(
     page: number,
     registersPerPage: number,
-    filter?: string,
+    filter: string,
   ): Promise<IListActivitiesDTO>;
 }
 

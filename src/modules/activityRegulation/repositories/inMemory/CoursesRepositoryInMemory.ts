@@ -40,7 +40,7 @@ class CoursesRepositoryInMemory implements ICoursesRepository {
   async list(
     page: number,
     registersPerPage: number,
-    filter?: string,
+    filter: string,
   ): Promise<IListCoursesDTO> {
     return {
       courses: this.courses,

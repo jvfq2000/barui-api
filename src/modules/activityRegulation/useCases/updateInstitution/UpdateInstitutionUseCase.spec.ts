@@ -34,7 +34,6 @@ describe("Update Institution", () => {
     );
 
     Object.assign(institution, {
-      id: institution.id,
       cityId: "507f6a73-d50b-5380-8c1b-5c9810c563ea",
       name: "Institution Susan Allen",
     });

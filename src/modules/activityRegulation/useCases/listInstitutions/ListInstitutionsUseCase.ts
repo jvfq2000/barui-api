@@ -1,7 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
 import { IListInstitutionsDTO } from "@modules/activityRegulation/dtos/IListInstitutionsDTO";
-import { Institution } from "@modules/activityRegulation/infra/typeorm/entities/Institution";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 
 interface IRequest {

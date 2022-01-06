@@ -3,19 +3,20 @@ import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/ISaveCourseDTO"
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInstitutionDTO";
 import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { AppError } from "@shared/errors/AppError";
 
+import { CreateInstitutionUseCase } from "../../institutions/createInstitution/CreateInstitutionUseCase";
 import { CreateCourseUseCase } from "../createCourse/CreateCourseUseCase";
-import { CreateInstitutionUseCase } from "../createInstitution/CreateInstitutionUseCase";
-import { UpdateCourseUseCase } from "./UpdateCourseUseCase";
+import { FindCourseByIdUseCase } from "./FindCourseByIdUseCase";
 
 let usersRepositoryInMemory: UsersRepositoryInMemory;
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
 let coursesRepositoryInMemory: CoursesRepositoryInMemory;
 let createInstitutionUseCase: CreateInstitutionUseCase;
 let createCourseUseCase: CreateCourseUseCase;
-let updateCourseUseCase: UpdateCourseUseCase;
+let findCourseByIdUseCase: FindCourseByIdUseCase;
 
-describe("Update Course", () => {
+describe("Find Course By Id", () => {
   beforeEach(() => {
     coursesRepositoryInMemory = new CoursesRepositoryInMemory();
     institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
@@ -31,14 +32,13 @@ describe("Update Course", () => {
       usersRepositoryInMemory,
     );
 
-    updateCourseUseCase = new UpdateCourseUseCase(
+    findCourseByIdUseCase = new FindCourseByIdUseCase(
       coursesRepositoryInMemory,
-      institutionsRepositoryInMemory,
       usersRepositoryInMemory,
     );
   });
 
-  it("should be able to update a course", async () => {
+  it("should be able to find course by id", async () => {
     let institution: ISaveInstitutionDTO = {
       cityId: "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
       name: "Institution Iva Rowe",
@@ -63,17 +63,19 @@ describe("Update Course", () => {
 
     course = await coursesRepositoryInMemory.findByName(course.name);
 
-    Object.assign(course, {
-      name: "Course Herman Pierce",
-      numberPeriods: 6,
-    });
-
-    const courseUpdated = await updateCourseUseCase.execute(
+    const courseFoundById = await findCourseByIdUseCase.execute(
       "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      course,
+      course.id,
     );
+    expect(courseFoundById.id).toBe(course.id);
+  });
 
-    expect(courseUpdated.name).toBe("Course Herman Pierce");
-    expect(courseUpdated.numberPeriods).toBe(6);
+  it("should not be able to find course if id non exists", async () => {
+    await expect(
+      findCourseByIdUseCase.execute(
+        "a79e1e38-62bf-5223-9be4-f5081c33eec7",
+        "test",
+      ),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

@@ -5,7 +5,7 @@ import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositor
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
 import { AppError } from "@shared/errors/AppError";
 
-import { CreateInstitutionUseCase } from "../createInstitution/CreateInstitutionUseCase";
+import { CreateInstitutionUseCase } from "../../institutions/createInstitution/CreateInstitutionUseCase";
 import { CreateCourseUseCase } from "./CreateCourseUseCase";
 
 let usersRepositoryInMemory: UsersRepositoryInMemory;

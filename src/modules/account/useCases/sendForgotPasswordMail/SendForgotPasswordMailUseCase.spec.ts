@@ -5,8 +5,8 @@ import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/ISaveCourseDTO"
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInstitutionDTO";
 import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
-import { CreateCourseUseCase } from "@modules/activityRegulation/useCases/createCourse/CreateCourseUseCase";
-import { CreateInstitutionUseCase } from "@modules/activityRegulation/useCases/createInstitution/CreateInstitutionUseCase";
+import { CreateCourseUseCase } from "@modules/activityRegulation/useCases/courses/createCourse/CreateCourseUseCase";
+import { CreateInstitutionUseCase } from "@modules/activityRegulation/useCases/institutions/createInstitution/CreateInstitutionUseCase";
 import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
 import { MailProviderInMemory } from "@shared/container/providers/MailProvider/inMemory/MailProviderInMemory";
 import { AppError } from "@shared/errors/AppError";

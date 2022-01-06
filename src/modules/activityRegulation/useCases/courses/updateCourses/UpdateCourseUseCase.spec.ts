@@ -4,18 +4,18 @@ import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInsti
 import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
 
+import { CreateInstitutionUseCase } from "../../institutions/createInstitution/CreateInstitutionUseCase";
 import { CreateCourseUseCase } from "../createCourse/CreateCourseUseCase";
-import { CreateInstitutionUseCase } from "../createInstitution/CreateInstitutionUseCase";
-import { ModifyIsActiveCourseUseCase } from "./ModifyIsActiveCourseUseCase";
+import { UpdateCourseUseCase } from "./UpdateCourseUseCase";
 
 let usersRepositoryInMemory: UsersRepositoryInMemory;
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
 let coursesRepositoryInMemory: CoursesRepositoryInMemory;
 let createInstitutionUseCase: CreateInstitutionUseCase;
 let createCourseUseCase: CreateCourseUseCase;
-let modifyIsActiveCourseUseCase: ModifyIsActiveCourseUseCase;
+let updateCourseUseCase: UpdateCourseUseCase;
 
-describe("Modiry Is Active Course", () => {
+describe("Update Course", () => {
   beforeEach(() => {
     coursesRepositoryInMemory = new CoursesRepositoryInMemory();
     institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
@@ -31,13 +31,14 @@ describe("Modiry Is Active Course", () => {
       usersRepositoryInMemory,
     );
 
-    modifyIsActiveCourseUseCase = new ModifyIsActiveCourseUseCase(
+    updateCourseUseCase = new UpdateCourseUseCase(
       coursesRepositoryInMemory,
+      institutionsRepositoryInMemory,
       usersRepositoryInMemory,
     );
   });
 
-  it("should be able to modify active or inactive course status", async () => {
+  it("should be able to update a course", async () => {
     let institution: ISaveInstitutionDTO = {
       cityId: "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
       name: "Institution Iva Rowe",
@@ -49,7 +50,7 @@ describe("Modiry Is Active Course", () => {
       institution.name,
     );
 
-    let courseInactivated: ISaveCourseDTO = {
+    let course: ISaveCourseDTO = {
       name: "Course Alexander Larson",
       numberPeriods: 8,
       institutionId: institution.id,
@@ -57,43 +58,22 @@ describe("Modiry Is Active Course", () => {
 
     await createCourseUseCase.execute(
       "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      courseInactivated,
+      course,
     );
 
-    courseInactivated = await coursesRepositoryInMemory.findByName(
-      courseInactivated.name,
-    );
+    course = await coursesRepositoryInMemory.findByName(course.name);
 
-    await modifyIsActiveCourseUseCase.execute(
+    Object.assign(course, {
+      name: "Course Herman Pierce",
+      numberPeriods: 6,
+    });
+
+    const courseUpdated = await updateCourseUseCase.execute(
       "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      courseInactivated.id,
+      course,
     );
 
-    let courseActivated: ISaveCourseDTO = {
-      name: "Course Linnie Moore",
-      numberPeriods: 8,
-      institutionId: institution.id,
-    };
-
-    await createCourseUseCase.execute(
-      "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      courseActivated,
-    );
-
-    courseActivated = await coursesRepositoryInMemory.findByName(
-      courseActivated.name,
-    );
-
-    await modifyIsActiveCourseUseCase.execute(
-      "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      courseActivated.id,
-    );
-    await modifyIsActiveCourseUseCase.execute(
-      "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      courseActivated.id,
-    );
-
-    expect(courseActivated.isActive).toBe(true);
-    expect(courseInactivated.isActive).toBe(false);
+    expect(courseUpdated.name).toBe("Course Herman Pierce");
+    expect(courseUpdated.numberPeriods).toBe(6);
   });
 });

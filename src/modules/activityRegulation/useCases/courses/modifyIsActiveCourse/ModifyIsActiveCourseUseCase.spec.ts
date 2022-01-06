@@ -1,27 +1,24 @@
-import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
 import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersRepositoryInMemory";
 import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/ISaveCourseDTO";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInstitutionDTO";
 import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
-import { CreateCourseUseCase } from "@modules/activityRegulation/useCases/courses/createCourse/CreateCourseUseCase";
-import { CreateInstitutionUseCase } from "@modules/activityRegulation/useCases/institutions/createInstitution/CreateInstitutionUseCase";
 
-import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
-import { ProfileUserUseCase } from "./ProfileUserUseCase";
+import { CreateInstitutionUseCase } from "../../institutions/createInstitution/CreateInstitutionUseCase";
+import { CreateCourseUseCase } from "../createCourse/CreateCourseUseCase";
+import { ModifyIsActiveCourseUseCase } from "./ModifyIsActiveCourseUseCase";
 
+let usersRepositoryInMemory: UsersRepositoryInMemory;
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
 let coursesRepositoryInMemory: CoursesRepositoryInMemory;
-let usersRepositoryInMemory: UsersRepositoryInMemory;
 let createInstitutionUseCase: CreateInstitutionUseCase;
 let createCourseUseCase: CreateCourseUseCase;
-let createUserUseCase: CreateUserUseCase;
-let profileUserUseCase: ProfileUserUseCase;
+let modifyIsActiveCourseUseCase: ModifyIsActiveCourseUseCase;
 
-describe("Profile User", () => {
+describe("Modiry Is Active Course", () => {
   beforeEach(() => {
-    institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
     coursesRepositoryInMemory = new CoursesRepositoryInMemory();
+    institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
     usersRepositoryInMemory = new UsersRepositoryInMemory();
 
     createInstitutionUseCase = new CreateInstitutionUseCase(
@@ -34,15 +31,13 @@ describe("Profile User", () => {
       usersRepositoryInMemory,
     );
 
-    createUserUseCase = new CreateUserUseCase(
+    modifyIsActiveCourseUseCase = new ModifyIsActiveCourseUseCase(
+      coursesRepositoryInMemory,
       usersRepositoryInMemory,
-      institutionsRepositoryInMemory,
     );
-
-    profileUserUseCase = new ProfileUserUseCase(usersRepositoryInMemory);
   });
 
-  it("should be able to access profile user", async () => {
+  it("should be able to modify active or inactive course status", async () => {
     let institution: ISaveInstitutionDTO = {
       cityId: "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
       name: "Institution Iva Rowe",
@@ -54,7 +49,7 @@ describe("Profile User", () => {
       institution.name,
     );
 
-    let course: ISaveCourseDTO = {
+    let courseInactivated: ISaveCourseDTO = {
       name: "Course Alexander Larson",
       numberPeriods: 8,
       institutionId: institution.id,
@@ -62,33 +57,43 @@ describe("Profile User", () => {
 
     await createCourseUseCase.execute(
       "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      course,
+      courseInactivated,
     );
 
-    course = await coursesRepositoryInMemory.findByName(course.name);
+    courseInactivated = await coursesRepositoryInMemory.findByName(
+      courseInactivated.name,
+    );
 
-    let user: ISaveUserDTO = {
-      name: "Emily Dixon",
-      lastName: "Jimmy Hopkins",
-      email: "vojwacle@ku.ae",
-      identifier: "24233361131",
-      telephone: "(921) 583-5241",
-      initialSemester: "1/2022",
-      registration: "31191",
-      accessLevel: "aluno",
-      courseId: course.id,
+    await modifyIsActiveCourseUseCase.execute(
+      "a79e1e38-62bf-5223-9be4-f5081c33eec7",
+      courseInactivated.id,
+    );
+
+    let courseActivated: ISaveCourseDTO = {
+      name: "Course Linnie Moore",
+      numberPeriods: 8,
       institutionId: institution.id,
     };
 
-    await createUserUseCase.execute(
+    await createCourseUseCase.execute(
       "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      user,
+      courseActivated,
     );
 
-    user = await usersRepositoryInMemory.findByEmail(user.email);
+    courseActivated = await coursesRepositoryInMemory.findByName(
+      courseActivated.name,
+    );
 
-    const profile = await profileUserUseCase.execute(user.id);
+    await modifyIsActiveCourseUseCase.execute(
+      "a79e1e38-62bf-5223-9be4-f5081c33eec7",
+      courseActivated.id,
+    );
+    await modifyIsActiveCourseUseCase.execute(
+      "a79e1e38-62bf-5223-9be4-f5081c33eec7",
+      courseActivated.id,
+    );
 
-    expect(profile).toHaveProperty("id");
+    expect(courseActivated.isActive).toBe(true);
+    expect(courseInactivated.isActive).toBe(false);
   });
 });

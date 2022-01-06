@@ -19,7 +19,7 @@ async function ensureCourseCoordinator(
     requiredAccessLevel: accessLevel[2],
   });
 
-  if (userHasValidAccessLevel) {
+  if (!userHasValidAccessLevel) {
     throw new AppError("Você não tem permissão para realizar esta ação!", 401);
   }
 

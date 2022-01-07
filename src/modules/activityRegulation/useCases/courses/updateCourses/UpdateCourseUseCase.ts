@@ -1,12 +1,12 @@
 import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
-import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/ISaveCourseDTO";
+import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/course/ISaveCourseDTO";
 import { Course } from "@modules/activityRegulation/infra/typeorm/entities/Course";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { AppError } from "@shared/errors/AppError";
-import { accessLevel as accessLevelPermitions } from "@utils/permitions";
+import { accessLevel as accessLevelPermissions } from "@utils/permissions";
 
 @injectable()
 class UpdateCourseUseCase {
@@ -32,7 +32,7 @@ class UpdateCourseUseCase {
     let newInstitutionId = institutionId;
     const adminUser = await this.usersRepository.findById(adminId);
 
-    if (adminUser.accessLevel === accessLevelPermitions[3]) {
+    if (adminUser.accessLevel === accessLevelPermissions[3]) {
       newInstitutionId = adminUser.institutionId;
     } else if (!institutionId) {
       throw new AppError("Campus não informado.");

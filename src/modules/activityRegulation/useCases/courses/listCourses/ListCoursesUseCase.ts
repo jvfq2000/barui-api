@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
-import { IListCoursesDTO } from "@modules/activityRegulation/dtos/IListCoursesDTO";
+import { IListCoursesDTO } from "@modules/activityRegulation/dtos/course/IListCoursesDTO";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 
 interface IRequest {

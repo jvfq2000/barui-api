@@ -1,5 +1,5 @@
-import { IListActivitiesDTO } from "../dtos/IListActivitiesDTO";
-import { ISaveActivityDTO } from "../dtos/ISaveActivityDTO";
+import { IListActivitiesDTO } from "../dtos/activity/IListActivitiesDTO";
+import { ISaveActivityDTO } from "../dtos/activity/ISaveActivityDTO";
 import { Activity } from "../infra/typeorm/entities/Activity";
 
 interface IActivitiesRepository {

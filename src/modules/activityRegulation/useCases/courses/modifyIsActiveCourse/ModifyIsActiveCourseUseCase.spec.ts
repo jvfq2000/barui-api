@@ -1,6 +1,6 @@
 import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersRepositoryInMemory";
-import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/ISaveCourseDTO";
-import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInstitutionDTO";
+import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/course/ISaveCourseDTO";
+import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
 
@@ -39,7 +39,7 @@ describe("Modiry Is Active Course", () => {
 
   it("should be able to modify active or inactive course status", async () => {
     let institution: ISaveInstitutionDTO = {
-      cityId: "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
+      cityId: "1d05966e-c0cb-50b3-84f5-0fe898aa16f0",
       name: "Institution Iva Rowe",
     };
 

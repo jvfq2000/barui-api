@@ -1,16 +1,20 @@
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { StatesRepositoryInMemory } from "@modules/territory/repositories/inMemory/StatesRepositoryInMemory";
 
 import { ListInstitutionsUseCase } from "./ListInstitutionsUseCase";
 
+let statesRepositoryInMemory: StatesRepositoryInMemory;
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
 let listInstitutionsUseCase: ListInstitutionsUseCase;
 
 describe("List Institutions", () => {
   beforeEach(() => {
+    statesRepositoryInMemory = new StatesRepositoryInMemory();
     institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
 
     listInstitutionsUseCase = new ListInstitutionsUseCase(
       institutionsRepositoryInMemory,
+      statesRepositoryInMemory,
     );
   });
 
@@ -19,6 +23,7 @@ describe("List Institutions", () => {
       page: 1,
       registersPerPage: 10,
       filter: "",
+      isActive: true,
     });
 
     expect(listInstitutions).toHaveProperty("institutions");

@@ -1,5 +1,5 @@
-import { IListRegulationsDTO } from "../dtos/IListRegulationsDTO";
-import { ISaveRegulationDTO } from "../dtos/ISaveRegulationDTO";
+import { IListRegulationsDTO } from "../dtos/regulation/IListRegulationsDTO";
+import { ISaveRegulationDTO } from "../dtos/regulation/ISaveRegulationDTO";
 import { Regulation } from "../infra/typeorm/entities/Regulation";
 
 interface IRegulationsRepository {

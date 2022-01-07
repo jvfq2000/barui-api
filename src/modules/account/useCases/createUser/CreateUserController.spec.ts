@@ -121,7 +121,7 @@ describe("Create User Controller", () => {
     expect(response.status).toBe(400);
   });
 
-  it("should not be able to create a new user if you don't have permition", async () => {
+  it("should not be able to create a new user if you don't have permission", async () => {
     const responseToken = await request(app).post("/sessions").send({
       email: "ecoge@zagpuzef.vg",
       password: "Co2arCmS",

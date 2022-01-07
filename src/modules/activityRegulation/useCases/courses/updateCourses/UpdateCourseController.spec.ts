@@ -72,7 +72,7 @@ describe("Update Course Controller", () => {
     expect(responseUpdateCourse.status).toBe(200);
   });
 
-  it("should not be able to update a course if you don't have permition", async () => {
+  it("should not be able to update a course if you don't have permission", async () => {
     const responseToken = await request(app).post("/sessions").send({
       email: "bora@ruc.cw",
       password: "h08f563J",

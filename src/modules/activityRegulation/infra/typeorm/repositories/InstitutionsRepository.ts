@@ -1,7 +1,7 @@
 import { getRepository, Repository } from "typeorm";
 
-import { IListInstitutionsDTO } from "@modules/activityRegulation/dtos/IListInstitutionsDTO";
-import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInstitutionDTO";
+import { IListInstitutionsDTO } from "@modules/activityRegulation/dtos/institution/IListInstitutionsDTO";
+import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 
 import { Institution } from "../entities/Institution";
@@ -30,7 +30,10 @@ class InstitutionsRepository implements IInstitutionsRepository {
   }
 
   async findByName(name: string): Promise<Institution> {
-    const institution = await this.repository.findOne({ name });
+    const institution = await this.repository.findOne(
+      { name },
+      { relations: ["city", "city.state"] },
+    );
 
     return institution;
   }

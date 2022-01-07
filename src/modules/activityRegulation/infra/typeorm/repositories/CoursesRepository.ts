@@ -1,7 +1,7 @@
 import { getRepository, Repository } from "typeorm";
 
-import { IListCoursesDTO } from "@modules/activityRegulation/dtos/IListCoursesDTO";
-import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/ISaveCourseDTO";
+import { IListCoursesDTO } from "@modules/activityRegulation/dtos/course/IListCoursesDTO";
+import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/course/ISaveCourseDTO";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 
 import { Course } from "../entities/Course";

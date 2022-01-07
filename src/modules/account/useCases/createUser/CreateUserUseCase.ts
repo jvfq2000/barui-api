@@ -5,7 +5,7 @@ import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { AppError } from "@shared/errors/AppError";
-import { accessLevel as accessLevelPermitions } from "@utils/permitions";
+import { accessLevel as accessLevelPermissions } from "@utils/permissions";
 
 @injectable()
 class CreateUserUseCase {
@@ -41,7 +41,7 @@ class CreateUserUseCase {
 
     const adminUser = await this.usersRepository.findById(adminId);
 
-    if (adminUser.accessLevel === accessLevelPermitions[3]) {
+    if (adminUser.accessLevel === accessLevelPermissions[3]) {
       newInstitutionId = adminUser.institutionId;
     } else if (!institutionId) {
       throw new AppError("Campus não informado.");

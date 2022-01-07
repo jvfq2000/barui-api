@@ -1,7 +1,7 @@
 import { v4 as uuidV4 } from "uuid";
 
-import { IListInstitutionsDTO } from "@modules/activityRegulation/dtos/IListInstitutionsDTO";
-import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInstitutionDTO";
+import { IListInstitutionsDTO } from "@modules/activityRegulation/dtos/institution/IListInstitutionsDTO";
+import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { Institution } from "@modules/activityRegulation/infra/typeorm/entities/Institution";
 
 import { IInstitutionsRepository } from "../IInstitutionsRepository";

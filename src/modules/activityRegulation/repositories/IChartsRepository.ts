@@ -1,5 +1,5 @@
-import { IListChartsDTO } from "../dtos/IListChartsDTO";
-import { ISaveChartDTO } from "../dtos/ISaveChartDTO";
+import { IListChartsDTO } from "../dtos/chart/IListChartsDTO";
+import { ISaveChartDTO } from "../dtos/chart/ISaveChartDTO";
 import { Chart } from "../infra/typeorm/entities/Chart";
 
 interface IChartsRepository {

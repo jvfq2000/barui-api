@@ -1,4 +1,4 @@
-import { Regulation } from "../infra/typeorm/entities/Regulation";
+import { Regulation } from "../../infra/typeorm/entities/Regulation";
 
 interface IListRegulationsDTO {
   regulations: Regulation[];

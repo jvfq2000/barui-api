@@ -1,4 +1,4 @@
-import { Activity } from "../infra/typeorm/entities/Activity";
+import { Activity } from "../../infra/typeorm/entities/Activity";
 
 interface IListActivitiesDTO {
   activities: Activity[];

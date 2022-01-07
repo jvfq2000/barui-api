@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { UsersRepository } from "@modules/account/infra/typeorm/repositories/UsersRepository";
 import { AppError } from "@shared/errors/AppError";
-import { accessLevel } from "@utils/permitions";
+import { accessLevel } from "@utils/permissions";
 import { validateUserAccessLevel } from "@utils/validateUserAccessLevel";
 
 async function ensureGeneralAdmin(

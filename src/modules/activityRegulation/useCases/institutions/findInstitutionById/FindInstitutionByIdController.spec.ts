@@ -60,7 +60,7 @@ describe("Find Institution By Id Controller", () => {
     expect(responseFindById.status).toBe(200);
   });
 
-  it("should not be able to find user by id if you don'd have permition", async () => {
+  it("should not be able to find user by id if you don'd have permission", async () => {
     const responseToken = await request(app).post("/sessions").send({
       email: "lorormev@bak.at",
       password: "h08f563J",

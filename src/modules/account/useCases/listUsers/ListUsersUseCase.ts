@@ -13,6 +13,7 @@ interface IRequest {
   page: number;
   registersPerPage: number;
   filter: string;
+  isActive: boolean;
 }
 
 @injectable()
@@ -26,19 +27,25 @@ class ListUsersUseCase {
     page,
     registersPerPage,
     filter,
+    isActive,
   }: IRequest): Promise<IResponse> {
     const { users, totalCount } = await this.usersRepository.list(
       page || 1,
       registersPerPage || 10,
       filter || "",
     );
-    const formatedUsers: IUserResponseDTO[] = [];
+    const formattedUsers: IUserResponseDTO[] = [];
+    let totalCountIsActive = totalCount;
 
     users.forEach(user => {
-      formatedUsers.push(UserMap.toDTO(user));
+      if (user.isActive === isActive) {
+        formattedUsers.push(UserMap.toDTO(user));
+      } else {
+        totalCountIsActive -= 1;
+      }
     });
 
-    return { users: formatedUsers, totalCount };
+    return { users: formattedUsers, totalCount: totalCountIsActive };
   }
 }
 

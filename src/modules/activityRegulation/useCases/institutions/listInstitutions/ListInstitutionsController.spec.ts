@@ -41,7 +41,7 @@ describe("List Institutions Controller", () => {
     await connection.close();
   });
 
-  it("should be able to list all institutions if you have permission", async () => {
+  it("should be able to list all institutions", async () => {
     const responseToken = await request(app).post("/sessions").send({
       email: "zaz@idazapup.it",
       password: "Co2arCmS",

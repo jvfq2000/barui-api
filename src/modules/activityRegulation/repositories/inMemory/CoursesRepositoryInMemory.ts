@@ -1,7 +1,7 @@
 import { v4 as uuidV4 } from "uuid";
 
-import { IListCoursesDTO } from "@modules/activityRegulation/dtos/IListCoursesDTO";
-import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/ISaveCourseDTO";
+import { IListCoursesDTO } from "@modules/activityRegulation/dtos/course/IListCoursesDTO";
+import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/course/ISaveCourseDTO";
 import { Course } from "@modules/activityRegulation/infra/typeorm/entities/Course";
 
 import { ICoursesRepository } from "../ICoursesRepository";

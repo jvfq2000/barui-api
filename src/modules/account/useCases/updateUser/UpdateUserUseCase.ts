@@ -5,7 +5,7 @@ import { IUserResponseDTO } from "@modules/account/dtos/IUserResponseDTO";
 import { UserMap } from "@modules/account/mapper/UserMap";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
-import { accessLevel as accessLevelPermitions } from "@utils/permitions";
+import { accessLevel as accessLevelPermissions } from "@utils/permissions";
 
 @injectable()
 class UpdateUserUseCase {
@@ -39,7 +39,7 @@ class UpdateUserUseCase {
     const adminUser = await this.usersRepository.findById(adminId);
 
     if (
-      adminUser.accessLevel === accessLevelPermitions[3] &&
+      adminUser.accessLevel === accessLevelPermissions[3] &&
       adminUser.institutionId !== user.institutionId
     ) {
       throw new AppError(

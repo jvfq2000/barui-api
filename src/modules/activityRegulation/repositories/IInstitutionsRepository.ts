@@ -1,5 +1,5 @@
-import { IListInstitutionsDTO } from "../dtos/IListInstitutionsDTO";
-import { ISaveInstitutionDTO } from "../dtos/ISaveInstitutionDTO";
+import { IListInstitutionsDTO } from "../dtos/institution/IListInstitutionsDTO";
+import { ISaveInstitutionDTO } from "../dtos/institution/ISaveInstitutionDTO";
 import { Institution } from "../infra/typeorm/entities/Institution";
 
 interface IInstitutionsRepository {

@@ -1,4 +1,4 @@
-import { Institution } from "../infra/typeorm/entities/Institution";
+import { Institution } from "../../infra/typeorm/entities/Institution";
 
 interface IListInstitutionsDTO {
   institutions: Institution[];

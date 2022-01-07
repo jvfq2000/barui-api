@@ -1,5 +1,5 @@
-import { IListCoursesDTO } from "../dtos/IListCoursesDTO";
-import { ISaveCourseDTO } from "../dtos/ISaveCourseDTO";
+import { IListCoursesDTO } from "../dtos/course/IListCoursesDTO";
+import { ISaveCourseDTO } from "../dtos/course/ISaveCourseDTO";
 import { Course } from "../infra/typeorm/entities/Course";
 
 interface ICoursesRepository {

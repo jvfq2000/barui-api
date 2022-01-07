@@ -67,7 +67,7 @@ describe("Find Course By Id Controller", () => {
     expect(responseFindById.status).toBe(200);
   });
 
-  it("should not be able to find course by id if you don'd have permition", async () => {
+  it("should not be able to find course by id if you don'd have permission", async () => {
     const responseToken = await request(app).post("/sessions").send({
       email: "ecoge@zagpuzef.vg",
       password: "Co2arCmS",

@@ -1,4 +1,4 @@
-import { Chart } from "../infra/typeorm/entities/Chart";
+import { Chart } from "../../infra/typeorm/entities/Chart";
 
 interface IListChartsDTO {
   charts: Chart[];

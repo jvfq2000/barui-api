@@ -17,6 +17,7 @@ describe("List Users", () => {
       page: 1,
       registersPerPage: 10,
       filter: "",
+      isActive: true,
     });
 
     expect(listUsers).toHaveProperty("users");

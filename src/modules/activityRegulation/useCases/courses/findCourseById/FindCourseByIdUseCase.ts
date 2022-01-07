@@ -4,7 +4,7 @@ import { IUsersRepository } from "@modules/account/repositories/IUsersRepository
 import { Course } from "@modules/activityRegulation/infra/typeorm/entities/Course";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 import { AppError } from "@shared/errors/AppError";
-import { accessLevel as accessLevelPermitions } from "@utils/permitions";
+import { accessLevel as accessLevelPermissions } from "@utils/permissions";
 
 @injectable()
 class FindCourseByIdUseCase {
@@ -25,7 +25,7 @@ class FindCourseByIdUseCase {
     const adminUser = await this.usersRepository.findById(adminId);
 
     if (
-      adminUser.accessLevel === accessLevelPermitions[3] &&
+      adminUser.accessLevel === accessLevelPermissions[3] &&
       adminUser.institutionId !== course.institutionId
     ) {
       throw new AppError(

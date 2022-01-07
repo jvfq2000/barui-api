@@ -67,7 +67,7 @@ describe("Modiry Is Active Course Controller", () => {
     expect(responseModfyIsActive.status).toBe(204);
   });
 
-  it("should not be able to modify active or inactive course status if you don't have permition", async () => {
+  it("should not be able to modify active or inactive course status if you don't have permission", async () => {
     const responseToken = await request(app).post("/sessions").send({
       email: "bora@ruc.cw",
       password: "h08f563J",

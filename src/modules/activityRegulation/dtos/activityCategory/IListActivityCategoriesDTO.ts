@@ -1,4 +1,4 @@
-import { ActivityCategory } from "../infra/typeorm/entities/ActivityCategory";
+import { ActivityCategory } from "../../infra/typeorm/entities/ActivityCategory";
 
 interface IListActivityCategoriesDTO {
   activityCategories: ActivityCategory[];

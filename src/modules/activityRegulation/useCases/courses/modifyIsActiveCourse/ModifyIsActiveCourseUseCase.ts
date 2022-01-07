@@ -3,7 +3,7 @@ import { inject, injectable } from "tsyringe";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 import { AppError } from "@shared/errors/AppError";
-import { accessLevel } from "@utils/permitions";
+import { accessLevel } from "@utils/permissions";
 
 @injectable()
 class ModifyIsActiveCourseUseCase {

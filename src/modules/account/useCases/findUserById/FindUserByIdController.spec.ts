@@ -43,7 +43,7 @@ describe("Find User By Id Controller", () => {
     await connection.query(
       `INSERT INTO
           "user"(id, name, last_name, password, email, identifier, access_level, institution_id)
-          VALUES('${user2Id}', 'Jeffrey Elliott', 'Jordan Phillips', '${password}', 'lorormev@bak.at', '79040487225', 'aluno', '${institution2Id}')`,
+          VALUES('${user2Id}', 'Jeffrey Elliott', 'Jordan Phillips', '${password}', 'lorormev@bak.at', '79040487225', 'coordenador de atividades', '${institution2Id}')`,
     );
   });
 
@@ -69,7 +69,7 @@ describe("Find User By Id Controller", () => {
     expect(responseFindById.status).toBe(200);
   });
 
-  it("should not be able to find user by id if you don'd have permition", async () => {
+  it("should not be able to find user by id if you don'd have permission", async () => {
     const responseToken = await request(app).post("/sessions").send({
       email: "lorormev@bak.at",
       password: "h08f563J",

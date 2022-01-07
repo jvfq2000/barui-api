@@ -6,7 +6,7 @@ import { ListInstitutionsUseCase } from "./ListInstitutionsUseCase";
 
 class ListInstitutionsController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { page, registersPerPage, filter } = request.query;
+    const { page, registersPerPage, filter, isActive } = request.query;
 
     const listInstitutionsUseCase = container.resolve(ListInstitutionsUseCase);
 
@@ -14,6 +14,7 @@ class ListInstitutionsController {
       page: Number(page),
       registersPerPage: Number(registersPerPage),
       filter: filter as string,
+      isActive: isActive !== "false",
     });
 
     return response.status(200).json(institutions);

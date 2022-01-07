@@ -1,4 +1,4 @@
-import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInstitutionDTO";
+import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
 import { AppError } from "@shared/errors/AppError";
 
@@ -17,7 +17,7 @@ describe("Create Institution", () => {
 
   it("should be able to create a new institution", async () => {
     const institution: ISaveInstitutionDTO = {
-      cityId: "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
+      cityId: "1d05966e-c0cb-50b3-84f5-0fe898aa16f0",
       name: "Institution Hozibseg",
     };
 
@@ -33,7 +33,7 @@ describe("Create Institution", () => {
   it("should not be able to create a new institution with name exists", async () => {
     expect(async () => {
       const institution: ISaveInstitutionDTO = {
-        cityId: "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
+        cityId: "1d05966e-c0cb-50b3-84f5-0fe898aa16f0",
         name: "Institution Mina Hudson",
       };
 

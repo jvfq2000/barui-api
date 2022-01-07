@@ -1,4 +1,4 @@
-import { Course } from "../infra/typeorm/entities/Course";
+import { Course } from "../../infra/typeorm/entities/Course";
 
 interface IListCoursesDTO {
   courses: Course[];

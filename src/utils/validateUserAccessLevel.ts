@@ -1,4 +1,4 @@
-import { accessLevel } from "./permitions";
+import { accessLevel } from "./permissions";
 
 interface IValidateUserAccessLevelParams {
   requiredAccessLevel: string;

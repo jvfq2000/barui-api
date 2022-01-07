@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
-import { accessLevel } from "@utils/permitions";
+import { accessLevel } from "@utils/permissions";
 
 interface IRequest {
   userId: string;

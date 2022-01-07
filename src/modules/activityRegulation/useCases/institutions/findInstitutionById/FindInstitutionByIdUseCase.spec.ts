@@ -1,16 +1,22 @@
-import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/ISaveInstitutionDTO";
+import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { CitiesRepositoryInMemory } from "@modules/territory/repositories/inMemory/CitiesRepositoryInMemory";
+import { StatesRepositoryInMemory } from "@modules/territory/repositories/inMemory/StatesRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 
 import { CreateInstitutionUseCase } from "../createInstitution/CreateInstitutionUseCase";
 import { FindInstitutionByIdUseCase } from "./FindInstitutionByIdUseCase";
 
+let statesRepositoryInMemory: StatesRepositoryInMemory;
+let citiesRepositoryInMemory: CitiesRepositoryInMemory;
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
 let createInstitutionUseCase: CreateInstitutionUseCase;
 let findInstitutionByIdUseCase: FindInstitutionByIdUseCase;
 
 describe("Find Institution By Id", () => {
   beforeEach(() => {
+    statesRepositoryInMemory = new StatesRepositoryInMemory();
+    citiesRepositoryInMemory = new CitiesRepositoryInMemory();
     institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
 
     createInstitutionUseCase = new CreateInstitutionUseCase(
@@ -19,12 +25,14 @@ describe("Find Institution By Id", () => {
 
     findInstitutionByIdUseCase = new FindInstitutionByIdUseCase(
       institutionsRepositoryInMemory,
+      statesRepositoryInMemory,
+      citiesRepositoryInMemory,
     );
   });
 
   it("should be able to find institution by id", async () => {
     let institution: ISaveInstitutionDTO = {
-      cityId: "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
+      cityId: "1d05966e-c0cb-50b3-84f5-0fe898aa16f0",
       name: "Institution Hozibseg",
     };
 

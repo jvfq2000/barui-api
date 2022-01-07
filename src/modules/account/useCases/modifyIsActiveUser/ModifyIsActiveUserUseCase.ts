@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { AppError } from "@shared/errors/AppError";
-import { accessLevel as accessLevelPermitions } from "@utils/permitions";
+import { accessLevel as accessLevelPermissions } from "@utils/permissions";
 
 @injectable()
 class ModifyIsActiveUserUseCase {
@@ -21,7 +21,7 @@ class ModifyIsActiveUserUseCase {
     const adminUser = await this.usersRepository.findById(adminId);
 
     if (
-      adminUser.accessLevel === accessLevelPermitions[3] &&
+      adminUser.accessLevel === accessLevelPermissions[3] &&
       adminUser.institutionId !== user.institutionId
     ) {
       throw new AppError(

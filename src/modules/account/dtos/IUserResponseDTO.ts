@@ -1,6 +1,3 @@
-import { Course } from "@modules/activityRegulation/infra/typeorm/entities/Course";
-import { Institution } from "@modules/activityRegulation/infra/typeorm/entities/Institution";
-
 interface IUserResponseDTO {
   id: string;
   name: string;
@@ -11,14 +8,17 @@ interface IUserResponseDTO {
   initialSemester: string;
   registration: string;
   avatar: string;
+  avatarUrl: string;
   accessLevel: string;
   isActive: boolean;
-  courseId: string;
-  course: Course;
-  institutionId: string;
-  institution: Institution;
-  avatarUrl: string;
   createdAt: Date;
+
+  courseId: string;
+  courseName: string;
+  courseNumberPeriods: number;
+
+  institutionId: string;
+  institutionName: string;
 }
 
 export { IUserResponseDTO };

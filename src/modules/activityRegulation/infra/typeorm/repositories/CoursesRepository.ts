@@ -54,16 +54,17 @@ class CoursesRepository implements ICoursesRepository {
       .innerJoinAndSelect(
         "course.institution",
         "institution",
-        "LOWER(institution.name) like LOWER(:filter)",
+        "institution.name like '%%'",
       )
-      .where("LOWER(course.name) like LOWER(:filter)")
-      .orWhere("to_char(course.created_at, 'DD/MM/YYYY') like LOWER(:filter)")
+      .where("(LOWER(course.name) like LOWER(:filter)")
+      .orWhere("LOWER(institution.name) like LOWER(:filter)")
+      .orWhere("to_char(course.created_at, 'DD/MM/YYYY') like LOWER(:filter))")
       .setParameter("filter", `%${filter}%`);
 
     if (institutionId) {
       baseQuery = baseQuery
-        .andWhere("course.institution_id like LOWER(:institution_id)")
-        .setParameter("institution_id", `%${institutionId}%`);
+        .andWhere("course.institution_id = :institution_id")
+        .setParameter("institution_id", `${institutionId}`);
     }
 
     const courses = await baseQuery

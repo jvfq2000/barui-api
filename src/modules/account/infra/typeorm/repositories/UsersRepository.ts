@@ -17,22 +17,32 @@ class UsersRepository implements IUsersRepository {
     name,
     lastName,
     email,
-    password,
-    avatar,
-    accessLevel,
-    isActive,
     identifier,
+    telephone,
+    initialSemester,
+    registration,
+    avatar,
+    password,
+    accessLevel,
+    courseId,
+    institutionId,
+    isActive,
   }: ISaveUserDTO): Promise<void> {
     const user = this.repository.create({
       id,
       name,
       lastName,
       email,
-      password,
-      avatar,
-      accessLevel,
-      isActive,
       identifier,
+      telephone,
+      initialSemester,
+      registration,
+      avatar,
+      password,
+      accessLevel,
+      courseId,
+      institutionId,
+      isActive,
     });
 
     await this.repository.save(user);
@@ -51,17 +61,30 @@ class UsersRepository implements IUsersRepository {
   async list(
     page: number,
     registersPerPage: number,
-    filter = "",
+    filter: string,
+    institutionId: string,
   ): Promise<IListUsersDTO> {
-    const baseQuery = this.repository
+    let baseQuery = this.repository
       .createQueryBuilder("user")
-      .where("LOWER(user.name) like LOWER(:filter)")
+      .innerJoinAndSelect(
+        "user.institution",
+        "institution",
+        "institution.name like '%%'",
+      )
+      .where("(LOWER(user.name) like LOWER(:filter)")
+      .orWhere("LOWER(institution.name) like LOWER(:filter)")
       .orWhere("LOWER(user.last_name) like LOWER(:filter)")
       .orWhere("LOWER(user.email) like LOWER(:filter)")
       .orWhere("LOWER(user.access_level) like LOWER(:filter)")
       .orWhere("LOWER(user.identifier) like LOWER(:filter)")
-      .orWhere("to_char(created_at, 'DD/MM/YYYY') like LOWER(:filter)")
+      .orWhere("to_char(user.created_at, 'DD/MM/YYYY') like LOWER(:filter))")
       .setParameter("filter", `%${filter}%`);
+
+    if (institutionId) {
+      baseQuery = baseQuery
+        .andWhere("user.institution_id = :institution_id")
+        .setParameter("institution_id", `${institutionId}`);
+    }
 
     const users = await baseQuery
       .skip(registersPerPage * (page - 1))

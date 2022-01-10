@@ -3,6 +3,8 @@ import { inject, injectable } from "tsyringe";
 import { IUserResponseDTO } from "@modules/account/dtos/IUserResponseDTO";
 import { UserMap } from "@modules/account/mapper/UserMap";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
+import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
+import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { AppError } from "@shared/errors/AppError";
 import { accessLevel as accessLevelPermissions } from "@utils/permissions";
 
@@ -11,6 +13,10 @@ class FindUserByIdUseCase {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository,
+    @inject("InstitutionsRepository")
+    private institutionsRepository: IInstitutionsRepository,
+    @inject("CoursesRepository")
+    private coursesRepository: ICoursesRepository,
   ) {}
 
   async execute(adminId: string, userId: string): Promise<IUserResponseDTO> {
@@ -43,6 +49,12 @@ class FindUserByIdUseCase {
         401,
       );
     }
+
+    user.institution = await this.institutionsRepository.findById(
+      user.institutionId,
+    );
+
+    user.course = await this.coursesRepository.findById(user.courseId);
 
     return UserMap.toDTO(user);
   }

@@ -10,6 +10,8 @@ class FindCourseByIdController {
 
     const findCourseByIdUseCase = container.resolve(FindCourseByIdUseCase);
 
+    console.log(adminId, courseId);
+
     const course = await findCourseByIdUseCase.execute(
       adminId,
       String(courseId),

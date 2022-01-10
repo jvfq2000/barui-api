@@ -35,6 +35,12 @@ class InstitutionsRepositoryInMemory implements IInstitutionsRepository {
     return this.institutions.find(institution => institution.id === id);
   }
 
+  async listByCityId(cityId: string): Promise<Institution[]> {
+    return this.institutions.filter(
+      institution => institution.cityId === cityId,
+    );
+  }
+
   async list(
     page: number,
     registersPerPage: number,

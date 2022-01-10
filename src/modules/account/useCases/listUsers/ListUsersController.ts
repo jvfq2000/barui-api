@@ -6,11 +6,12 @@ import { ListUsersUseCase } from "./ListUsersUseCase";
 
 class ListUsersController {
   async handle(request: Request, response: Response): Promise<Response> {
+    const adminId = request.user.id;
     const { page, registersPerPage, filter, isActive } = request.query;
 
     const listUsersUseCase = container.resolve(ListUsersUseCase);
 
-    const users = await listUsersUseCase.execute({
+    const users = await listUsersUseCase.execute(adminId, {
       page: Number(page),
       registersPerPage: Number(registersPerPage),
       filter: filter as string,

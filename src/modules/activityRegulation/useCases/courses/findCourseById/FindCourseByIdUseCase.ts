@@ -1,8 +1,10 @@
 import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
-import { Course } from "@modules/activityRegulation/infra/typeorm/entities/Course";
+import { ICourseResponseDTO } from "@modules/activityRegulation/dtos/course/ICourseResponseDTO";
+import { CourseMap } from "@modules/activityRegulation/mapper/courseMap";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
+import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { AppError } from "@shared/errors/AppError";
 import { accessLevel as accessLevelPermissions } from "@utils/permissions";
 
@@ -11,11 +13,16 @@ class FindCourseByIdUseCase {
   constructor(
     @inject("CoursesRepository")
     private coursesRepository: ICoursesRepository,
+    @inject("InstitutionsRepository")
+    private institutionsRepository: IInstitutionsRepository,
     @inject("UsersRepository")
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute(adminId: string, courseId: string): Promise<Course> {
+  async execute(
+    adminId: string,
+    courseId: string,
+  ): Promise<ICourseResponseDTO> {
     const course = await this.coursesRepository.findById(courseId);
 
     if (!course) {
@@ -34,7 +41,11 @@ class FindCourseByIdUseCase {
       );
     }
 
-    return course;
+    course.institution = await this.institutionsRepository.findById(
+      course.institutionId,
+    );
+
+    return CourseMap.toDTO(course);
   }
 }
 

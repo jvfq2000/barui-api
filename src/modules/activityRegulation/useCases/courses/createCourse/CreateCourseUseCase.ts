@@ -19,7 +19,7 @@ class CreateCourseUseCase {
   ) {}
   async execute(
     adminId: string,
-    { name, numberPeriods, institutionId }: ISaveCourseDTO,
+    { name, numberPeriods }: ISaveCourseDTO,
   ): Promise<void> {
     const courseAlreadyExists = await this.coursesRepository.findByName(name);
 
@@ -27,27 +27,18 @@ class CreateCourseUseCase {
       throw new AppError("Já existe um curso com esse nome.");
     }
 
-    let newInstitutionId = institutionId;
     const adminUser = await this.usersRepository.findById(adminId);
 
-    if (adminUser.accessLevel === accessLevelPermissions[3]) {
-      newInstitutionId = adminUser.institutionId;
-    } else if (!institutionId) {
-      throw new AppError("Campus não informado.");
-    }
-
-    const institution = await this.institutionsRepository.findById(
-      newInstitutionId,
-    );
-
-    if (!institution) {
-      throw new AppError("Campus não encontrado.");
+    if (!adminUser.institutionId) {
+      throw new AppError(
+        "Para cadastrar um curso, você precisa estar vinculado a um campus.",
+      );
     }
 
     await this.coursesRepository.save({
       name,
       numberPeriods,
-      institutionId: newInstitutionId,
+      institutionId: adminUser.institutionId,
     });
   }
 }

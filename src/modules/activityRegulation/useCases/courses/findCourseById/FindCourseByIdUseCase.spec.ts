@@ -34,6 +34,7 @@ describe("Find Course By Id", () => {
 
     findCourseByIdUseCase = new FindCourseByIdUseCase(
       coursesRepositoryInMemory,
+      institutionsRepositoryInMemory,
       usersRepositoryInMemory,
     );
   });

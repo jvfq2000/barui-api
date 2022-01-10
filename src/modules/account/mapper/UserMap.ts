@@ -13,14 +13,17 @@ class UserMap {
       initialSemester: user.initialSemester,
       registration: user.registration,
       avatar: user.avatar,
+      avatarUrl: user.avatarUrl(),
       accessLevel: user.accessLevel,
       isActive: user.isActive,
-      courseId: user.courseId,
-      course: user.course,
-      institutionId: user.institutionId,
-      institution: user.institution,
-      avatarUrl: user.avatarUrl(),
       createdAt: user.createdAt,
+
+      courseId: user.courseId,
+      courseName: user.course?.name,
+      courseNumberPeriods: user.course?.numberPeriods,
+
+      institutionId: user.institutionId,
+      institutionName: user.institution?.name,
     };
 
     return userDTO;

@@ -8,7 +8,7 @@ import { IStatesRepository } from "@modules/territory/repositories/IStatesReposi
 import { AppError } from "@shared/errors/AppError";
 
 @injectable()
-class FindInstitutionByIdUseCase {
+class ListInstitutionsByCityIdUseCase {
   constructor(
     @inject("InstitutionsRepository")
     private institutionsRepository: IInstitutionsRepository,
@@ -18,23 +18,32 @@ class FindInstitutionByIdUseCase {
     private citiesRepository: ICitiesRepository,
   ) {}
 
-  async execute(institutionId: string): Promise<IInstitutionResponseDTO> {
-    const institution = await this.institutionsRepository.findById(
-      institutionId,
-    );
+  async execute(cityId: string): Promise<IInstitutionResponseDTO[]> {
+    const city = await this.citiesRepository.findById(cityId);
 
-    if (!institution) {
-      throw new AppError("Campus não encontrado.");
+    if (!city) {
+      throw new AppError("Cidade não encontrada.");
     }
 
-    institution.city = await this.citiesRepository.findById(institution.cityId);
+    const institutions = await this.institutionsRepository.listByCityId(cityId);
 
-    institution.city.state = await this.statesRepository.findById(
-      institution.city.stateId,
-    );
+    const formattedInstitutions: IInstitutionResponseDTO[] = [];
 
-    return InstitutionMap.toDTO(institution);
+    const institutionsPromise = institutions.map(async institution => {
+      const state = await this.statesRepository.findById(city.stateId);
+
+      const institutionWithState = institution;
+
+      institutionWithState.city = city;
+      institutionWithState.city.state = state;
+
+      formattedInstitutions.push(InstitutionMap.toDTO(institutionWithState));
+    });
+
+    await Promise.all(institutionsPromise);
+
+    return formattedInstitutions;
   }
 }
 
-export { FindInstitutionByIdUseCase };
+export { ListInstitutionsByCityIdUseCase };

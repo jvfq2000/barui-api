@@ -6,6 +6,7 @@ interface IInstitutionsRepository {
   save(data: ISaveInstitutionDTO): Promise<void>;
   findByName(name: string): Promise<Institution>;
   findById(id: string): Promise<Institution>;
+  listByCityId(cityId: string): Promise<Institution[]>;
   list(
     page: number,
     registersPerPage: number,

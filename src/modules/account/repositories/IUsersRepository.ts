@@ -10,7 +10,8 @@ interface IUsersRepository {
   list(
     page: number,
     registersPerPage: number,
-    filter?: string,
+    filter: string,
+    institutionId: string,
   ): Promise<IListUsersDTO>;
 }
 export { IUsersRepository };

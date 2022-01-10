@@ -4,7 +4,6 @@ import { IUsersRepository } from "@modules/account/repositories/IUsersRepository
 import { ICourseResponseDTO } from "@modules/activityRegulation/dtos/course/ICourseResponseDTO";
 import { CourseMap } from "@modules/activityRegulation/mapper/courseMap";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
-import { accessLevel } from "@utils/permissions";
 
 interface IRequest {
   page: number;
@@ -37,7 +36,7 @@ class ListCoursesUseCase {
       page || 1,
       registersPerPage || 10,
       filter || "",
-      adminUser.accessLevel === accessLevel[3] ? adminUser.institutionId : "",
+      adminUser.institutionId || "",
     );
 
     const formattedCourses: ICourseResponseDTO[] = [];

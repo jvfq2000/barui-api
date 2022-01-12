@@ -5,18 +5,15 @@ import { UserMap } from "@modules/account/mapper/UserMap";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
+import { CitiesRepository } from "@modules/territory/infra/typeorm/repositories/CitiesRepository";
+import { ICitiesRepository } from "@modules/territory/repositories/ICitiesRepository";
+import { IStatesRepository } from "@modules/territory/repositories/IStatesRepository";
+import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 import { accessLevel } from "@utils/permissions";
 
 interface IResponse {
   users: IUserResponseDTO[];
   totalCount: number;
-}
-
-interface IRequest {
-  page: number;
-  registersPerPage: number;
-  filter: string;
-  isActive: boolean;
 }
 
 @injectable()
@@ -28,38 +25,55 @@ class ListUsersUseCase {
     private institutionsRepository: IInstitutionsRepository,
     @inject("CoursesRepository")
     private coursesRepository: ICoursesRepository,
+    @inject("CitiesRepository")
+    private citiesRepository: ICitiesRepository,
+    @inject("StatesRepository")
+    private statesRepository: IStatesRepository,
   ) {}
 
-  async execute(
-    adminId: string,
-    { page, registersPerPage, filter, isActive }: IRequest,
-  ): Promise<IResponse> {
-    const adminUser = await this.usersRepository.findById(adminId);
+  async execute({
+    userId,
+    page,
+    registersPerPage,
+    filter,
+    isActive,
+  }: IGeneralListDTO): Promise<IResponse> {
+    const adminUser = await this.usersRepository.findById(userId);
 
-    const { users, totalCount } = await this.usersRepository.list(
-      page || 1,
-      registersPerPage || 10,
-      filter || "",
-      adminUser.accessLevel === accessLevel[3] ? adminUser.institutionId : "",
-    );
+    const institutionId =
+      adminUser.accessLevel === accessLevel[3] ? adminUser.institutionId : "";
+
+    const { users, totalCount } = await this.usersRepository.list({
+      userId,
+      institutionId,
+      page: page || 1,
+      registersPerPage: registersPerPage || 10,
+      filter: filter || "",
+      isActive,
+    });
     const formattedUsers: IUserResponseDTO[] = [];
-    let totalCountIsActive = totalCount;
+    const totalCountIsActive = totalCount;
 
     const usersPromise = users.map(async user => {
-      if (user.isActive === isActive && user.id !== adminUser.id) {
-        const userWithCourseAndInstitution = user;
+      const fullUser = user;
 
-        userWithCourseAndInstitution.institution = user.institutionId
-          ? await this.institutionsRepository.findById(user.institutionId)
-          : null;
+      fullUser.course = user.courseId
+        ? await this.coursesRepository.findById(user.courseId)
+        : null;
 
-        userWithCourseAndInstitution.course = user.courseId
-          ? await this.coursesRepository.findById(user.courseId)
-          : null;
-        formattedUsers.push(UserMap.toDTO(userWithCourseAndInstitution));
-      } else {
-        totalCountIsActive -= 1;
-      }
+      fullUser.institution = user.institutionId
+        ? await this.institutionsRepository.findById(user.institutionId)
+        : null;
+
+      fullUser.institution.city = user.institutionId
+        ? await this.citiesRepository.findById(user.institution.cityId)
+        : null;
+
+      fullUser.institution.city.state = user.institutionId
+        ? await this.statesRepository.findById(user.institution.city.stateId)
+        : null;
+
+      formattedUsers.push(UserMap.toDTO(fullUser));
     });
 
     await Promise.all(usersPromise);

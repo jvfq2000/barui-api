@@ -24,6 +24,11 @@ class UserMap {
 
       institutionId: user.institutionId,
       institutionName: user.institution?.name,
+
+      cityId: user.institution?.cityId,
+      cityName: user.institution?.city?.name,
+      stateId: user.institution?.city?.stateId,
+      stateName: user.institution?.city?.state?.name,
     };
 
     return userDTO;

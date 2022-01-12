@@ -3,6 +3,7 @@ import { getRepository, Repository } from "typeorm";
 import { IListInstitutionsDTO } from "@modules/activityRegulation/dtos/institution/IListInstitutionsDTO";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
+import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 
 import { Institution } from "../entities/Institution";
 
@@ -48,20 +49,25 @@ class InstitutionsRepository implements IInstitutionsRepository {
     return institutions;
   }
 
-  async list(
-    page: number,
-    registersPerPage: number,
-    filter: string,
-  ): Promise<IListInstitutionsDTO> {
+  async list({
+    page,
+    registersPerPage,
+    filter,
+    isActive,
+  }: IGeneralListDTO): Promise<IListInstitutionsDTO> {
     const baseQuery = this.repository
       .createQueryBuilder("institution")
       .innerJoinAndSelect("institution.city", "city", "city.name like '%%'")
-      .where("LOWER(institution.name) like LOWER(:filter)")
+
+      .where("(LOWER(institution.name) like LOWER(:filter)")
       .orWhere("LOWER(city.name) like LOWER(:filter)")
       .orWhere(
-        "to_char(institution.created_at, 'DD/MM/YYYY') like LOWER(:filter)",
+        "to_char(institution.created_at, 'DD/MM/YYYY') like LOWER(:filter))",
       )
-      .setParameter("filter", `%${filter}%`);
+      .andWhere("institution.is_active = :is_active")
+
+      .setParameter("filter", `%${filter}%`)
+      .setParameter("is_active", isActive);
 
     const institutions = await baseQuery
       .skip(registersPerPage * (page - 1))

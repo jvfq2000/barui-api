@@ -3,6 +3,7 @@ import { v4 as uuidV4 } from "uuid";
 import { IListInstitutionsDTO } from "@modules/activityRegulation/dtos/institution/IListInstitutionsDTO";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { Institution } from "@modules/activityRegulation/infra/typeorm/entities/Institution";
+import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 
 import { IInstitutionsRepository } from "../IInstitutionsRepository";
 
@@ -41,11 +42,12 @@ class InstitutionsRepositoryInMemory implements IInstitutionsRepository {
     );
   }
 
-  async list(
-    page: number,
-    registersPerPage: number,
-    filter: string,
-  ): Promise<IListInstitutionsDTO> {
+  async list({
+    page,
+    registersPerPage,
+    filter,
+    isActive,
+  }: IGeneralListDTO): Promise<IListInstitutionsDTO> {
     return {
       institutions: this.institutions,
       totalCount: this.institutions.length,

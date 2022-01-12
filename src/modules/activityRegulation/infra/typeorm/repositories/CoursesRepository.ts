@@ -3,6 +3,7 @@ import { getRepository, Repository } from "typeorm";
 import { IListCoursesDTO } from "@modules/activityRegulation/dtos/course/IListCoursesDTO";
 import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/course/ISaveCourseDTO";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
+import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 
 import { Course } from "../entities/Course";
 
@@ -43,12 +44,31 @@ class CoursesRepository implements ICoursesRepository {
     return course;
   }
 
-  async list(
-    page: number,
-    registersPerPage: number,
-    filter: string,
-    institutionId: string,
-  ): Promise<IListCoursesDTO> {
+  async listByInstitutionId(institutionId: string): Promise<Course[]> {
+    const courses = this.repository
+      .createQueryBuilder("course")
+      .innerJoinAndSelect(
+        "course.institution",
+        "institution",
+        "institution.id = :institution_id",
+      )
+
+      .where("course.is_active = true")
+
+      .setParameter("institution_id", institutionId)
+      .orderBy("course.name")
+      .getMany();
+
+    return courses;
+  }
+
+  async list({
+    institutionId,
+    page,
+    registersPerPage,
+    filter,
+    isActive,
+  }: IGeneralListDTO): Promise<IListCoursesDTO> {
     let baseQuery = this.repository
       .createQueryBuilder("course")
       .innerJoinAndSelect(
@@ -56,15 +76,19 @@ class CoursesRepository implements ICoursesRepository {
         "institution",
         "institution.name like '%%'",
       )
+
       .where("(LOWER(course.name) like LOWER(:filter)")
       .orWhere("LOWER(institution.name) like LOWER(:filter)")
       .orWhere("to_char(course.created_at, 'DD/MM/YYYY') like LOWER(:filter))")
-      .setParameter("filter", `%${filter}%`);
+      .andWhere("course.is_active = :is_active")
+
+      .setParameter("filter", `%${filter}%`)
+      .setParameter("is_active", isActive);
 
     if (institutionId) {
       baseQuery = baseQuery
         .andWhere("course.institution_id = :institution_id")
-        .setParameter("institution_id", `${institutionId}`);
+        .setParameter("institution_id", institutionId);
     }
 
     const courses = await baseQuery

@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
+import { IUsersTokensRepository } from "@modules/account/repositories/IUsersTokensRepository";
 import { AppError } from "@shared/errors/AppError";
 import { accessLevel as accessLevelPermissions } from "@utils/permissions";
 
@@ -9,6 +10,8 @@ class ModifyIsActiveUserUseCase {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository,
+    @inject("UsersTokensRepository")
+    private usersTokensRepository: IUsersTokensRepository,
   ) {}
 
   async execute(adminId, userId: string): Promise<void> {
@@ -28,6 +31,10 @@ class ModifyIsActiveUserUseCase {
         "Você não tem permissão para realizar esta ação!",
         401,
       );
+    }
+
+    if (user.isActive) {
+      await this.usersTokensRepository.deleteByUserId(user.id);
     }
 
     user.isActive = !user.isActive;

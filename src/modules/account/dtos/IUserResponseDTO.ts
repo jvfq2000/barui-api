@@ -19,6 +19,11 @@ interface IUserResponseDTO {
 
   institutionId: string;
   institutionName: string;
+
+  cityId: string;
+  cityName: string;
+  stateId: string;
+  stateName: string;
 }
 
 export { IUserResponseDTO };

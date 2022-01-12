@@ -5,6 +5,8 @@ import { UserMap } from "@modules/account/mapper/UserMap";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
+import { ICitiesRepository } from "@modules/territory/repositories/ICitiesRepository";
+import { IStatesRepository } from "@modules/territory/repositories/IStatesRepository";
 
 @injectable()
 class ProfileUserUseCase {
@@ -15,15 +17,33 @@ class ProfileUserUseCase {
     private institutionsRepository: IInstitutionsRepository,
     @inject("CoursesRepository")
     private coursesRepository: ICoursesRepository,
+    @inject("CitiesRepository")
+    private citiesRepository: ICitiesRepository,
+    @inject("StatesRepository")
+    private statesRepository: IStatesRepository,
   ) {}
   async execute(userId: string): Promise<IUserResponseDTO> {
     const user = await this.usersRepository.findById(userId);
 
-    user.institution = await this.institutionsRepository.findById(
-      user.institutionId,
-    );
+    user.course = user.courseId
+      ? await this.coursesRepository.findById(user.courseId)
+      : null;
 
-    user.course = await this.coursesRepository.findById(user.courseId);
+    user.institution = user.institutionId
+      ? await this.institutionsRepository.findById(user.institutionId)
+      : null;
+
+    if (user.institution) {
+      user.institution.city = user.institutionId
+        ? await this.citiesRepository.findById(user.institution.cityId)
+        : null;
+    }
+
+    if (user.institution) {
+      user.institution.city.state = user.institutionId
+        ? await this.statesRepository.findById(user.institution.city.stateId)
+        : null;
+    }
 
     return UserMap.toDTO(user);
   }

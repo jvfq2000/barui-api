@@ -3,6 +3,7 @@ import { v4 as uuidV4 } from "uuid";
 import { IListCoursesDTO } from "@modules/activityRegulation/dtos/course/IListCoursesDTO";
 import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/course/ISaveCourseDTO";
 import { Course } from "@modules/activityRegulation/infra/typeorm/entities/Course";
+import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 
 import { ICoursesRepository } from "../ICoursesRepository";
 
@@ -37,11 +38,19 @@ class CoursesRepositoryInMemory implements ICoursesRepository {
     return this.courses.find(course => course.id === id);
   }
 
-  async list(
-    page: number,
-    registersPerPage: number,
-    filter: string,
-  ): Promise<IListCoursesDTO> {
+  async listByInstitutionId(institutionId: string): Promise<Course[]> {
+    return this.courses.filter(
+      course => course.institutionId === institutionId,
+    );
+  }
+
+  async list({
+    institutionId,
+    page,
+    registersPerPage,
+    filter,
+    isActive,
+  }: IGeneralListDTO): Promise<IListCoursesDTO> {
     return {
       courses: this.courses,
       totalCount: this.courses.length,

@@ -4,14 +4,8 @@ import { IUsersRepository } from "@modules/account/repositories/IUsersRepository
 import { ICourseResponseDTO } from "@modules/activityRegulation/dtos/course/ICourseResponseDTO";
 import { CourseMap } from "@modules/activityRegulation/mapper/courseMap";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
+import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 import { accessLevel } from "@utils/permissions";
-
-interface IRequest {
-  page: number;
-  registersPerPage: number;
-  filter: string;
-  isActive: boolean;
-}
 
 interface IResponse {
   courses: ICourseResponseDTO[];
@@ -27,31 +21,33 @@ class ListCoursesUseCase {
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute(
-    adminId: string,
-    { page, registersPerPage, filter, isActive }: IRequest,
-  ): Promise<IResponse> {
-    const adminUser = await this.usersRepository.findById(adminId);
+  async execute({
+    userId,
+    page,
+    registersPerPage,
+    filter,
+    isActive,
+  }: IGeneralListDTO): Promise<IResponse> {
+    const adminUser = await this.usersRepository.findById(userId);
 
-    const { courses, totalCount } = await this.coursesRepository.list(
-      page || 1,
-      registersPerPage || 10,
-      filter || "",
-      adminUser.accessLevel === accessLevel[3] ? adminUser.institutionId : "",
-    );
+    const institutionId =
+      adminUser.accessLevel === accessLevel[3] ? adminUser.institutionId : "";
 
-    const formattedCourses: ICourseResponseDTO[] = [];
-    let totalCountIsActive = totalCount;
-
-    courses.forEach(course => {
-      if (course.isActive === isActive) {
-        formattedCourses.push(CourseMap.toDTO(course));
-      } else {
-        totalCountIsActive -= 1;
-      }
+    const { courses, totalCount } = await this.coursesRepository.list({
+      institutionId,
+      page: page || 1,
+      registersPerPage: registersPerPage || 10,
+      filter: filter || "",
+      isActive,
     });
 
-    return { courses: formattedCourses, totalCount: totalCountIsActive };
+    const formattedCourses: ICourseResponseDTO[] = [];
+
+    courses.forEach(course => {
+      formattedCourses.push(CourseMap.toDTO(course));
+    });
+
+    return { courses: formattedCourses, totalCount };
   }
 }
 

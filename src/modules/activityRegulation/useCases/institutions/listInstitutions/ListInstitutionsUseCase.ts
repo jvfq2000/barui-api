@@ -4,17 +4,11 @@ import { IInstitutionResponseDTO } from "@modules/activityRegulation/dtos/instit
 import { InstitutionMap } from "@modules/activityRegulation/mapper/institutionMap";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { IStatesRepository } from "@modules/territory/repositories/IStatesRepository";
+import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 
 interface IResponse {
   institutions: IInstitutionResponseDTO[];
   totalCount: number;
-}
-
-interface IRequest {
-  page: number;
-  registersPerPage: number;
-  filter: string;
-  isActive: boolean;
 }
 
 @injectable()
@@ -31,29 +25,27 @@ class ListInstitutionsUseCase {
     registersPerPage,
     filter,
     isActive,
-  }: IRequest): Promise<IResponse> {
+  }: IGeneralListDTO): Promise<IResponse> {
     const { institutions, totalCount } = await this.institutionsRepository.list(
-      page || 1,
-      registersPerPage || 10,
-      filter || "",
+      {
+        page: page || 1,
+        registersPerPage: registersPerPage || 10,
+        filter: filter || "",
+        isActive,
+      },
     );
 
     const formattedInstitutions: IInstitutionResponseDTO[] = [];
-    let totalCountIsActive = totalCount;
+    const totalCountIsActive = totalCount;
 
     const institutionsPromise = institutions.map(async institution => {
-      if (institution.isActive === isActive) {
-        const state = await this.statesRepository.findById(
-          institution.city.stateId,
-        );
+      const institutionWithState = institution;
 
-        const institutionWithState = institution;
-        institutionWithState.city.state = state;
+      institutionWithState.city.state = await this.statesRepository.findById(
+        institution.city.stateId,
+      );
 
-        formattedInstitutions.push(InstitutionMap.toDTO(institutionWithState));
-      } else {
-        totalCountIsActive -= 1;
-      }
+      formattedInstitutions.push(InstitutionMap.toDTO(institutionWithState));
     });
 
     await Promise.all(institutionsPromise);

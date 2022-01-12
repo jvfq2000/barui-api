@@ -2,6 +2,7 @@ import { IListUsersDTO } from "@modules/account/dtos/IListUsersDTO";
 import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
 import { User } from "@modules/account/infra/typeorm/entities/User";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
+import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 
 class UsersRepositoryInMemory implements IUsersRepository {
   users: User[] = [
@@ -20,7 +21,7 @@ class UsersRepositoryInMemory implements IUsersRepository {
       avatarUrl: () => "http://hupmo.mm/genappuc",
       accessLevel: "administrador geral",
       institution: null,
-      institutionId: null,
+      institutionId: "a79e1e38-62bf-5223-9be4-f5081c33eec7",
       course: null,
       courseId: null,
       createdAt: new Date(),
@@ -59,7 +60,14 @@ class UsersRepositoryInMemory implements IUsersRepository {
     return this.users.find(user => user.id === id);
   }
 
-  async list(page: number, registersPerPage: number): Promise<IListUsersDTO> {
+  async list({
+    userId,
+    institutionId,
+    page,
+    registersPerPage,
+    filter,
+    isActive,
+  }: IGeneralListDTO): Promise<IListUsersDTO> {
     return { users: this.users, totalCount: this.users.length };
   }
 }

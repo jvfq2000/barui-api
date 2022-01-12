@@ -3,6 +3,7 @@ import { Router } from "express";
 import { CreateCourseController } from "@modules/activityRegulation/useCases/courses/createCourse/CreateCourseController";
 import { FindCourseByIdController } from "@modules/activityRegulation/useCases/courses/findCourseById/FindCourseByIdController";
 import { ListCoursesController } from "@modules/activityRegulation/useCases/courses/listCourses/ListCoursesController";
+import { ListCoursesByInstitutionIdController } from "@modules/activityRegulation/useCases/courses/listCoursesByInstitutionId/ListCoursesInstitutionsIdController";
 import { ModifyIsActiveCourseController } from "@modules/activityRegulation/useCases/courses/modifyIsActiveCourse/ModifyIsActiveCourseController";
 import { UpdateCourseController } from "@modules/activityRegulation/useCases/courses/updateCourses/UpdateCourseController";
 
@@ -14,6 +15,8 @@ const listCoursesController = new ListCoursesController();
 const updateCourseController = new UpdateCourseController();
 const modifyIsActiveCourseController = new ModifyIsActiveCourseController();
 const findCourseByIdController = new FindCourseByIdController();
+const listCoursesByInstitutionIdController =
+  new ListCoursesByInstitutionIdController();
 
 const coursesRoutes = Router();
 
@@ -36,6 +39,13 @@ coursesRoutes.get(
   ensureAuthenticated,
   ensureInstitutionAdmin,
   findCourseByIdController.handle,
+);
+
+coursesRoutes.get(
+  "/by-institution-id",
+  ensureAuthenticated,
+  ensureInstitutionAdmin,
+  listCoursesByInstitutionIdController.handle,
 );
 
 coursesRoutes.put(

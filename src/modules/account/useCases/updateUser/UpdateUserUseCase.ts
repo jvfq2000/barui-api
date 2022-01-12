@@ -85,13 +85,17 @@ class UpdateUserUseCase {
       ? await this.institutionsRepository.findById(user.institutionId)
       : null;
 
-    user.institution.city = user.institutionId
-      ? await this.citiesRepository.findById(user.institution.cityId)
-      : null;
+    if (user.institution) {
+      user.institution.city = user.institutionId
+        ? await this.citiesRepository.findById(user.institution.cityId)
+        : null;
+    }
 
-    user.institution.city.state = user.institutionId
-      ? await this.statesRepository.findById(user.institution.city.stateId)
-      : null;
+    if (user.institution) {
+      user.institution.city.state = user.institutionId
+        ? await this.statesRepository.findById(user.institution.city.stateId)
+        : null;
+    }
 
     return UserMap.toDTO(user);
   }

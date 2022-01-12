@@ -65,13 +65,17 @@ class ListUsersUseCase {
         ? await this.institutionsRepository.findById(user.institutionId)
         : null;
 
-      fullUser.institution.city = user.institutionId
-        ? await this.citiesRepository.findById(user.institution.cityId)
-        : null;
+      if (user.institution) {
+        fullUser.institution.city = user.institutionId
+          ? await this.citiesRepository.findById(user.institution.cityId)
+          : null;
+      }
 
-      fullUser.institution.city.state = user.institutionId
-        ? await this.statesRepository.findById(user.institution.city.stateId)
-        : null;
+      if (user.institution) {
+        fullUser.institution.city.state = user.institutionId
+          ? await this.statesRepository.findById(user.institution.city.stateId)
+          : null;
+      }
 
       formattedUsers.push(UserMap.toDTO(fullUser));
     });

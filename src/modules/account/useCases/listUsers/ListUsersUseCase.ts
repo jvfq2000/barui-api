@@ -57,23 +57,25 @@ class ListUsersUseCase {
     const usersPromise = users.map(async user => {
       const fullUser = user;
 
-      fullUser.course = user.courseId
-        ? await this.coursesRepository.findById(user.courseId)
+      fullUser.course = fullUser.courseId
+        ? await this.coursesRepository.findById(fullUser.courseId)
         : null;
 
-      fullUser.institution = user.institutionId
-        ? await this.institutionsRepository.findById(user.institutionId)
+      fullUser.institution = fullUser.institutionId
+        ? await this.institutionsRepository.findById(fullUser.institutionId)
         : null;
 
-      if (user.institution) {
-        fullUser.institution.city = user.institutionId
-          ? await this.citiesRepository.findById(user.institution.cityId)
+      if (fullUser.institution) {
+        fullUser.institution.city = fullUser.institutionId
+          ? await this.citiesRepository.findById(fullUser.institution.cityId)
           : null;
       }
 
-      if (user.institution) {
-        fullUser.institution.city.state = user.institutionId
-          ? await this.statesRepository.findById(user.institution.city.stateId)
+      if (fullUser.institution) {
+        fullUser.institution.city.state = fullUser.institutionId
+          ? await this.statesRepository.findById(
+              fullUser.institution.city.stateId,
+            )
           : null;
       }
 

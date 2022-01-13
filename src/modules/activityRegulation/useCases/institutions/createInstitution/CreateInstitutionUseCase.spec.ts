@@ -1,5 +1,5 @@
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 
 import { CreateInstitutionUseCase } from "./CreateInstitutionUseCase";

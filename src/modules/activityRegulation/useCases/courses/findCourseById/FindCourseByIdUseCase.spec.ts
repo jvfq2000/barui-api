@@ -1,8 +1,7 @@
 import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersRepositoryInMemory";
 import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/course/ISaveCourseDTO";
-import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 
 import { CreateInstitutionUseCase } from "../../institutions/createInstitution/CreateInstitutionUseCase";
@@ -12,7 +11,6 @@ import { FindCourseByIdUseCase } from "./FindCourseByIdUseCase";
 let usersRepositoryInMemory: UsersRepositoryInMemory;
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
 let coursesRepositoryInMemory: CoursesRepositoryInMemory;
-let createInstitutionUseCase: CreateInstitutionUseCase;
 let createCourseUseCase: CreateCourseUseCase;
 let findCourseByIdUseCase: FindCourseByIdUseCase;
 
@@ -21,10 +19,6 @@ describe("Find Course By Id", () => {
     coursesRepositoryInMemory = new CoursesRepositoryInMemory();
     institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
     usersRepositoryInMemory = new UsersRepositoryInMemory();
-
-    createInstitutionUseCase = new CreateInstitutionUseCase(
-      institutionsRepositoryInMemory,
-    );
 
     createCourseUseCase = new CreateCourseUseCase(
       coursesRepositoryInMemory,
@@ -40,21 +34,9 @@ describe("Find Course By Id", () => {
   });
 
   it("should be able to find course by id", async () => {
-    let institution: ISaveInstitutionDTO = {
-      cityId: "1d05966e-c0cb-50b3-84f5-0fe898aa16f0",
-      name: "Institution Iva Rowe",
-    };
-
-    await createInstitutionUseCase.execute(institution);
-
-    institution = await institutionsRepositoryInMemory.findByName(
-      institution.name,
-    );
-
     let course: ISaveCourseDTO = {
       name: "Course Alexander Larson",
       numberPeriods: 8,
-      institutionId: institution.id,
     };
 
     await createCourseUseCase.execute(

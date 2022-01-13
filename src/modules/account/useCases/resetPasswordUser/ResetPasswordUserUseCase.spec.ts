@@ -7,7 +7,7 @@ import { UsersTokensRepositoryInMemory } from "@modules/account/repositories/inM
 import { IUsersTokensRepository } from "@modules/account/repositories/IUsersTokensRepository";
 import { CreateUserUseCase } from "@modules/account/useCases/createUser/CreateUserUseCase";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 import { CreateInstitutionUseCase } from "@modules/activityRegulation/useCases/institutions/createInstitution/CreateInstitutionUseCase";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";

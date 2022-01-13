@@ -1,5 +1,5 @@
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 import { CitiesRepositoryInMemory } from "@modules/territory/repositories/inMemory/CitiesRepositoryInMemory";
 import { StatesRepositoryInMemory } from "@modules/territory/repositories/inMemory/StatesRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
@@ -51,7 +51,7 @@ describe("Find Institution By Id", () => {
   it("should not be able to find institution if id non exists", async () => {
     await expect(
       findInstitutionByIdUseCase.execute(
-        "a79e1e38-62bf-5223-9be4-f5081c33eec7",
+        "ed8e2bd4-82b7-5f6a-b1df-93e94b818784",
       ),
     ).rejects.toBeInstanceOf(AppError);
   });

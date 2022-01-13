@@ -19,14 +19,13 @@ describe("List Courses", () => {
   });
 
   it("should be able to list all courses", async () => {
-    const listCourses = await listCoursesUseCase.execute(
-      "a79e1e38-62bf-5223-9be4-f5081c33eec7",
-      {
-        page: 1,
-        registersPerPage: 10,
-        filter: "",
-      },
-    );
+    const listCourses = await listCoursesUseCase.execute({
+      userId: "a79e1e38-62bf-5223-9be4-f5081c33eec7",
+      page: 1,
+      registersPerPage: 10,
+      filter: "",
+      isActive: true,
+    });
 
     expect(listCourses).toHaveProperty("courses");
     expect(listCourses).toHaveProperty("totalCount");

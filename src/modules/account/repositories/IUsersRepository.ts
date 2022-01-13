@@ -16,5 +16,6 @@ interface IUsersRepository {
     filter,
     isActive,
   }: IGeneralListDTO): Promise<IListUsersDTO>;
+  listByInstitutionId(institutionId): Promise<User[]>;
 }
 export { IUsersRepository };

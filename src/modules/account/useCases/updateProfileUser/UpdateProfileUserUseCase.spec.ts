@@ -1,14 +1,20 @@
 import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
 import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersRepositoryInMemory";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 import { CreateInstitutionUseCase } from "@modules/activityRegulation/useCases/institutions/createInstitution/CreateInstitutionUseCase";
+import { CitiesRepositoryInMemory } from "@modules/territory/repositories/inMemory/CitiesRepositoryInMemory";
+import { StatesRepositoryInMemory } from "@modules/territory/repositories/inMemory/StatesRepositoryInMemory";
 
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { UpdateProfileUserUseCase } from "./UpdateProfileUserUseCase";
 
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
+let coursesRepositoryInMemory: CoursesRepositoryInMemory;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
+let citiesRepositoryInMemory: CitiesRepositoryInMemory;
+let statesRepositoryInMemory: StatesRepositoryInMemory;
 let createInstitutionUseCase: CreateInstitutionUseCase;
 let createUserUseCase: CreateUserUseCase;
 let updateProfileUserUseCase: UpdateProfileUserUseCase;
@@ -16,7 +22,10 @@ let updateProfileUserUseCase: UpdateProfileUserUseCase;
 describe("Update Profile User", () => {
   beforeEach(() => {
     institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
+    coursesRepositoryInMemory = new CoursesRepositoryInMemory();
     usersRepositoryInMemory = new UsersRepositoryInMemory();
+    citiesRepositoryInMemory = new CitiesRepositoryInMemory();
+    statesRepositoryInMemory = new StatesRepositoryInMemory();
 
     createInstitutionUseCase = new CreateInstitutionUseCase(
       institutionsRepositoryInMemory,
@@ -29,6 +38,10 @@ describe("Update Profile User", () => {
 
     updateProfileUserUseCase = new UpdateProfileUserUseCase(
       usersRepositoryInMemory,
+      institutionsRepositoryInMemory,
+      coursesRepositoryInMemory,
+      citiesRepositoryInMemory,
+      statesRepositoryInMemory,
     );
   });
 

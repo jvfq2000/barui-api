@@ -2,8 +2,10 @@ import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
 import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersRepositoryInMemory";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 import { CreateInstitutionUseCase } from "@modules/activityRegulation/useCases/institutions/createInstitution/CreateInstitutionUseCase";
+import { CitiesRepositoryInMemory } from "@modules/territory/repositories/inMemory/CitiesRepositoryInMemory";
+import { StatesRepositoryInMemory } from "@modules/territory/repositories/inMemory/StatesRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
@@ -12,6 +14,8 @@ import { FindUserByIdUseCase } from "./FindUserByIdUseCase";
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
 let coursesRepositoryInMemory: CoursesRepositoryInMemory;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
+let citiesRepositoryInMemory: CitiesRepositoryInMemory;
+let statesRepositoryInMemory: StatesRepositoryInMemory;
 let createInstitutionUseCase: CreateInstitutionUseCase;
 let createUserUseCase: CreateUserUseCase;
 let findUserByIdUseCase: FindUserByIdUseCase;
@@ -21,6 +25,8 @@ describe("Find User By Id", () => {
     institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
     coursesRepositoryInMemory = new CoursesRepositoryInMemory();
     usersRepositoryInMemory = new UsersRepositoryInMemory();
+    citiesRepositoryInMemory = new CitiesRepositoryInMemory();
+    statesRepositoryInMemory = new StatesRepositoryInMemory();
 
     createInstitutionUseCase = new CreateInstitutionUseCase(
       institutionsRepositoryInMemory,
@@ -35,6 +41,8 @@ describe("Find User By Id", () => {
       usersRepositoryInMemory,
       institutionsRepositoryInMemory,
       coursesRepositoryInMemory,
+      citiesRepositoryInMemory,
+      statesRepositoryInMemory,
     );
   });
 

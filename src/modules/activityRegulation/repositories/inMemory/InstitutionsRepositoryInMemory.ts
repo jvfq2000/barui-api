@@ -8,7 +8,22 @@ import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 import { IInstitutionsRepository } from "../IInstitutionsRepository";
 
 class InstitutionsRepositoryInMemory implements IInstitutionsRepository {
-  institutions: Institution[] = [];
+  institutions: Institution[] = [
+    {
+      id: "a79e1e38-62bf-5223-9be4-f5081c33eec7",
+      name: "Institution Hallie Holland",
+      isActive: true,
+      createdAt: new Date(),
+      cityId: "507f6a73-d50b-5380-8c1b-5c9810c563ea",
+      city: {
+        id: "507f6a73-d50b-5380-8c1b-5c9810c563ea",
+        name: "Zuwhirci",
+        createdAt: new Date(),
+        stateId: "48c47ca1-1532-5325-a9e3-ff1a0cdea5f9",
+        state: null,
+      },
+    },
+  ];
 
   async save({
     id,

@@ -5,6 +5,7 @@ import { inject, injectable } from "tsyringe";
 import auth from "@config/auth";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/account/repositories/IUsersTokensRepository";
+import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
 import { AppError } from "@shared/errors/AppError";
 
@@ -34,6 +35,8 @@ class AuthenticateUserUseCase {
     private usersRepository: IUsersRepository,
     @inject("UsersTokensRepository")
     private usersTokensRepository: IUsersTokensRepository,
+    @inject("InstitutionsRepository")
+    private institutionsRepository: IInstitutionsRepository,
     @inject("DayjsDateProvider")
     private dateProvider: IDateProvider,
   ) {}
@@ -63,6 +66,19 @@ class AuthenticateUserUseCase {
         "Usuário está inativo, procure um administrador para mais informações!",
         401,
       );
+    }
+
+    if (user.institutionId) {
+      const institution = await this.institutionsRepository.findById(
+        user.institutionId,
+      );
+
+      if (!institution.isActive) {
+        throw new AppError(
+          "Usuário está inativo, procure um administrador para mais informações!",
+          401,
+        );
+      }
     }
 
     const token = sign({ accessLevel: user.accessLevel }, secretToken, {

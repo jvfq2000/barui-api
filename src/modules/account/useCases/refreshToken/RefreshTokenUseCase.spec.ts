@@ -3,7 +3,7 @@ import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/
 import { UsersTokensRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersTokensRepositoryInMemory";
 import { CreateUserUseCase } from "@modules/account/useCases/createUser/CreateUserUseCase";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 import { CreateInstitutionUseCase } from "@modules/activityRegulation/useCases/institutions/createInstitution/CreateInstitutionUseCase";
 import { DayjsDateProvider } from "@shared/container/providers/DateProvider/implementations/DayjsDateProvider";
 import { AppError } from "@shared/errors/AppError";
@@ -46,6 +46,7 @@ describe("Refresh Token", () => {
     authenticateUserUseCase = new AuthenticateUserUseCase(
       usersRepositoryInMemory,
       usersTokensRepositoryInMemory,
+      institutionsRepositoryInMemory,
       dateProvider,
     );
   });

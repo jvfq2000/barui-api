@@ -1,16 +1,22 @@
+import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersRepositoryInMemory";
+import { UsersTokensRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersTokensRepositoryInMemory";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 
 import { CreateInstitutionUseCase } from "../createInstitution/CreateInstitutionUseCase";
 import { ModifyIsActiveInstitutionUseCase } from "./ModifyIsActiveInstitutionUseCase";
 
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
+let usersRepositoryInMemory: UsersRepositoryInMemory;
+let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory;
 let createInstitutionUseCase: CreateInstitutionUseCase;
 let modifyIsActiveInstitutionUseCase: ModifyIsActiveInstitutionUseCase;
 
 describe("Modiry Is Active Institution", () => {
   beforeEach(() => {
     institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
+    usersRepositoryInMemory = new UsersRepositoryInMemory();
+    usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory();
 
     createInstitutionUseCase = new CreateInstitutionUseCase(
       institutionsRepositoryInMemory,
@@ -18,6 +24,8 @@ describe("Modiry Is Active Institution", () => {
 
     modifyIsActiveInstitutionUseCase = new ModifyIsActiveInstitutionUseCase(
       institutionsRepositoryInMemory,
+      usersRepositoryInMemory,
+      usersTokensRepositoryInMemory,
     );
   });
 

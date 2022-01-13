@@ -2,7 +2,7 @@ import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/
 import { ISaveCourseDTO } from "@modules/activityRegulation/dtos/course/ISaveCourseDTO";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
 import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/CoursesRepositoryInMemory";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 
 import { CreateInstitutionUseCase } from "../../institutions/createInstitution/CreateInstitutionUseCase";
 import { CreateCourseUseCase } from "../createCourse/CreateCourseUseCase";

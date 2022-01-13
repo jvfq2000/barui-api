@@ -1,7 +1,8 @@
 import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
 import { UsersRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersRepositoryInMemory";
+import { UsersTokensRepositoryInMemory } from "@modules/account/repositories/inMemory/UsersTokensRepositoryInMemory";
 import { ISaveInstitutionDTO } from "@modules/activityRegulation/dtos/institution/ISaveInstitutionDTO";
-import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory copy";
+import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 import { CreateInstitutionUseCase } from "@modules/activityRegulation/useCases/institutions/createInstitution/CreateInstitutionUseCase";
 
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
@@ -9,6 +10,7 @@ import { ModifyIsActiveUserUseCase } from "./ModifyIsActiveUserUseCase";
 
 let institutionsRepositoryInMemory: InstitutionsRepositoryInMemory;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
+let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory;
 let createInstitutionUseCase: CreateInstitutionUseCase;
 let createUserUseCase: CreateUserUseCase;
 let modifyIsActiveUserUseCase: ModifyIsActiveUserUseCase;
@@ -17,6 +19,7 @@ describe("Modify Is Active User", () => {
   beforeEach(() => {
     institutionsRepositoryInMemory = new InstitutionsRepositoryInMemory();
     usersRepositoryInMemory = new UsersRepositoryInMemory();
+    usersTokensRepositoryInMemory = new UsersTokensRepositoryInMemory();
 
     createInstitutionUseCase = new CreateInstitutionUseCase(
       institutionsRepositoryInMemory,
@@ -29,6 +32,7 @@ describe("Modify Is Active User", () => {
 
     modifyIsActiveUserUseCase = new ModifyIsActiveUserUseCase(
       usersRepositoryInMemory,
+      usersTokensRepositoryInMemory,
     );
   });
 

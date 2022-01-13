@@ -70,6 +70,10 @@ class UsersRepositoryInMemory implements IUsersRepository {
   }: IGeneralListDTO): Promise<IListUsersDTO> {
     return { users: this.users, totalCount: this.users.length };
   }
+
+  async listByInstitutionId(institutionId: any): Promise<User[]> {
+    return this.users.filter(user => user.institutionId === institutionId);
+  }
 }
 
 export { UsersRepositoryInMemory };

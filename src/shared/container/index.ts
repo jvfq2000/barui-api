@@ -6,8 +6,10 @@ import { IUsersRepository } from "@modules/account/repositories/IUsersRepository
 import { IUsersTokensRepository } from "@modules/account/repositories/IUsersTokensRepository";
 import { CoursesRepository } from "@modules/activityRegulation/infra/typeorm/repositories/CoursesRepository";
 import { InstitutionsRepository } from "@modules/activityRegulation/infra/typeorm/repositories/InstitutionsRepository";
+import { RegulationsRepository } from "@modules/activityRegulation/infra/typeorm/repositories/RegulationsRepository";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
+import { IRegulationsRepository } from "@modules/activityRegulation/repositories/IRegulationsRepository";
 import { CitiesRepository } from "@modules/territory/infra/typeorm/repositories/CitiesRepository";
 import { StatesRepository } from "@modules/territory/infra/typeorm/repositories/StateRepository";
 import { ICitiesRepository } from "@modules/territory/repositories/ICitiesRepository";
@@ -41,4 +43,9 @@ container.registerSingleton<IInstitutionsRepository>(
 container.registerSingleton<ICoursesRepository>(
   "CoursesRepository",
   CoursesRepository,
+);
+
+container.registerSingleton<IRegulationsRepository>(
+  "RegulationsRepository",
+  RegulationsRepository,
 );

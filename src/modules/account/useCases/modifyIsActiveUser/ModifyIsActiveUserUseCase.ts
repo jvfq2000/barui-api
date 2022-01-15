@@ -14,7 +14,7 @@ class ModifyIsActiveUserUseCase {
     private usersTokensRepository: IUsersTokensRepository,
   ) {}
 
-  async execute(adminId, userId: string): Promise<void> {
+  async execute(adminId: string, userId: string): Promise<void> {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {

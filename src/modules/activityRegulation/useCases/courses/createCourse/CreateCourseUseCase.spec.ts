@@ -26,7 +26,6 @@ describe("Create Course", () => {
 
     createCourseUseCase = new CreateCourseUseCase(
       coursesRepositoryInMemory,
-      institutionsRepositoryInMemory,
       usersRepositoryInMemory,
     );
   });
@@ -54,9 +53,11 @@ describe("Create Course", () => {
       course,
     );
 
-    const courseCreated = await coursesRepositoryInMemory.findByName(
-      course.name,
-    );
+    const courseCreated =
+      await coursesRepositoryInMemory.findByNameAndInstitutionId(
+        course.name,
+        institution.id,
+      );
 
     expect(courseCreated).toHaveProperty("id");
   });

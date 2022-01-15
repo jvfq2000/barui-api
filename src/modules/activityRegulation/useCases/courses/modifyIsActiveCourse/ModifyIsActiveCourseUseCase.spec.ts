@@ -27,7 +27,6 @@ describe("Modiry Is Active Course", () => {
 
     createCourseUseCase = new CreateCourseUseCase(
       coursesRepositoryInMemory,
-      institutionsRepositoryInMemory,
       usersRepositoryInMemory,
     );
 
@@ -60,9 +59,11 @@ describe("Modiry Is Active Course", () => {
       courseInactivated,
     );
 
-    courseInactivated = await coursesRepositoryInMemory.findByName(
-      courseInactivated.name,
-    );
+    courseInactivated =
+      await coursesRepositoryInMemory.findByNameAndInstitutionId(
+        courseInactivated.name,
+        institution.id,
+      );
 
     await modifyIsActiveCourseUseCase.execute(
       "a79e1e38-62bf-5223-9be4-f5081c33eec7",
@@ -80,9 +81,11 @@ describe("Modiry Is Active Course", () => {
       courseActivated,
     );
 
-    courseActivated = await coursesRepositoryInMemory.findByName(
-      courseActivated.name,
-    );
+    courseActivated =
+      await coursesRepositoryInMemory.findByNameAndInstitutionId(
+        courseActivated.name,
+        institution.id,
+      );
 
     await modifyIsActiveCourseUseCase.execute(
       "a79e1e38-62bf-5223-9be4-f5081c33eec7",

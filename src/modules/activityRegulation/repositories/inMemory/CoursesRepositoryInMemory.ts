@@ -30,7 +30,10 @@ class CoursesRepositoryInMemory implements ICoursesRepository {
     this.courses.push(course);
   }
 
-  async findByName(name: string): Promise<Course> {
+  async findByNameAndInstitutionId(
+    name: string,
+    institutionId: string,
+  ): Promise<Course> {
     return this.courses.find(course => course.name === name);
   }
 

@@ -1,7 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { IInstitutionResponseDTO } from "@modules/activityRegulation/dtos/institution/IInstitutionResponseDTO";
-import { InstitutionMap } from "@modules/activityRegulation/mapper/institutionMap";
+import { InstitutionMap } from "@modules/activityRegulation/mapper/InstitutionMap";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { IStatesRepository } from "@modules/territory/repositories/IStatesRepository";
 import { IGeneralListDTO } from "@utils/IGeneralListDTO";

@@ -9,12 +9,7 @@ interface IInstitutionsRepository {
   findByName(name: string): Promise<Institution>;
   findById(id: string): Promise<Institution>;
   listByCityId(cityId: string): Promise<Institution[]>;
-  list({
-    page,
-    registersPerPage,
-    filter,
-    isActive,
-  }: IGeneralListDTO): Promise<IListInstitutionsDTO>;
+  list(data: IGeneralListDTO): Promise<IListInstitutionsDTO>;
 }
 
 export { IInstitutionsRepository };

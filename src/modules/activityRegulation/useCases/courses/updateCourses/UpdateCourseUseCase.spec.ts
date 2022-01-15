@@ -27,7 +27,6 @@ describe("Update Course", () => {
 
     createCourseUseCase = new CreateCourseUseCase(
       coursesRepositoryInMemory,
-      institutionsRepositoryInMemory,
       usersRepositoryInMemory,
     );
 
@@ -61,7 +60,10 @@ describe("Update Course", () => {
       course,
     );
 
-    course = await coursesRepositoryInMemory.findByName(course.name);
+    course = await coursesRepositoryInMemory.findByNameAndInstitutionId(
+      course.name,
+      institution.id,
+    );
 
     Object.assign(course, {
       name: "Course Herman Pierce",

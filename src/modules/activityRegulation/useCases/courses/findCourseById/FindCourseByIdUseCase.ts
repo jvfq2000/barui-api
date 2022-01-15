@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { ICourseResponseDTO } from "@modules/activityRegulation/dtos/course/ICourseResponseDTO";
-import { CourseMap } from "@modules/activityRegulation/mapper/courseMap";
+import { CourseMap } from "@modules/activityRegulation/mapper/CourseMap";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { AppError } from "@shared/errors/AppError";

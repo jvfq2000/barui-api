@@ -31,7 +31,6 @@ describe("Update User Access Level", () => {
 
     createCourseUseCase = new CreateCourseUseCase(
       coursesRepositoryInMemory,
-      institutionsRepositoryInMemory,
       usersRepositoryInMemory,
     );
 
@@ -68,7 +67,10 @@ describe("Update User Access Level", () => {
       course,
     );
 
-    course = await coursesRepositoryInMemory.findByName(course.name);
+    course = await coursesRepositoryInMemory.findByNameAndInstitutionId(
+      course.name,
+      institution.id,
+    );
 
     let user: ISaveUserDTO = {
       name: "Emily Dixon",
@@ -131,7 +133,10 @@ describe("Update User Access Level", () => {
       course,
     );
 
-    course = await coursesRepositoryInMemory.findByName(course.name);
+    course = await coursesRepositoryInMemory.findByNameAndInstitutionId(
+      course.name,
+      institution.id,
+    );
 
     let user: ISaveUserDTO = {
       name: "Eliza Waters",

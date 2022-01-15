@@ -106,7 +106,7 @@ class UsersRepository implements IUsersRepository {
     return { users, totalCount };
   }
 
-  async listByInstitutionId(institutionId: any): Promise<User[]> {
+  async listByInstitutionId(institutionId: string): Promise<User[]> {
     const users = await this.repository.find({ institutionId });
     return users;
   }

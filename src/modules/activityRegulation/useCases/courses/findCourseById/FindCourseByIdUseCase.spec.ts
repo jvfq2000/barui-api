@@ -4,7 +4,6 @@ import { CoursesRepositoryInMemory } from "@modules/activityRegulation/repositor
 import { InstitutionsRepositoryInMemory } from "@modules/activityRegulation/repositories/inMemory/InstitutionsRepositoryInMemory";
 import { AppError } from "@shared/errors/AppError";
 
-import { CreateInstitutionUseCase } from "../../institutions/createInstitution/CreateInstitutionUseCase";
 import { CreateCourseUseCase } from "../createCourse/CreateCourseUseCase";
 import { FindCourseByIdUseCase } from "./FindCourseByIdUseCase";
 
@@ -22,7 +21,6 @@ describe("Find Course By Id", () => {
 
     createCourseUseCase = new CreateCourseUseCase(
       coursesRepositoryInMemory,
-      institutionsRepositoryInMemory,
       usersRepositoryInMemory,
     );
 
@@ -44,7 +42,10 @@ describe("Find Course By Id", () => {
       course,
     );
 
-    course = await coursesRepositoryInMemory.findByName(course.name);
+    course = await coursesRepositoryInMemory.findByNameAndInstitutionId(
+      course.name,
+      "a79e1e38-62bf-5223-9be4-f5081c33eec7",
+    );
 
     const courseFoundById = await findCourseByIdUseCase.execute(
       "a79e1e38-62bf-5223-9be4-f5081c33eec7",

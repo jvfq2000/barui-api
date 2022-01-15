@@ -8,14 +8,7 @@ interface IUsersRepository {
   save(data: ISaveUserDTO): Promise<void>;
   findByEmail(email: string): Promise<User>;
   findById(id: string): Promise<User>;
-  list({
-    userId,
-    institutionId,
-    page,
-    registersPerPage,
-    filter,
-    isActive,
-  }: IGeneralListDTO): Promise<IListUsersDTO>;
-  listByInstitutionId(institutionId): Promise<User[]>;
+  list(data: IGeneralListDTO): Promise<IListUsersDTO>;
+  listByInstitutionId(institutionId: string): Promise<User[]>;
 }
 export { IUsersRepository };

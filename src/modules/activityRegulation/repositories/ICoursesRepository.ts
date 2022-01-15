@@ -6,16 +6,13 @@ import { Course } from "../infra/typeorm/entities/Course";
 
 interface ICoursesRepository {
   save(data: ISaveCourseDTO): Promise<void>;
-  findByName(name: string): Promise<Course>;
   findById(id: string): Promise<Course>;
+  findByNameAndInstitutionId(
+    name: string,
+    institutionId: string,
+  ): Promise<Course>;
   listByInstitutionId(institutionId: string): Promise<Course[]>;
-  list({
-    institutionId,
-    page,
-    registersPerPage,
-    filter,
-    isActive,
-  }: IGeneralListDTO): Promise<IListCoursesDTO>;
+  list(data: IGeneralListDTO): Promise<IListCoursesDTO>;
 }
 
 export { ICoursesRepository };

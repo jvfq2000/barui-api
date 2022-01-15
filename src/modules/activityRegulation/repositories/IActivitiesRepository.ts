@@ -1,3 +1,5 @@
+import { IGeneralListDTO } from "@utils/IGeneralListDTO";
+
 import { IListActivitiesDTO } from "../dtos/activity/IListActivitiesDTO";
 import { ISaveActivityDTO } from "../dtos/activity/ISaveActivityDTO";
 import { Activity } from "../infra/typeorm/entities/Activity";
@@ -10,11 +12,7 @@ interface IActivitiesRepository {
     chartId: string,
     categoryId: string,
   ): Promise<Activity[]>;
-  list(
-    page: number,
-    registersPerPage: number,
-    filter: string,
-  ): Promise<IListActivitiesDTO>;
+  list(data: IGeneralListDTO): Promise<IListActivitiesDTO>;
 }
 
 export { IActivitiesRepository };

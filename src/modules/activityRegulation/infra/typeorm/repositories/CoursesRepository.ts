@@ -32,9 +32,11 @@ class CoursesRepository implements ICoursesRepository {
     await this.repository.save(course);
   }
 
-  async findByName(name: string): Promise<Course> {
-    const course = await this.repository.findOne({ name });
-
+  async findByNameAndInstitutionId(
+    name: string,
+    institutionId: string,
+  ): Promise<Course> {
+    const course = await this.repository.findOne({ name, institutionId });
     return course;
   }
 

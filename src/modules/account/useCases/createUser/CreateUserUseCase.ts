@@ -55,7 +55,12 @@ class CreateUserUseCase {
       throw new AppError("Campus não encontrado.");
     }
 
-    const passwordHash = await hash(identifier, 8);
+    const identifierFormatted = identifier
+      .replace(".", "")
+      .replace(".", "")
+      .replace("-", "");
+
+    const passwordHash = await hash(identifierFormatted, 8);
 
     await this.usersRepository.save({
       name,

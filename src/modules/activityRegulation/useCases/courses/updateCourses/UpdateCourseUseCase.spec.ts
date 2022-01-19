@@ -32,7 +32,6 @@ describe("Update Course", () => {
 
     updateCourseUseCase = new UpdateCourseUseCase(
       coursesRepositoryInMemory,
-      institutionsRepositoryInMemory,
       usersRepositoryInMemory,
     );
   });

@@ -52,7 +52,6 @@ class ListUsersUseCase {
       isActive,
     });
     const formattedUsers: IUserResponseDTO[] = [];
-    const totalCountIsActive = totalCount;
 
     const usersPromise = users.map(async user => {
       const fullUser = user;
@@ -84,7 +83,7 @@ class ListUsersUseCase {
 
     await Promise.all(usersPromise);
 
-    return { users: formattedUsers, totalCount: totalCountIsActive };
+    return { users: formattedUsers, totalCount };
   }
 }
 

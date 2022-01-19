@@ -1,7 +1,7 @@
 interface ISaveActivityCategoryDTO {
   id?: string;
   name: string;
-  institutionId: string;
+  institutionId?: string;
   isActive?: boolean;
 }
 

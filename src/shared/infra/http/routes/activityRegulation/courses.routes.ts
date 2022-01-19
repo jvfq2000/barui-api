@@ -3,7 +3,7 @@ import { Router } from "express";
 import { CreateCourseController } from "@modules/activityRegulation/useCases/courses/createCourse/CreateCourseController";
 import { FindCourseByIdController } from "@modules/activityRegulation/useCases/courses/findCourseById/FindCourseByIdController";
 import { ListCoursesController } from "@modules/activityRegulation/useCases/courses/listCourses/ListCoursesController";
-import { ListCoursesByInstitutionIdController } from "@modules/activityRegulation/useCases/courses/listCoursesByInstitutionId/ListCoursesInstitutionsIdController";
+import { ListCoursesByInstitutionIdController } from "@modules/activityRegulation/useCases/courses/listCoursesByInstitutionId/ListCoursesInstitutionIdController";
 import { ModifyIsActiveCourseController } from "@modules/activityRegulation/useCases/courses/modifyIsActiveCourse/ModifyIsActiveCourseController";
 import { UpdateCourseController } from "@modules/activityRegulation/useCases/courses/updateCourses/UpdateCourseController";
 

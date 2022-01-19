@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["ES2021.String"],
     "target": "es5",
     "module": "commonjs",
     "strictPropertyInitialization": false,

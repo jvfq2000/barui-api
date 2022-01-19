@@ -7,7 +7,7 @@ class UpdateCourseController {
   async handle(request: Request, response: Response): Promise<Response> {
     const adminId = request.user.id;
     const { courseId } = request.query;
-    const { name, numberPeriods, institutionId } = request.body;
+    const { name, numberPeriods } = request.body;
 
     const updateCourseUseCase = container.resolve(UpdateCourseUseCase);
 
@@ -15,7 +15,6 @@ class UpdateCourseController {
       id: String(courseId),
       name,
       numberPeriods,
-      institutionId,
     });
 
     return response.json(course);

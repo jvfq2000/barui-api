@@ -16,20 +16,6 @@ describe("Update Course Controller", () => {
     connection = await createConnection();
     await connection.runMigrations();
 
-    const password = await hash("h08f563J", 8);
-
-    await connection.query(
-      `INSERT INTO
-          "user"(id, name, last_name, password, email, identifier, access_level)
-          VALUES('${uuidV4()}', 'Ruby Barnett', 'Max Hammond', '${password}', 'bora@ruc.cw', '88471531365', 'coordenador de curso')`,
-    );
-
-    await connection.query(
-      `INSERT INTO
-          "user"(id, name, last_name, password, email, identifier, access_level)
-          VALUES('${uuidV4()}', 'Eddie Clayton', 'Gavin Terry', '${password}', 'tan@tihuhoh.la', '38770871889', 'administrador geral')`,
-    );
-
     const city = await connection.manager.findOne(City, { name: "Arinos" });
 
     await connection.query(
@@ -42,6 +28,20 @@ describe("Update Course Controller", () => {
       `INSERT INTO
           "course"(id, name, number_periods, institution_id)
           VALUES('${courseId}', 'Bacharelado em Sistemas de Informação', 8, '${institutionId}')`,
+    );
+
+    const password = await hash("h08f563J", 8);
+
+    await connection.query(
+      `INSERT INTO
+          "user"(id, name, last_name, password, email, identifier, access_level, institution_id, course_id)
+          VALUES('${uuidV4()}', 'Ruby Barnett', 'Max Hammond', '${password}', 'bora@ruc.cw', '88471531365', 'coordenador de curso', '${institutionId}', '${courseId}')`,
+    );
+
+    await connection.query(
+      `INSERT INTO
+          "user"(id, name, last_name, password, email, identifier, access_level, institution_id, course_id)
+          VALUES('${uuidV4()}', 'Eddie Clayton', 'Gavin Terry', '${password}', 'tan@tihuhoh.la', '38770871889', 'administrador geral', '${institutionId}', '${courseId}')`,
     );
   });
 
@@ -63,7 +63,6 @@ describe("Update Course Controller", () => {
       .send({
         name: "Sistemas de Informação",
         numberPeriods: 6,
-        institutionId,
       })
       .set({
         Authorization: `Bearer ${token}`,
@@ -85,7 +84,6 @@ describe("Update Course Controller", () => {
       .send({
         name: "Sistemas de Informação",
         numberPeriods: 6,
-        institutionId,
       })
       .set({
         Authorization: `Bearer ${token}`,
@@ -100,7 +98,6 @@ describe("Update Course Controller", () => {
       .send({
         name: "Sistemas de Informação",
         numberPeriods: 6,
-        institutionId,
       });
 
     expect(responseUpdateCourse.status).toBe(401);

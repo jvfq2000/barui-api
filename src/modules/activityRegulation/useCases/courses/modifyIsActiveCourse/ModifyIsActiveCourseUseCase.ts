@@ -32,6 +32,7 @@ class ModifyIsActiveCourseUseCase {
         401,
       );
     }
+
     course.isActive = !course.isActive;
 
     await this.coursesRepository.save(course);

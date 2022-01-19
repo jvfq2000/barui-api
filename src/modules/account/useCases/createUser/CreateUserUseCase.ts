@@ -1,4 +1,5 @@
 import { hash } from "bcrypt";
+import replaceAllInserter from "string.prototype.replaceall";
 import { inject, injectable } from "tsyringe";
 
 import { ISaveUserDTO } from "@modules/account/dtos/ISaveUserDTO";
@@ -14,7 +15,9 @@ class CreateUserUseCase {
     private usersRepository: IUsersRepository,
     @inject("InstitutionsRepository")
     private institutionsRepository: IInstitutionsRepository,
-  ) {}
+  ) {
+    replaceAllInserter.shim();
+  }
 
   async execute(
     adminId: string,
@@ -56,9 +59,8 @@ class CreateUserUseCase {
     }
 
     const identifierFormatted = identifier
-      .replace(".", "")
-      .replace(".", "")
-      .replace("-", "");
+      .replaceAll(".", "")
+      .replaceAll("-", "");
 
     const passwordHash = await hash(identifierFormatted, 8);
 

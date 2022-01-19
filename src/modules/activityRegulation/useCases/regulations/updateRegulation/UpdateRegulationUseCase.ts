@@ -44,9 +44,10 @@ class UpdateRegulationUseCase {
       throw new AppError("Regulamento não encontrado.");
     }
 
-    await this.storageProvider.delete(regulation.file, "regulation");
-
-    await this.storageProvider.save(file, "regulation");
+    if (file) {
+      await this.storageProvider.delete(regulation.file, "regulation");
+      await this.storageProvider.save(file, "regulation");
+    }
 
     await this.regulationsRepository.save({
       id,

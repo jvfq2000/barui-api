@@ -6,8 +6,12 @@ import { ActivityCategory } from "../infra/typeorm/entities/ActivityCategory";
 
 interface IActivityCategoriesRepository {
   save(data: ISaveActivityCategoryDTO): Promise<void>;
-  findByName(name: string): Promise<ActivityCategory>;
+  findByNameAndInstitutionId(
+    name: string,
+    institutionId: string,
+  ): Promise<ActivityCategory>;
   findById(id: string): Promise<ActivityCategory>;
+  listByInstitutionId(institutionId: string): Promise<ActivityCategory[]>;
   list(data: IGeneralListDTO): Promise<IListActivityCategoriesDTO>;
 }
 

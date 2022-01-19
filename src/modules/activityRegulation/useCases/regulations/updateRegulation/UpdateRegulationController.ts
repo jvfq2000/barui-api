@@ -6,7 +6,7 @@ import { UpdateRegulationUseCase } from "./UpdateRegulationUseCase";
 class UpdateRegulationController {
   async handle(request: Request, response: Response): Promise<Response> {
     const userId = request.user.id;
-    const file = request.file.filename;
+    const file = request.file?.filename;
 
     const { name, inForceFrom, courseId } = request.body;
     const { regulationId } = request.query;

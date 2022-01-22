@@ -4,11 +4,15 @@ import { UsersRepository } from "@modules/account/infra/typeorm/repositories/Use
 import { UsersTokensRepository } from "@modules/account/infra/typeorm/repositories/UsersTokensRepository";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { IUsersTokensRepository } from "@modules/account/repositories/IUsersTokensRepository";
+import { ActivitiesRepository } from "@modules/activityRegulation/infra/typeorm/repositories/ActivitiesRepository";
 import { ActivityCategoriesRepository } from "@modules/activityRegulation/infra/typeorm/repositories/ActivityCategoriesRepository";
+import { ChartsRepository } from "@modules/activityRegulation/infra/typeorm/repositories/ChartsRepository";
 import { CoursesRepository } from "@modules/activityRegulation/infra/typeorm/repositories/CoursesRepository";
 import { InstitutionsRepository } from "@modules/activityRegulation/infra/typeorm/repositories/InstitutionsRepository";
 import { RegulationsRepository } from "@modules/activityRegulation/infra/typeorm/repositories/RegulationsRepository";
+import { IActivitiesRepository } from "@modules/activityRegulation/repositories/IActivitiesRepository";
 import { IActivityCategoriesRepository } from "@modules/activityRegulation/repositories/IActivityCategoriesRepository";
+import { IChartsRepository } from "@modules/activityRegulation/repositories/IChartsRepository";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { IRegulationsRepository } from "@modules/activityRegulation/repositories/IRegulationsRepository";
@@ -55,4 +59,14 @@ container.registerSingleton<IRegulationsRepository>(
 container.registerSingleton<IActivityCategoriesRepository>(
   "ActivityCategoriesRepository",
   ActivityCategoriesRepository,
+);
+
+container.registerSingleton<IChartsRepository>(
+  "ChartsRepository",
+  ChartsRepository,
+);
+
+container.registerSingleton<IActivitiesRepository>(
+  "ActivitiesRepository",
+  ActivitiesRepository,
 );

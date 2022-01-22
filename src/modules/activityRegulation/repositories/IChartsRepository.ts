@@ -6,9 +6,8 @@ import { Chart } from "../infra/typeorm/entities/Chart";
 
 interface IChartsRepository {
   save(data: ISaveChartDTO): Promise<void>;
-  findByName(name: string): Promise<Chart>;
   findById(id: string): Promise<Chart>;
-  listByCourseId(courseId: string): Promise<Chart[]>;
+  findByNameAndCourseId(name: string, courseId: string): Promise<Chart>;
   list(data: IGeneralListDTO): Promise<IListChartsDTO>;
 }
 

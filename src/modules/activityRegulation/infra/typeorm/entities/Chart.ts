@@ -18,6 +18,9 @@ class Chart {
   @Column()
   name: string;
 
+  @Column({ name: "in_force_from" })
+  inForceFrom: string;
+
   @Column({ name: "course_id" })
   courseId: string;
 

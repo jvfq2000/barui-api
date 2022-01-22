@@ -46,6 +46,10 @@ class UsersRepository implements IUsersRepository {
       isActive,
     });
 
+    if (user.courseId === "") {
+      user.courseId = null;
+    }
+
     await this.repository.save(user);
   }
 

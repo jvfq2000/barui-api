@@ -4,6 +4,7 @@ import { authenticateRoutes } from "./account/authenticate.routes";
 import { passwordRoutes } from "./account/password.routes";
 import { usersRoutes } from "./account/users.routes";
 import { activityCategoriesRoutes } from "./activityRegulation/activityCategories.routes";
+import { chartsRoutes } from "./activityRegulation/charts.routes";
 import { coursesRoutes } from "./activityRegulation/courses.routes";
 import { institutionsRoutes } from "./activityRegulation/institutions.routes";
 import { regulationsRoutes } from "./activityRegulation/regulations.routes";
@@ -21,5 +22,6 @@ router.use("/institutions", institutionsRoutes);
 router.use("/courses", coursesRoutes);
 router.use("/regulations", regulationsRoutes);
 router.use("/activity-categories", activityCategoriesRoutes);
+router.use("/charts", chartsRoutes);
 
 export { router };

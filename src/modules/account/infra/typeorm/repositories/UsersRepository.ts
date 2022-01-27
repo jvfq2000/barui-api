@@ -46,7 +46,7 @@ class UsersRepository implements IUsersRepository {
       isActive,
     });
 
-    if (user.courseId === "") {
+    if (!user.courseId) {
       user.courseId = null;
     }
 

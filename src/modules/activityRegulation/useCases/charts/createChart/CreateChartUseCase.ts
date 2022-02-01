@@ -23,7 +23,7 @@ class CreateChartUseCase {
     adminId: string,
     { name, inForceFrom, courseId, activities }: ISaveChartDTO,
   ): Promise<void> {
-    if (!activities) {
+    if (!activities || activities.length === 0) {
       throw new AppError(
         "Por favor, informe as atividades complementares deste quadro.",
       );

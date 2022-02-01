@@ -36,20 +36,6 @@ class ActivitiesRepository implements IActivitiesRepository {
     return activity;
   }
 
-  async findByNameAndChartIdAndCategoryId(
-    name: string,
-    chartId: string,
-    categoryId: string,
-  ): Promise<Activity> {
-    const activity = await this.repository.findOne({
-      name,
-      chartId,
-      categoryId,
-    });
-
-    return activity;
-  }
-
   async listByChartIdAndCategoryId(
     chartId: string,
     categoryId: string,

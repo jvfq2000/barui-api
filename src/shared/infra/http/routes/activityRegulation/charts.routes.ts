@@ -4,12 +4,14 @@ import { CreateChartController } from "@modules/activityRegulation/useCases/char
 import { FindChartByIdController } from "@modules/activityRegulation/useCases/charts/findChartById/FindChartByIdController";
 import { ListChartsController } from "@modules/activityRegulation/useCases/charts/listCharts/ListChartsController";
 import { ModifyIsActiveChartController } from "@modules/activityRegulation/useCases/charts/modifyIsActiveChart/ModifyIsActiveChartController";
+import { UpdateChartController } from "@modules/activityRegulation/useCases/charts/updateChart/UpdateChartController";
 
 import { ensureAuthenticated } from "../../middlewares/ensureAuthenticated";
 import { ensureInstitutionAdmin } from "../../middlewares/ensureInstitutionAdmin";
 
 const listChartsController = new ListChartsController();
 const createChartController = new CreateChartController();
+const updateChartController = new UpdateChartController();
 const findChartByIdController = new FindChartByIdController();
 const modifyIsActiveChartController = new ModifyIsActiveChartController();
 
@@ -34,6 +36,13 @@ chartsRoutes.get(
   ensureAuthenticated,
   ensureInstitutionAdmin,
   findChartByIdController.handle,
+);
+
+chartsRoutes.put(
+  "/",
+  ensureAuthenticated,
+  ensureInstitutionAdmin,
+  updateChartController.handle,
 );
 
 chartsRoutes.patch(

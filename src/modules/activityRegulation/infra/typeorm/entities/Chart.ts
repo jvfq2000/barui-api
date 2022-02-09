@@ -21,6 +21,9 @@ class Chart {
   @Column({ name: "in_force_from" })
   inForceFrom: string;
 
+  @Column({ name: "min_hours" })
+  minHours: number;
+
   @Column({ name: "course_id" })
   courseId: string;
 

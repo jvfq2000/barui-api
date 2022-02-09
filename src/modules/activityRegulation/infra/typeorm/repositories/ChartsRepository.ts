@@ -18,6 +18,7 @@ class ChartsRepository implements IChartsRepository {
     id,
     name,
     inForceFrom,
+    minHours,
     isActive,
     courseId,
   }: ISaveChartDTO): Promise<void> {
@@ -25,6 +26,7 @@ class ChartsRepository implements IChartsRepository {
       id,
       name,
       inForceFrom,
+      minHours,
       isActive,
       courseId,
     });
@@ -39,6 +41,42 @@ class ChartsRepository implements IChartsRepository {
 
   async findByNameAndCourseId(name: string, courseId: string): Promise<Chart> {
     const chart = await this.repository.findOne({ name, courseId });
+    return chart;
+  }
+
+  async findByStudentId(studentId: string): Promise<Chart> {
+    const chart = this.repository
+      .createQueryBuilder("chart")
+      .innerJoin("chart.course", "course")
+      .innerJoinAndSelect("course.user", "user", `user.id = ${studentId}`)
+
+      .where(
+        `
+          cast(split_part(chart.in_force_from, '/', 2) as integer)
+          <= cast(split_part(user.initial_semester, '/', 2) as integer)
+        `,
+      )
+      .andWhere(
+        `
+          cast(split_part(chart.in_force_from, '/', 1) as integer)
+          <= cast(split_part(user.initial_semester, '/', 1) as integer)
+        `,
+      )
+      .orWhere(
+        "to_char(student_activity.created_at, 'DD/MM/YYYY') like LOWER(:filter))",
+      )
+
+      .orderBy("student_activity.is_active = :is_active")
+      .orderBy(
+        "cast(split_part(chart.in_force_from, '/', 2) as integer)",
+        "DESC",
+      )
+      .addOrderBy(
+        "cast(split_part(chart.in_force_from, '/', 1) as integer)",
+        "DESC",
+      )
+      .getOne();
+
     return chart;
   }
 

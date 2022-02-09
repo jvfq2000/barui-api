@@ -4,6 +4,7 @@ interface IChartResponseDTO {
   id: string;
   name: string;
   inForceFrom: string;
+  minHours: number;
   isActive: boolean;
   createdAt: Date;
 

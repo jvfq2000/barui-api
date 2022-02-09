@@ -12,6 +12,7 @@ interface IActivityCategoriesRepository {
   ): Promise<ActivityCategory>;
   findById(id: string): Promise<ActivityCategory>;
   listByInstitutionId(institutionId: string): Promise<ActivityCategory[]>;
+  listByChartId(chartId: string): Promise<ActivityCategory[]>;
   list(data: IGeneralListDTO): Promise<IListActivityCategoriesDTO>;
 }
 

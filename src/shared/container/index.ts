@@ -16,6 +16,10 @@ import { IChartsRepository } from "@modules/activityRegulation/repositories/ICha
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
 import { IInstitutionsRepository } from "@modules/activityRegulation/repositories/IInstitutionsRepository";
 import { IRegulationsRepository } from "@modules/activityRegulation/repositories/IRegulationsRepository";
+import { HistoricStudentActivitiesRepository } from "@modules/studentActivity/infra/typeorm/repositories/HistoricStudentActivitiesRepository";
+import { StudentActivitiesRepository } from "@modules/studentActivity/infra/typeorm/repositories/StudentActivitiesRepository";
+import { IHistoricStudentActivitiesRepository } from "@modules/studentActivity/repositories/IHistoricStudentActivitiesRepository";
+import { IStudentActivitiesRepository } from "@modules/studentActivity/repositories/IStudentActivitiesRepository";
 import { CitiesRepository } from "@modules/territory/infra/typeorm/repositories/CitiesRepository";
 import { StatesRepository } from "@modules/territory/infra/typeorm/repositories/StateRepository";
 import { ICitiesRepository } from "@modules/territory/repositories/ICitiesRepository";
@@ -69,4 +73,14 @@ container.registerSingleton<IChartsRepository>(
 container.registerSingleton<IActivitiesRepository>(
   "ActivitiesRepository",
   ActivitiesRepository,
+);
+
+container.registerSingleton<IStudentActivitiesRepository>(
+  "StudentActivitiesRepository",
+  StudentActivitiesRepository,
+);
+
+container.registerSingleton<IHistoricStudentActivitiesRepository>(
+  "HistoricStudentActivitiesRepository",
+  HistoricStudentActivitiesRepository,
 );

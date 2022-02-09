@@ -11,6 +11,7 @@ class ChartMap {
       id: chart.id,
       name: chart.name,
       inForceFrom: chart.inForceFrom,
+      minHours: chart.minHours,
       isActive: chart.isActive,
       createdAt: chart.createdAt,
 

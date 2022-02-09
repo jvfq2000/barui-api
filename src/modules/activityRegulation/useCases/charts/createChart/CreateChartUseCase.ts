@@ -21,7 +21,7 @@ class CreateChartUseCase {
   ) {}
   async execute(
     adminId: string,
-    { name, inForceFrom, courseId, activities }: ISaveChartDTO,
+    { name, inForceFrom, minHours, courseId, activities }: ISaveChartDTO,
   ): Promise<void> {
     if (!activities || activities.length === 0) {
       throw new AppError(
@@ -55,6 +55,7 @@ class CreateChartUseCase {
     await this.chartsRepository.save({
       name,
       inForceFrom,
+      minHours,
       courseId: newCorseId,
     });
 

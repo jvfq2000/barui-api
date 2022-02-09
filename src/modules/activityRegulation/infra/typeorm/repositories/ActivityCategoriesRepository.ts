@@ -67,6 +67,19 @@ class ActivityCategoriesRepository implements IActivityCategoriesRepository {
     return activityCategories;
   }
 
+  async listByChartId(chartId: string): Promise<ActivityCategory[]> {
+    const chart = this.repository
+      .createQueryBuilder("activity_category")
+      .innerJoin("activity_category.activity", "activity")
+      .innerJoinAndSelect("activity.chart", "chart", `chart.id = ${chartId}`)
+
+      .groupBy("activity_category.id")
+      .orderBy("activity_category.name", "ASC")
+      .getMany();
+
+    return chart;
+  }
+
   async list({
     institutionId,
     page,

@@ -6,13 +6,14 @@ import { CreateChartUseCase } from "./CreateChartUseCase";
 class CreateChartController {
   async handle(request: Request, response: Response): Promise<Response> {
     const userId = request.user.id;
-    const { name, inForceFrom, courseId, activities } = request.body;
+    const { name, inForceFrom, minHours, courseId, activities } = request.body;
 
     const createChartUseCase = container.resolve(CreateChartUseCase);
 
     await createChartUseCase.execute(userId, {
       name,
       inForceFrom,
+      minHours,
       courseId,
       activities,
     });

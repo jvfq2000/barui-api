@@ -21,7 +21,7 @@ class UpdateChartUseCase {
   ) {}
   async execute(
     adminId: string,
-    { id, name, inForceFrom, courseId, activities }: ISaveChartDTO,
+    { id, name, inForceFrom, minHours, courseId, activities }: ISaveChartDTO,
   ): Promise<void> {
     if (!activities || activities.length === 0) {
       throw new AppError(
@@ -54,6 +54,7 @@ class UpdateChartUseCase {
     Object.assign(chart, {
       name,
       inForceFrom,
+      minHours,
       courseId: newCorseId,
     });
 

@@ -8,6 +8,7 @@ import { chartsRoutes } from "./activityRegulation/charts.routes";
 import { coursesRoutes } from "./activityRegulation/courses.routes";
 import { institutionsRoutes } from "./activityRegulation/institutions.routes";
 import { regulationsRoutes } from "./activityRegulation/regulations.routes";
+import { studentActivitiesRoutes } from "./studentActivity/studentActivities.routes";
 import { citiesRoutes } from "./territory/cities.routes";
 import { statesRoutes } from "./territory/states.routes";
 
@@ -23,5 +24,6 @@ router.use("/courses", coursesRoutes);
 router.use("/regulations", regulationsRoutes);
 router.use("/activity-categories", activityCategoriesRoutes);
 router.use("/charts", chartsRoutes);
+router.use("/student-activities", studentActivitiesRoutes);
 
 export { router };

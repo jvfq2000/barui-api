@@ -8,6 +8,7 @@ interface IChartsRepository {
   save(data: ISaveChartDTO): Promise<void>;
   findById(id: string): Promise<Chart>;
   findByNameAndCourseId(name: string, courseId: string): Promise<Chart>;
+  findByStudentId(studentId: string): Promise<Chart>;
   list(data: IGeneralListDTO): Promise<IListChartsDTO>;
 }
 

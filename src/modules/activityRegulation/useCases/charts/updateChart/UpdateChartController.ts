@@ -6,7 +6,8 @@ import { UpdateChartUseCase } from "./UpdateChartUseCase";
 class UpdateChartController {
   async handle(request: Request, response: Response): Promise<Response> {
     const userId = request.user.id;
-    const { id, name, inForceFrom, courseId, activities } = request.body;
+    const { id, name, inForceFrom, minHours, courseId, activities } =
+      request.body;
 
     const updateChartUseCase = container.resolve(UpdateChartUseCase);
 
@@ -14,6 +15,7 @@ class UpdateChartController {
       id,
       name,
       inForceFrom,
+      minHours,
       courseId,
       activities,
     });

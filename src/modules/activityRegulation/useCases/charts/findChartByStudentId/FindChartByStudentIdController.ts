@@ -11,9 +11,9 @@ class FindChartByStudentIdController {
       FindChartByStudentIdUseCase,
     );
 
-    await findChartByStudentIdUseCase.execute(userId);
+    const chart = await findChartByStudentIdUseCase.execute(userId);
 
-    return response.status(201).send();
+    return response.status(200).json(chart);
   }
 }
 

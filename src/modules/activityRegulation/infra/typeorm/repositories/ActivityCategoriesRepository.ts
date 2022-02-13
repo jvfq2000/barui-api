@@ -5,7 +5,9 @@ import { ISaveActivityCategoryDTO } from "@modules/activityRegulation/dtos/activ
 import { IActivityCategoriesRepository } from "@modules/activityRegulation/repositories/IActivityCategoriesRepository";
 import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 
+import { Activity } from "../entities/Activity";
 import { ActivityCategory } from "../entities/ActivityCategory";
+import { Chart } from "../entities/Chart";
 
 class ActivityCategoriesRepository implements IActivityCategoriesRepository {
   private repository: Repository<ActivityCategory>;
@@ -68,16 +70,33 @@ class ActivityCategoriesRepository implements IActivityCategoriesRepository {
   }
 
   async listByChartId(chartId: string): Promise<ActivityCategory[]> {
-    const chart = this.repository
+    const activityCategories = this.repository
       .createQueryBuilder("activity_category")
-      .innerJoin("activity_category.activity", "activity")
-      .innerJoinAndSelect("activity.chart", "chart", `chart.id = ${chartId}`)
+      .innerJoinAndSelect(
+        Activity,
+        "activity",
+        "activity.category_id = activity_category.id",
+      )
+      .innerJoinAndSelect(
+        Chart,
+        "chart",
+        `chart.id = activity.chart_id and chart.id = '${chartId}'`,
+      )
+      .select([
+        "activity_category.id",
+        "activity_category.name",
+        "activity_category.institution_id",
+        "activity_category.is_active",
+        "activity_category.created_at",
+      ])
+
+      .where("activity_category.is_active = true")
 
       .groupBy("activity_category.id")
       .orderBy("activity_category.name", "ASC")
       .getMany();
 
-    return chart;
+    return activityCategories;
   }
 
   async list({
@@ -112,9 +131,9 @@ class ActivityCategoriesRepository implements IActivityCategoriesRepository {
     }
 
     const activityCategories = await baseQuery
+      .orderBy("activity_category.name")
       .skip(registersPerPage * (page - 1))
       .take(registersPerPage)
-      .orderBy("activity_category.name")
       .getMany();
 
     const totalCount = await baseQuery.getCount();

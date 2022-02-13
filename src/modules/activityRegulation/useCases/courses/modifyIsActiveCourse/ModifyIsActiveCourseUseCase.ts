@@ -18,7 +18,7 @@ class ModifyIsActiveCourseUseCase {
     const course = await this.coursesRepository.findById(courseId);
 
     if (!course) {
-      throw new AppError("Campus não encontrado.");
+      throw new AppError("Curso não encontrado.");
     }
 
     const adminUser = await this.usersRepository.findById(adminId);

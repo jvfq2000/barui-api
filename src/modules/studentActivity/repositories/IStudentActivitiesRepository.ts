@@ -1,4 +1,3 @@
-import { Chart } from "@modules/activityRegulation/infra/typeorm/entities/Chart";
 import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 
 import { IListStudentActivitiesDTO } from "../dtos/studentActivity/IListStudentActivitiesDTO";

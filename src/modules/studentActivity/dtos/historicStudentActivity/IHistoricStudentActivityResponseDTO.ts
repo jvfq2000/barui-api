@@ -1,4 +1,4 @@
-interface IStudentActivityResponseDTO {
+interface IHistoricStudentActivityResponseDTO {
   id: string;
   action: string;
   field: string;
@@ -13,4 +13,4 @@ interface IStudentActivityResponseDTO {
   studentActivityName: string;
 }
 
-export { IStudentActivityResponseDTO };
+export { IHistoricStudentActivityResponseDTO };

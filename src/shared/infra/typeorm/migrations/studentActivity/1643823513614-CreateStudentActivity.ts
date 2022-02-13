@@ -20,6 +20,10 @@ export class CreateStudentActivity1643823513614 implements MigrationInterface {
             type: "integer",
           },
           {
+            name: "semester",
+            type: "varchar",
+          },
+          {
             name: "is_certified",
             type: "boolean",
           },
@@ -31,11 +35,6 @@ export class CreateStudentActivity1643823513614 implements MigrationInterface {
           {
             name: "approved_hours",
             type: "integer",
-            isNullable: true,
-          },
-          {
-            name: "coordinator_visa",
-            type: "boolean",
             isNullable: true,
           },
           {

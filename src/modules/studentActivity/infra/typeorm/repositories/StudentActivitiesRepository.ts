@@ -18,9 +18,9 @@ class StudentActivitiesRepository implements IStudentActivitiesRepository {
     id,
     description,
     hours,
+    semester,
     isCertified,
     approvedHours,
-    coordinatorVisa,
     file,
     justification,
     activityId,
@@ -31,9 +31,9 @@ class StudentActivitiesRepository implements IStudentActivitiesRepository {
       id,
       description,
       hours,
+      semester,
       isCertified,
       approvedHours,
-      coordinatorVisa,
       file,
       justification,
       activityId,
@@ -62,47 +62,30 @@ class StudentActivitiesRepository implements IStudentActivitiesRepository {
 
   async list({
     userId,
-    courseId,
-    institutionId,
     filter,
     page,
     registersPerPage,
     isActive,
   }: IGeneralListDTO): Promise<IListStudentActivitiesDTO> {
-    let baseQuery = this.repository
+    const baseQuery = this.repository
       .createQueryBuilder("student_activity")
 
       .where("(LOWER(student_activity.description) like LOWER(:filter)")
+      .orWhere("LOWER(student_activity.semester) like LOWER(:filter)")
       .orWhere(
         "to_char(student_activity.created_at, 'DD/MM/YYYY') like LOWER(:filter))",
       )
       .andWhere("student_activity.is_active = :is_active")
+      .andWhere("student_activity.user_id = :user_id")
 
       .setParameter("filter", `%${filter}%`)
-      .setParameter("is_active", isActive);
-
-    if (userId) {
-      baseQuery = baseQuery
-        .andWhere("student_activity.user_id = :user_id")
-        .setParameter("user_id", userId);
-    }
-
-    if (institutionId) {
-      baseQuery = baseQuery
-        .andWhere("student_activity.user.institution_id = :institution_id")
-        .setParameter("institution_id", institutionId);
-    }
-
-    if (courseId) {
-      baseQuery = baseQuery
-        .andWhere("student_activity.user.course_id = :course_id")
-        .setParameter("course_id", courseId);
-    }
+      .setParameter("is_active", isActive)
+      .setParameter("user_id", userId);
 
     const studentActivities = await baseQuery
+      .orderBy("student_activity.description")
       .skip(registersPerPage * (page - 1))
       .take(registersPerPage)
-      .orderBy("student_activity.description")
       .getMany();
 
     const totalCount = await baseQuery.getCount();

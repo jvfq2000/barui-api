@@ -7,8 +7,14 @@ class CreateStudentActivityController {
   async handle(request: Request, response: Response): Promise<Response> {
     const userId = request.user.id;
     const file = request.file.filename;
-    const { description, hours, isCertified, justification, activityId } =
-      request.body;
+    const {
+      description,
+      hours,
+      semester,
+      isCertified,
+      justification,
+      activityId,
+    } = request.body;
 
     const createStudentActivityUseCase = container.resolve(
       CreateStudentActivityUseCase,
@@ -17,6 +23,7 @@ class CreateStudentActivityController {
     await createStudentActivityUseCase.execute({
       description,
       hours,
+      semester,
       isCertified,
       file,
       justification,

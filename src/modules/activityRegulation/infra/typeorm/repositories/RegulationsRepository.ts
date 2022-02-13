@@ -93,9 +93,9 @@ class RegulationsRepository implements IRegulationsRepository {
     }
 
     const regulations = await baseQuery
+      .orderBy("regulation.name")
       .skip(registersPerPage * (page - 1))
       .take(registersPerPage)
-      .orderBy("regulation.name")
       .getMany();
 
     const totalCount = await baseQuery.getCount();

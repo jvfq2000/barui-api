@@ -94,9 +94,9 @@ class CoursesRepository implements ICoursesRepository {
     }
 
     const courses = await baseQuery
+      .orderBy("course.name")
       .skip(registersPerPage * (page - 1))
       .take(registersPerPage)
-      .orderBy("course.name")
       .getMany();
 
     const totalCount = await baseQuery.getCount();

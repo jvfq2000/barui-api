@@ -22,6 +22,9 @@ class StudentActivity {
   @Column()
   hours: number;
 
+  @Column()
+  semester: string;
+
   @Column({ name: "is_certified" })
   isCertified: boolean;
 
@@ -30,9 +33,6 @@ class StudentActivity {
 
   @Column({ name: "approved_hours" })
   approvedHours: number;
-
-  @Column({ name: "coordinator_visa" })
-  coordinatorVisa: boolean;
 
   @Column()
   file: string;

@@ -1,5 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 
+import { User } from "@modules/account/infra/typeorm/entities/User";
 import { IListChartsDTO } from "@modules/activityRegulation/dtos/chart/IListChartsDTO";
 import { ISaveChartDTO } from "@modules/activityRegulation/dtos/chart/ISaveChartDTO";
 import { IChartsRepository } from "@modules/activityRegulation/repositories/IChartsRepository";
@@ -48,7 +49,20 @@ class ChartsRepository implements IChartsRepository {
     const chart = this.repository
       .createQueryBuilder("chart")
       .innerJoin("chart.course", "course")
-      .innerJoinAndSelect("course.user", "user", `user.id = ${studentId}`)
+      .innerJoinAndSelect(
+        User,
+        "user",
+        `user.course_id = course.id and user.id = '${studentId}'`,
+      )
+      .select([
+        "chart.id",
+        "chart.name",
+        "chart.in_force_from",
+        "chart.min_hours",
+        "chart.course_id",
+        "chart.is_active",
+        "chart.created_at",
+      ])
 
       .where(
         `
@@ -62,9 +76,7 @@ class ChartsRepository implements IChartsRepository {
           <= cast(split_part(user.initial_semester, '/', 1) as integer)
         `,
       )
-      .orWhere(
-        "to_char(student_activity.created_at, 'DD/MM/YYYY') like LOWER(:filter))",
-      )
+      .andWhere("chart.is_active = true")
 
       .orderBy("student_activity.is_active = :is_active")
       .orderBy(
@@ -120,9 +132,9 @@ class ChartsRepository implements IChartsRepository {
     }
 
     const charts = await baseQuery
+      .orderBy("chart.name")
       .skip(registersPerPage * (page - 1))
       .take(registersPerPage)
-      .orderBy("chart.name")
       .getMany();
 
     const totalCount = await baseQuery.getCount();

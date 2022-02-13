@@ -9,7 +9,6 @@ import { IActivitiesRepository } from "@modules/activityRegulation/repositories/
 import { IActivityCategoriesRepository } from "@modules/activityRegulation/repositories/IActivityCategoriesRepository";
 import { IChartsRepository } from "@modules/activityRegulation/repositories/IChartsRepository";
 import { ICoursesRepository } from "@modules/activityRegulation/repositories/ICoursesRepository";
-import { IStudentActivitiesRepository } from "@modules/studentActivity/repositories/IStudentActivitiesRepository";
 import { AppError } from "@shared/errors/AppError";
 
 @injectable()

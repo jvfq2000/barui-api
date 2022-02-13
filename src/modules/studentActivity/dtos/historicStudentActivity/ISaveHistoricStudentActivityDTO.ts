@@ -5,6 +5,7 @@ interface ISaveHistoricStudentActivityDTO {
   later?: string;
   userId: string;
   studentActivityId: string;
+  createdAt?: Date;
 }
 
 export { ISaveHistoricStudentActivityDTO };

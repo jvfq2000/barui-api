@@ -22,6 +22,7 @@ class CreateStudentActivityUseCase {
   async execute({
     description,
     hours,
+    semester,
     isCertified,
     file,
     justification,
@@ -55,6 +56,7 @@ class CreateStudentActivityUseCase {
     await this.studentActivitiesRepository.save({
       description,
       hours,
+      semester,
       isCertified,
       file,
       justification,

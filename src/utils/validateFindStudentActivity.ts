@@ -1,4 +1,3 @@
-import { User } from "@modules/account/infra/typeorm/entities/User";
 import { IUsersRepository } from "@modules/account/repositories/IUsersRepository";
 import { StudentActivity } from "@modules/studentActivity/infra/typeorm/entities/StudentActivity";
 import { AppError } from "@shared/errors/AppError";
@@ -25,17 +24,15 @@ async function validateFindUserActivity({
     currentUser.id !== studentActivity.userId
   ) {
     throw new AppError("Você não tem permissão para realizar esta ação!", 401);
-  } else {
-    if (currentUser.accessLevel === accessLevel[0]) {
-      throw new AppError(
-        "Você não tem permissão para realizar esta ação!",
-        401,
-      );
-    }
+  }
 
+  if (userId) {
     const user = await usersRepository.findById(userId);
 
-    if (user.accessLevel !== accessLevel[0]) {
+    if (
+      currentUser.accessLevel !== accessLevel[0] &&
+      user.accessLevel !== accessLevel[0]
+    ) {
       throw new AppError(
         "Não é possível alterar atividades de um usuário, que não seja aluno.",
       );

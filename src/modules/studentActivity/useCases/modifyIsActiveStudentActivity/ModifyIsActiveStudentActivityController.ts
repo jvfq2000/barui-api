@@ -14,8 +14,8 @@ class ModifyIsActiveStudentActivityController {
 
     await modifyIsActiveStudentActivityUseCase.execute({
       currentUserId: String(currentUserId),
-      userId: String(userId),
-      studentActivityId: String(studentActivityId),
+      userId: userId ? String(userId) : null,
+      studentActivityId: studentActivityId ? String(studentActivityId) : null,
     });
 
     return response.status(204).send();

@@ -24,7 +24,7 @@ class CreateStudentActivityController {
       description,
       hours,
       semester,
-      isCertified,
+      isCertified: isCertified === "true",
       file,
       justification,
       activityId,

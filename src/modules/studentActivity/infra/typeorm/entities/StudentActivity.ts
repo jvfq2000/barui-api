@@ -62,6 +62,17 @@ class StudentActivity {
       this.id = uuidV4();
     }
   }
+
+  fileUrl(): string {
+    switch (process.env.DISK) {
+      case "local":
+        return `${process.env.API_URL}/activity/${this.file}`;
+      case "s3":
+        return `${process.env.AWS_BUCKET_URL}/activity/${this.file}`;
+      default:
+        return null;
+    }
+  }
 }
 
 export { StudentActivity };

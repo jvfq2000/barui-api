@@ -11,6 +11,7 @@ class StudentActivityMap {
       isCertified: studentActivity.isCertified,
       justification: studentActivity.justification,
       file: studentActivity.file,
+      fileUrl: studentActivity.fileUrl(),
       approvedHours: studentActivity.approvedHours,
       isActive: studentActivity.isActive,
       createdAt: studentActivity.createdAt,

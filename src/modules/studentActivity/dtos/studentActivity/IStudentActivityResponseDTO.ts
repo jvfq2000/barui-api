@@ -7,6 +7,7 @@ interface IStudentActivityResponseDTO {
   justification: string;
   approvedHours: number;
   file: string;
+  fileUrl: string;
   isActive: boolean;
   createdAt: Date;
 

@@ -6,12 +6,12 @@ import { ISaveStudentActivityDTO } from "@modules/studentActivity/dtos/studentAc
 import { IHistoricStudentActivitiesRepository } from "@modules/studentActivity/repositories/IHistoricStudentActivitiesRepository";
 import { IStudentActivitiesRepository } from "@modules/studentActivity/repositories/IStudentActivitiesRepository";
 import { IDateProvider } from "@shared/container/providers/DateProvider/IDateProvider";
+import { IStorageProvider } from "@shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "@shared/errors/AppError";
 import { validateFindUserActivity } from "@utils/validateFindStudentActivity";
 
 interface IRequest {
   currentUserId: string;
-  userId: string;
   studentActivityRequest: ISaveStudentActivityDTO;
 }
 
@@ -28,11 +28,12 @@ class UpdateStudentActivityUseCase {
     private usersRepository: IUsersRepository,
     @inject("DayjsDateProvider")
     private dateProvider: IDateProvider,
+    @inject("StorageProvider")
+    private storageProvider: IStorageProvider,
   ) {}
 
   async execute({
     currentUserId,
-    userId,
     studentActivityRequest,
   }: IRequest): Promise<void> {
     const {
@@ -45,6 +46,7 @@ class UpdateStudentActivityUseCase {
       approvedHours,
       file,
       justification,
+      userId,
     } = studentActivityRequest;
 
     const studentActivity = await this.studentActivitiesRepository.findById(id);
@@ -162,6 +164,11 @@ class UpdateStudentActivityUseCase {
         later: justification,
         createdAt: date,
       });
+    }
+
+    if (file) {
+      await this.storageProvider.delete(studentActivity.file, "activity");
+      await this.storageProvider.save(file, "activity");
     }
 
     Object.assign(studentActivity, {

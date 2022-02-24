@@ -236,18 +236,7 @@ export class PopulateCityWithStateMG1640609462079
           ('${uuidV4()}', 'Córrego Danta', '${state.id}'),
           ('${uuidV4()}', 'Córrego do Bom Jesus', '${state.id}'),
           ('${uuidV4()}', 'Córrego Fundo', '${state.id}'),
-          ('${uuidV4()}', 'Córrego Novo', '${state.id}'),
-          ('${uuidV4()}', 'Couto de Magalhães de Minas', '${state.id}'),
-          ('${uuidV4()}', 'Crisólita', '${state.id}'),
-          ('${uuidV4()}', 'Cristais', '${state.id}'),
-          ('${uuidV4()}', 'Cristália', '${state.id}'),
-          ('${uuidV4()}', 'Cristiano Otoni', '${state.id}'),
-          ('${uuidV4()}', 'Cristina', '${state.id}'),
-          ('${uuidV4()}', 'Crucilândia', '${state.id}'),
-          ('${uuidV4()}', 'Cruzeiro da Fortaleza', '${state.id}'),
-          ('${uuidV4()}', 'Cruzília', '${state.id}'),
-          ('${uuidV4()}', 'Cuparaque', '${state.id}'),
-          ('${uuidV4()}', 'Curral de Dentro', '${state.id}')
+          ('${uuidV4()}', 'Córrego Novo', '${state.id}')
         ;
       `,
     );

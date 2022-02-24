@@ -18,14 +18,14 @@ const updateStudentActivityController = new UpdateStudentActivityController();
 const modifyIsActiveStudentActivityController =
   new ModifyIsActiveStudentActivityController();
 
-const uploadRegulation = multer(uploadConfig);
+const uploadStudentActivity = multer(uploadConfig);
 
 const studentActivitiesRoutes = Router();
 
 studentActivitiesRoutes.post(
   "/",
   ensureAuthenticated,
-  uploadRegulation.single("file"),
+  uploadStudentActivity.single("file"),
   createStudentActivityController.handle,
 );
 
@@ -44,6 +44,7 @@ studentActivitiesRoutes.get(
 studentActivitiesRoutes.put(
   "/",
   ensureAuthenticated,
+  uploadStudentActivity.single("file"),
   updateStudentActivityController.handle,
 );
 

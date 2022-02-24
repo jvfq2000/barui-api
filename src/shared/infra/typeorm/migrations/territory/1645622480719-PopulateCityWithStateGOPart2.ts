@@ -1,0 +1,155 @@
+import { MigrationInterface, QueryRunner } from "typeorm";
+import { v4 as uuidV4 } from "uuid";
+
+import { State } from "@modules/territory/infra/typeorm/entities/State";
+
+const acronym = "GO";
+
+export class PopulateCityWithStateGOPart21645622480719
+  implements MigrationInterface
+{
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    const state = await queryRunner.manager.findOne(State, { acronym });
+
+    await queryRunner.query(
+      `
+                INSERT INTO
+                  "city" (id, name, state_id)
+                VALUES
+                  ('${uuidV4()}', 'Itauçu', '${state.id}'),
+                  ('${uuidV4()}', 'Itumbiara', '${state.id}'),
+                  ('${uuidV4()}', 'Ivolândia', '${state.id}'),
+                  ('${uuidV4()}', 'Jandaia', '${state.id}'),
+                  ('${uuidV4()}', 'Jaraguá', '${state.id}'),
+                  ('${uuidV4()}', 'Jataí', '${state.id}'),
+                  ('${uuidV4()}', 'Jaupaci', '${state.id}'),
+                  ('${uuidV4()}', 'Jesúpolis', '${state.id}'),
+                  ('${uuidV4()}', 'Joviânia', '${state.id}'),
+                  ('${uuidV4()}', 'Jussara', '${state.id}'),
+                  ('${uuidV4()}', 'Lagoa Santa', '${state.id}'),
+                  ('${uuidV4()}', 'Leopoldo de Bulhões', '${state.id}'),
+                  ('${uuidV4()}', 'Luziânia', '${state.id}'),
+                  ('${uuidV4()}', 'Mairipotaba', '${state.id}'),
+                  ('${uuidV4()}', 'Mambaí', '${state.id}'),
+                  ('${uuidV4()}', 'Mara Rosa', '${state.id}'),
+                  ('${uuidV4()}', 'Marzagão', '${state.id}'),
+                  ('${uuidV4()}', 'Matrinchã', '${state.id}'),
+                  ('${uuidV4()}', 'Maurilândia', '${state.id}'),
+                  ('${uuidV4()}', 'Mimoso de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Minaçu', '${state.id}'),
+                  ('${uuidV4()}', 'Mineiros', '${state.id}'),
+                  ('${uuidV4()}', 'Moiporá', '${state.id}'),
+                  ('${uuidV4()}', 'Monte Alegre de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Montes Claros de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Montividiu', '${state.id}'),
+                  ('${uuidV4()}', 'Montividiu do Norte', '${state.id}'),
+                  ('${uuidV4()}', 'Morrinhos', '${state.id}'),
+                  ('${uuidV4()}', 'Morro Agudo de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Mossâmedes', '${state.id}'),
+                  ('${uuidV4()}', 'Mozarlândia', '${state.id}'),
+                  ('${uuidV4()}', 'Mundo Novo', '${state.id}'),
+                  ('${uuidV4()}', 'Mutunópolis', '${state.id}'),
+                  ('${uuidV4()}', 'Nazário', '${state.id}'),
+                  ('${uuidV4()}', 'Nerópolis', '${state.id}'),
+                  ('${uuidV4()}', 'Niquelândia', '${state.id}'),
+                  ('${uuidV4()}', 'Nova América', '${state.id}'),
+                  ('${uuidV4()}', 'Nova Aurora', '${state.id}'),
+                  ('${uuidV4()}', 'Nova Crixás', '${state.id}'),
+                  ('${uuidV4()}', 'Nova Glória', '${state.id}'),
+                  ('${uuidV4()}', 'Nova Iguaçu de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Nova Roma', '${state.id}'),
+                  ('${uuidV4()}', 'Nova Veneza', '${state.id}'),
+                  ('${uuidV4()}', 'Novo Brasil', '${state.id}'),
+                  ('${uuidV4()}', 'Novo Gama', '${state.id}'),
+                  ('${uuidV4()}', 'Novo Planalto', '${state.id}'),
+                  ('${uuidV4()}', 'Orizona', '${state.id}'),
+                  ('${uuidV4()}', 'Ouro Verde de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Ouvidor', '${state.id}'),
+                  ('${uuidV4()}', 'Padre Bernardo', '${state.id}'),
+                  ('${uuidV4()}', 'Palestina de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Palmeiras de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Palmelo', '${state.id}'),
+                  ('${uuidV4()}', 'Palminópolis', '${state.id}'),
+                  ('${uuidV4()}', 'Panamá', '${state.id}'),
+                  ('${uuidV4()}', 'Paranaiguara', '${state.id}'),
+                  ('${uuidV4()}', 'Paraúna', '${state.id}'),
+                  ('${uuidV4()}', 'Perolândia', '${state.id}'),
+                  ('${uuidV4()}', 'Petrolina de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Pilar de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Piracanjuba', '${state.id}'),
+                  ('${uuidV4()}', 'Piranhas', '${state.id}'),
+                  ('${uuidV4()}', 'Pirenópolis', '${state.id}'),
+                  ('${uuidV4()}', 'Pires do Rio', '${state.id}'),
+                  ('${uuidV4()}', 'Planaltina', '${state.id}'),
+                  ('${uuidV4()}', 'Pontalina', '${state.id}'),
+                  ('${uuidV4()}', 'Porangatu', '${state.id}'),
+                  ('${uuidV4()}', 'Porteirão', '${state.id}'),
+                  ('${uuidV4()}', 'Portelândia', '${state.id}'),
+                  ('${uuidV4()}', 'Posse', '${state.id}'),
+                  ('${uuidV4()}', 'Professor Jamil', '${state.id}'),
+                  ('${uuidV4()}', 'Quirinópolis', '${state.id}'),
+                  ('${uuidV4()}', 'Rialma', '${state.id}'),
+                  ('${uuidV4()}', 'Rianápolis', '${state.id}'),
+                  ('${uuidV4()}', 'Rio Quente', '${state.id}'),
+                  ('${uuidV4()}', 'Rio Verde', '${state.id}'),
+                  ('${uuidV4()}', 'Rubiataba', '${state.id}'),
+                  ('${uuidV4()}', 'Sanclerlândia', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Bárbara de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Cruz de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Fé de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Helena de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Isabel', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Rita do Araguaia', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Rita do Novo Destino', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Rosa de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Tereza de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Santa Terezinha de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Santo Antônio da Barra', '${state.id}'),
+                  ('${uuidV4()}', 'Santo Antônio de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Santo Antônio do Descoberto', '${state.id}'),
+                  ('${uuidV4()}', 'São Domingos', '${state.id}'),
+                  ('${uuidV4()}', 'São Francisco de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'São João d´Aliança', '${state.id}'),
+                  ('${uuidV4()}', 'São João da Paraúna', '${state.id}'),
+                  ('${uuidV4()}', 'São Luís de Montes Belos', '${state.id}'),
+                  ('${uuidV4()}', 'São Luíz do Norte', '${state.id}'),
+                  ('${uuidV4()}', 'São Miguel do Araguaia', '${state.id}'),
+                  ('${uuidV4()}', 'São Miguel do Passa Quatro', '${state.id}'),
+                  ('${uuidV4()}', 'São Patrício', '${state.id}'),
+                  ('${uuidV4()}', 'São Simão', '${state.id}'),
+                  ('${uuidV4()}', 'Senador Canedo', '${state.id}'),
+                  ('${uuidV4()}', 'Serranópolis', '${state.id}'),
+                  ('${uuidV4()}', 'Silvânia', '${state.id}'),
+                  ('${uuidV4()}', 'Simolândia', '${state.id}'),
+                  ('${uuidV4()}', 'Sítio d´Abadia', '${state.id}'),
+                  ('${uuidV4()}', 'Taquaral de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Teresina de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Terezópolis de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Três Ranchos', '${state.id}'),
+                  ('${uuidV4()}', 'Trindade', '${state.id}'),
+                  ('${uuidV4()}', 'Trombas', '${state.id}'),
+                  ('${uuidV4()}', 'Turvânia', '${state.id}'),
+                  ('${uuidV4()}', 'Turvelândia', '${state.id}'),
+                  ('${uuidV4()}', 'Uirapuru', '${state.id}'),
+                  ('${uuidV4()}', 'Uruaçu', '${state.id}'),
+                  ('${uuidV4()}', 'Uruana', '${state.id}'),
+                  ('${uuidV4()}', 'Urutaí', '${state.id}'),
+                  ('${uuidV4()}', 'Valparaíso de Goiás', '${state.id}'),
+                  ('${uuidV4()}', 'Varjão', '${state.id}'),
+                  ('${uuidV4()}', 'Vianópolis', '${state.id}'),
+                  ('${uuidV4()}', 'Vicentinópolis', '${state.id}'),
+                  ('${uuidV4()}', 'Vila Boa', '${state.id}'),
+                  ('${uuidV4()}', 'Vila Propício', '${state.id}')
+                ;
+              `,
+    );
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    const state = await queryRunner.manager.findOne(State, { acronym });
+
+    await queryRunner.query(
+      `DELETE FROM "city" WHERE state_id = '${state.id}'`,
+    );
+  }
+}

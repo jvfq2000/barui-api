@@ -21,7 +21,7 @@ class UpdateRegulationController {
       courseId,
     });
 
-    return response.status(201).send();
+    return response.status(204).send();
   }
 }
 

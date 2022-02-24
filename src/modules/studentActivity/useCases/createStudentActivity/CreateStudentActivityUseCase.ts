@@ -51,7 +51,9 @@ class CreateStudentActivityUseCase {
       );
     }
 
-    await this.storageProvider.save(file, "activity");
+    if (file) {
+      await this.storageProvider.save(file, "activity");
+    }
 
     await this.studentActivitiesRepository.save({
       description,

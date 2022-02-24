@@ -6,7 +6,6 @@ import { CreateStudentActivityUseCase } from "./CreateStudentActivityUseCase";
 class CreateStudentActivityController {
   async handle(request: Request, response: Response): Promise<Response> {
     const userId = request.user.id;
-    const file = request.file.filename;
     const {
       description,
       hours,
@@ -15,6 +14,8 @@ class CreateStudentActivityController {
       justification,
       activityId,
     } = request.body;
+
+    const file = isCertified === "true" ? request.file.filename : "";
 
     const createStudentActivityUseCase = container.resolve(
       CreateStudentActivityUseCase,

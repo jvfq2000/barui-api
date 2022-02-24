@@ -6,7 +6,19 @@ import { UpdateStudentActivityUseCase } from "./UpdateStudentActivityUseCase";
 class UpdateStudentActivityController {
   async handle(request: Request, response: Response): Promise<Response> {
     const currentUserId = request.user.id;
-    const { userId, studentActivity } = request.body;
+
+    const {
+      description,
+      hours,
+      semester,
+      isCertified,
+      justification,
+      activityId,
+      userId,
+    } = request.body;
+
+    const { studentActivityId } = request.query;
+    const file = isCertified === "true" ? request.file?.filename : "";
 
     const updateStudentActivityUseCase = container.resolve(
       UpdateStudentActivityUseCase,
@@ -14,8 +26,17 @@ class UpdateStudentActivityController {
 
     await updateStudentActivityUseCase.execute({
       currentUserId: String(currentUserId),
-      userId,
-      studentActivityRequest: studentActivity,
+      studentActivityRequest: {
+        id: String(studentActivityId),
+        description,
+        hours,
+        semester,
+        isCertified: isCertified === "true",
+        file,
+        justification,
+        activityId,
+        userId,
+      },
     });
 
     return response.status(204).send();

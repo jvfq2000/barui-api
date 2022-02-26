@@ -5,7 +5,7 @@ import { IUsersRepository } from "@modules/account/repositories/IUsersRepository
 import { IActivitiesRepository } from "@modules/activityRegulation/repositories/IActivitiesRepository";
 import { IActivityCategoriesRepository } from "@modules/activityRegulation/repositories/IActivityCategoriesRepository";
 import { IStudentActivityResponseDTO } from "@modules/studentActivity/dtos/studentActivity/IStudentActivityResponseDTO";
-import { StudentActivityMap } from "@modules/studentActivity/mapper/ActivityCategoryMap";
+import { StudentActivityMap } from "@modules/studentActivity/mapper/StudentActivityMap";
 import { IStudentActivitiesRepository } from "@modules/studentActivity/repositories/IStudentActivitiesRepository";
 import { AppError } from "@shared/errors/AppError";
 import { IGeneralListDTO } from "@utils/IGeneralListDTO";

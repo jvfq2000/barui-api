@@ -92,6 +92,14 @@ class StudentActivitiesRepository implements IStudentActivitiesRepository {
 
     return { studentActivities, totalCount };
   }
+
+  async listByStudentId(studentId: string): Promise<StudentActivity[]> {
+    const studentActivities = this.repository.find({
+      userId: studentId,
+      isActive: true,
+    });
+    return studentActivities;
+  }
 }
 
 export { StudentActivitiesRepository };

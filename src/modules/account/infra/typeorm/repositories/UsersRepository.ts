@@ -111,7 +111,17 @@ class UsersRepository implements IUsersRepository {
   }
 
   async listByInstitutionId(institutionId: string): Promise<User[]> {
-    const users = await this.repository.find({ institutionId });
+    const users = await this.repository.find({ institutionId, isActive: true });
+    return users;
+  }
+
+  async listStudentsByCourseId(courseId: string): Promise<User[]> {
+    const users = await this.repository.find({
+      courseId,
+      accessLevel: "aluno",
+      isActive: true,
+    });
+
     return users;
   }
 }

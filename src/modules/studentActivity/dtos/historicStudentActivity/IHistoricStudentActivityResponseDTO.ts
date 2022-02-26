@@ -10,7 +10,7 @@ interface IHistoricStudentActivityResponseDTO {
   userName: string;
 
   studentActivityId: string;
-  studentActivityName: string;
+  studentActivityDescription: string;
 }
 
 export { IHistoricStudentActivityResponseDTO };

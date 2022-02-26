@@ -12,6 +12,7 @@ interface IStudentActivitiesRepository {
   ): Promise<StudentActivity>;
   findById(id: string): Promise<StudentActivity>;
   list(data: IGeneralListDTO): Promise<IListStudentActivitiesDTO>;
+  listByStudentId(studentId: string): Promise<StudentActivity[]>;
 }
 
 export { IStudentActivitiesRepository };

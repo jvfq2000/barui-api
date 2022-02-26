@@ -10,5 +10,6 @@ interface IUsersRepository {
   findById(id: string): Promise<User>;
   list(data: IGeneralListDTO): Promise<IListUsersDTO>;
   listByInstitutionId(institutionId: string): Promise<User[]>;
+  listStudentsByCourseId(courseId: string): Promise<User[]>;
 }
 export { IUsersRepository };

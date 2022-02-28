@@ -13,7 +13,6 @@ import { UpdateUserAccessLevelController } from "@modules/account/useCases/updat
 import { UpdateUserAvatarController } from "@modules/account/useCases/updateUserAvatar/UpdateUserAvatarController";
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
 
-import { ensureActivitiesCoordinator } from "../../middlewares/ensureActivitiesCoordinator";
 import { ensureInstitutionAdmin } from "../../middlewares/ensureInstitutionAdmin";
 
 const createUserController = new CreateUserController();
@@ -44,12 +43,7 @@ usersRoutes.put(
   updateUserController.handle,
 );
 
-usersRoutes.get(
-  "/by-id",
-  ensureAuthenticated,
-  ensureActivitiesCoordinator,
-  findUserByIdController.handle,
-);
+usersRoutes.get("/by-id", ensureAuthenticated, findUserByIdController.handle);
 
 usersRoutes.get(
   "/",

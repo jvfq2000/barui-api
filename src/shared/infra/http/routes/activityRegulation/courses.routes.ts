@@ -37,7 +37,6 @@ coursesRoutes.get(
 coursesRoutes.get(
   "/by-id",
   ensureAuthenticated,
-  ensureInstitutionAdmin,
   findCourseByIdController.handle,
 );
 

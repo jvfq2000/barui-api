@@ -38,7 +38,6 @@ institutionsRoutes.get(
 institutionsRoutes.get(
   "/by-id",
   ensureAuthenticated,
-  ensureGeneralAdmin,
   findInstitutionByIdController.handle,
 );
 

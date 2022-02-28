@@ -15,6 +15,7 @@ class UpdateStudentActivityController {
       justification,
       activityId,
       userId,
+      approvedHours,
     } = request.body;
 
     const { studentActivityId } = request.query;
@@ -36,6 +37,7 @@ class UpdateStudentActivityController {
         justification,
         activityId,
         userId,
+        approvedHours,
       },
     });
 

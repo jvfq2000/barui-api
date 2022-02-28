@@ -135,7 +135,7 @@ class UpdateStudentActivityUseCase {
         action: "Alteração",
         studentActivityId: studentActivity.id,
         userId: currentUserId,
-        field: "Horas aprovadas",
+        field: "Horas deferidas",
         before: String(studentActivity.approvedHours),
         later: String(approvedHours),
         createdAt: date,

@@ -54,15 +54,6 @@ class ChartsRepository implements IChartsRepository {
         "user",
         `user.course_id = course.id and user.id = '${studentId}'`,
       )
-      .select([
-        "chart.id",
-        "chart.name",
-        "chart.in_force_from",
-        "chart.min_hours",
-        "chart.course_id",
-        "chart.is_active",
-        "chart.created_at",
-      ])
 
       .where(
         `

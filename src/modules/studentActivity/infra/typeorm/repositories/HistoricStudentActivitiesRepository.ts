@@ -1,9 +1,7 @@
 import { getRepository, Repository } from "typeorm";
 
-import { IListHistoricStudentActivitiesDTO } from "@modules/studentActivity/dtos/historicStudentActivity/IListHistoricStudentActivitiesDTO";
 import { ISaveHistoricStudentActivityDTO } from "@modules/studentActivity/dtos/historicStudentActivity/ISaveHistoricStudentActivityDTO";
 import { IHistoricStudentActivitiesRepository } from "@modules/studentActivity/repositories/IHistoricStudentActivitiesRepository";
-import { IGeneralListDTO } from "@utils/IGeneralListDTO";
 
 import { HistoricStudentActivity } from "../entities/HistoricStudentActivity";
 
@@ -37,9 +35,15 @@ class HistoricStudentActivitiesRepository
   }
 
   async listByStudentActivityId(
-    data: IGeneralListDTO,
-  ): Promise<IListHistoricStudentActivitiesDTO> {
-    throw new Error("Method not implemented.");
+    studentActivityId: string,
+  ): Promise<HistoricStudentActivity[]> {
+    const historical = await this.repository.find({
+      where: { studentActivityId },
+      order: {
+        createdAt: "DESC",
+      },
+    });
+    return historical;
   }
 }
 

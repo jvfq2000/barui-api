@@ -4,6 +4,7 @@ import multer from "multer";
 import uploadConfig from "@config/upload";
 import { CreateStudentActivityController } from "@modules/studentActivity/useCases/createStudentActivity/CreateStudentActivityController";
 import { FindStudentActivityByIdController } from "@modules/studentActivity/useCases/findStudentActivityById/FindStudentActivityByIdController";
+import { ListHistoricalByStudentActivityIdController } from "@modules/studentActivity/useCases/listHistoricalByStudentActivityId/ListHistoricalByStudentActivityIdController";
 import { ListStudentActivitiesController } from "@modules/studentActivity/useCases/listStudentActivities/ListStudentActivitiesController";
 import { ListStudentsController } from "@modules/studentActivity/useCases/listStudents/ListStudentsController";
 import { ModifyIsActiveStudentActivityController } from "@modules/studentActivity/useCases/modifyIsActiveStudentActivity/ModifyIsActiveStudentActivityController";
@@ -20,6 +21,8 @@ const updateStudentActivityController = new UpdateStudentActivityController();
 const modifyIsActiveStudentActivityController =
   new ModifyIsActiveStudentActivityController();
 const listStudentsController = new ListStudentsController();
+const listHistoricalByStudentActivityIdController =
+  new ListHistoricalByStudentActivityIdController();
 
 const uploadStudentActivity = multer(uploadConfig);
 
@@ -49,6 +52,12 @@ studentActivitiesRoutes.get(
   ensureAuthenticated,
   ensureActivitiesCoordinator,
   listStudentsController.handle,
+);
+
+studentActivitiesRoutes.get(
+  "/historic",
+  ensureAuthenticated,
+  listHistoricalByStudentActivityIdController.handle,
 );
 
 studentActivitiesRoutes.put(

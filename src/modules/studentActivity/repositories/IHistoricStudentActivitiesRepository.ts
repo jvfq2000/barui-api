@@ -1,13 +1,11 @@
-import { IGeneralListDTO } from "@utils/IGeneralListDTO";
-
-import { IListHistoricStudentActivitiesDTO } from "../dtos/historicStudentActivity/IListHistoricStudentActivitiesDTO";
 import { ISaveHistoricStudentActivityDTO } from "../dtos/historicStudentActivity/ISaveHistoricStudentActivityDTO";
+import { HistoricStudentActivity } from "../infra/typeorm/entities/HistoricStudentActivity";
 
 interface IHistoricStudentActivitiesRepository {
   save(data: ISaveHistoricStudentActivityDTO): Promise<void>;
   listByStudentActivityId(
-    data: IGeneralListDTO,
-  ): Promise<IListHistoricStudentActivitiesDTO>;
+    studentActivityId: string,
+  ): Promise<HistoricStudentActivity[]>;
 }
 
 export { IHistoricStudentActivitiesRepository };

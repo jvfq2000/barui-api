@@ -64,7 +64,7 @@ class UpdateStudentActivityUseCase {
 
     const date = this.dateProvider.dateNow();
 
-    if (studentActivity.activityId !== activityId) {
+    if (String(studentActivity.activityId) !== String(activityId)) {
       const oldActivity = await this.activitiesRepository.findById(
         studentActivity.activityId,
       );
@@ -82,7 +82,7 @@ class UpdateStudentActivityUseCase {
       });
     }
 
-    if (studentActivity.description !== description) {
+    if (String(studentActivity.description) !== String(description)) {
       await this.historicStudentActivitiesRepository.save({
         action: "Alteração",
         studentActivityId: studentActivity.id,
@@ -94,19 +94,22 @@ class UpdateStudentActivityUseCase {
       });
     }
 
-    if (studentActivity.hours !== hours) {
+    if (String(studentActivity.hours) !== String(hours)) {
       await this.historicStudentActivitiesRepository.save({
         action: "Alteração",
         studentActivityId: studentActivity.id,
         userId: currentUserId,
         field: "Qtd. horas",
         before: String(studentActivity.hours),
-        later: String(hours),
+        later:
+          String(hours) === "null" || String(hours) === "undefined"
+            ? ""
+            : String(hours),
         createdAt: date,
       });
     }
 
-    if (studentActivity.semester !== semester) {
+    if (String(studentActivity.semester) !== String(semester)) {
       await this.historicStudentActivitiesRepository.save({
         action: "Alteração",
         studentActivityId: studentActivity.id,
@@ -130,19 +133,28 @@ class UpdateStudentActivityUseCase {
       });
     }
 
-    if (studentActivity.approvedHours !== approvedHours) {
+    if (
+      (!studentActivity.approvedHours
+        ? ""
+        : String(studentActivity.approvedHours)) !==
+      (!approvedHours ? "" : String(approvedHours))
+    ) {
       await this.historicStudentActivitiesRepository.save({
         action: "Alteração",
         studentActivityId: studentActivity.id,
         userId: currentUserId,
         field: "Horas deferidas",
         before: String(studentActivity.approvedHours),
-        later: String(approvedHours),
+        later:
+          String(approvedHours) === "null" ||
+          String(approvedHours) === "undefined"
+            ? ""
+            : String(approvedHours),
         createdAt: date,
       });
     }
 
-    if (studentActivity.file !== file) {
+    if (String(studentActivity.file) !== String(file)) {
       await this.historicStudentActivitiesRepository.save({
         action: "Alteração",
         studentActivityId: studentActivity.id,
@@ -154,7 +166,7 @@ class UpdateStudentActivityUseCase {
       });
     }
 
-    if (studentActivity.file !== file) {
+    if (String(studentActivity.justification) !== String(justification)) {
       await this.historicStudentActivitiesRepository.save({
         action: "Alteração",
         studentActivityId: studentActivity.id,
